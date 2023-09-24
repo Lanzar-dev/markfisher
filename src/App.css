@@ -1,38 +1,128 @@
-.App {
-  text-align: center;
+:root {
+  --biya-color: #2d699d;
+  --biya-bg: #f4f7fa;
+  --font-family-a: "PoppinsMedium";
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: "PoppinsRegular";
+  src: url("./Fonts/Poppins-Regular.ttf") format("truetype");
+}
+* {
+  box-sizing: border-box;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+body {
+  padding: 0px;
+  margin: 0px;
+  overflow: hidden;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.Auth {
+  width: 100vw;
+  height: 100vh;
+  background-color: var(--biya-bg);
+  position: relative;
 }
-
-.App-link {
-  color: #61dafb;
+.Auth svg {
+  position: absolute;
+  left: -20vw;
+  width: 100%;
+  height: 100%;
 }
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.Auth .img {
+  position: absolute;
+  top: 10vh;
+  left: 50vw;
+  width: 323px;
+  height: 134px;
+  flex-shrink: 0;
+  background: url("./Images/biyaLogo.png"), lightgray -101.056px -150.456px/157.895% 378.947% no-repeat;
+}
+.Auth form {
+  position: absolute;
+  top: 33vh;
+  left: 50vw;
+  width: 504px;
+  height: 375px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.Auth form .field-holder {
+  width: fit-content;
+  margin: 25px auto;
+}
+.Auth form .field-holder .title {
+  width: 120px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #002855;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.Auth form .field-holder .description {
+  width: 80%;
+  height: 20px;
+  flex-shrink: 0;
+  color: #828282;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth form .field-holder .field {
+  position: relative;
+}
+.Auth form .field-holder .field svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  position: absolute;
+  left: 25px;
+  top: 5px;
+}
+.Auth form .field-holder .field input {
+  width: 358px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 80px;
+  border: 1px solid #dfe6ec;
+  background: #f8fbfd;
+  padding-left: 50px;
+}
+.Auth form .forgot-password {
+  margin: 5px auto;
+  width: 358px;
+  color: #828282;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth form .forgot-password a {
+  color: #072c7c;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  margin-left: 5px;
+}
+.Auth form .forgot-password button {
+  width: 129px;
+  height: 35px;
+  flex-shrink: 0;
+  border: 0px;
+  border-radius: 94px;
+  background: #4fadea;
+  cursor: pointer;
+  margin-left: 10px;
 }
