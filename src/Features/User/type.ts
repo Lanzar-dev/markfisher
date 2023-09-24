@@ -124,3 +124,9 @@ export interface ISignin {
   Email: string;
   Password: string;
 }
+
+export interface ISignUp {
+  Email: string;
+  PhoneNumber: string;
+  Password: string;
+}

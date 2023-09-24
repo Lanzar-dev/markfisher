@@ -125,4 +125,11 @@ body {
   background: #4fadea;
   cursor: pointer;
   margin-left: 10px;
+  color: #fff;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
 }

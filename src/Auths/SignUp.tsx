@@ -4,9 +4,9 @@ import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
 import { login } from "../Features/User/userSlice";
-import { ISignin } from "../Features/User/type";
+import { ISignUp } from "../Features/User/type";
 
-export const Login = () => {
+export const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector((state) => state.user);
@@ -14,6 +14,7 @@ export const Login = () => {
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     Email: Yup.string().required("Email is required"),
+    PhoneNumber: Yup.string().required("Phone number is required"),
     Password: Yup.string()
       .min(6, "Must not be less than 6 characters")
       .required("Required")
@@ -26,19 +27,20 @@ export const Login = () => {
   // Initial form values
   const initialValues = {
     Email: "",
+    PhoneNumber: "",
     Password: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
-  const handleSubmit = (values: ISignin) => {
+  const handleSubmit = (values: ISignUp) => {
     dispatch(login(values));
     if (isAuth === true) navigate(routes.dashboard);
   };
 
   // Formik form handling
-  const formik = useFormik<ISignin>({
+  const formik = useFormik<ISignUp>({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
@@ -70,6 +72,26 @@ export const Login = () => {
         </div>
 
         <div className="field-holder">
+          <div className="title">Phone number</div>
+          <div className="description">Enter your mobile number</div>
+          <div className="field">
+            {Email()}
+            <input
+              type="text"
+              id="PhoneNumber"
+              name="PhoneNumber"
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.PhoneNumber}
+              // placeholder="Enter Email"
+            />
+          </div>
+          {formik.touched.PhoneNumber && formik.errors.PhoneNumber && (
+            <div className="error">{formik.errors.PhoneNumber}</div>
+          )}
+        </div>
+
+        <div className="field-holder">
           <div className="title">Password</div>
           <div className="description">Enter your account password</div>
           <div className="field">
@@ -93,11 +115,11 @@ export const Login = () => {
           Forgot password? <a href="#a">Reset here</a>
         </div>
         <div className="forgot-password">
-          Don't have an account?
-          <a href="#b" onClick={() => navigate(routes.signup)}>
-            Register now
+          Have an account?
+          <a href="#b" onClick={() => navigate(routes.homepage)}>
+            Log in
           </a>
-          <button type="submit">Continue</button>
+          <button type="submit">Submit</button>
         </div>
       </form>
     </div>
