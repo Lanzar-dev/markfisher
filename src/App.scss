@@ -400,6 +400,7 @@ body {
       }
     }
     .right-content {
+      overflow-y: auto;
       width: 84vw;
       height: 92vh;
       border-radius: 20px 0px 0px 0px;
@@ -426,14 +427,59 @@ body {
           background: #e72f3d;
           margin-left: 20px;
           margin-right: 20px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          div {
+            color: #fff;
+            font-family: Poppins;
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin-right: 25px;
+          }
+          img {
+            display: inline-flex;
+            width: 100.248px;
+            height: 100.248px;
+            transform: rotate(360deg);
+            padding: 1.203px 2.558px 1.536px 0.181px;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+          }
         }
         .card:nth-child(3) {
           border-radius: 20px;
           background: #049dfe;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          div {
+            color: #fff;
+            font-family: Poppins;
+            font-size: 25px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            margin-right: 25px;
+          }
+          img {
+            display: inline-flex;
+            width: 55.345px;
+            height: 55.345px;
+            transform: rotate(360deg);
+            padding: 1.203px 2.558px 1.536px 0.181px;
+            justify-content: center;
+            align-items: center;
+            flex-shrink: 0;
+          }
         }
       }
       .recent-transaction {
         margin-left: 38px;
+        margin-bottom: 40px;
         width: 784px;
         height: 450px;
         flex-shrink: 0;

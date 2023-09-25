@@ -11,6 +11,8 @@ import merchantIcon from "../Images/Merchant.svg";
 import settingsIcon from "../Images/Settings.svg";
 import dnArrow from "../Images/DownArrow.svg";
 import userPic from "../Images/User.svg";
+import agent from "../Images/Agent.svg";
+import favourite from "../Images/Favorite.svg";
 
 export const Home = () => {
   return (
@@ -50,8 +52,16 @@ export const Home = () => {
         <div className="right-content">
           <div className="card-holder">
             <div className="card"></div>
-            <div className="card"></div>
-            <div className="card"></div>
+            <div className="card">
+              <div>
+                Manage Your <br /> Favourites
+              </div>
+              <img src={favourite} alt="favouriteIcon" />
+            </div>
+            <div className="card">
+              <div>Find An Agent</div>
+              <img src={agent} alt="agentIcon" />
+            </div>
           </div>
           <div className="recent-transaction"></div>
         </div>
