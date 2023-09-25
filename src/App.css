@@ -1,3 +1,4 @@
+@charset "UTF-8";
 :root {
   --biya-color: #2d699d;
   --biya-bg: #f4f7fa;
@@ -12,37 +13,83 @@
   box-sizing: border-box;
 }
 
+html,
 body {
   padding: 0px;
   margin: 0px;
   overflow: hidden;
 }
 
-.Auth {
-  width: 100vw;
+::-webkit-scrollbar {
+  height: 0px; /* height of horizontal scrollbar ← You're missing this */
+  width: 0px; /* width of vertical scrollbar */
+  border: 1px solid #d5d5d5;
+}
+
+::-webkit-scrollbar-track {
+  border-radius: 80px;
+  background: #b32525;
+}
+
+::-webkit-scrollbar-thumb {
+  border-radius: 80px;
+  background: #b0b0b0;
+}
+
+.Auth-Login {
+  display: flex;
+  overflow-y: auto;
   height: 100vh;
-  background-color: var(--biya-bg);
-  position: relative;
+  background-color: #f4f7fa;
 }
-.Auth svg {
-  position: absolute;
-  left: -20vw;
-  width: 100%;
-  height: 100%;
+.Auth-Login .left-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+  height: 100vh;
+  background-image: url("./Images//Frame.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
 }
-.Auth .img {
-  position: absolute;
-  top: 10vh;
-  left: 50vw;
+.Auth-Login .left-div .text .message-1 {
+  width: fit-content;
+  color: #002855;
+  font-family: Roboto;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Auth-Login .left-div .text .message-2 {
+  width: fit-content;
+  color: #2e2e2e;
+  font-family: Roboto;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Login .right-div {
+  display: flex;
+  align-items: center;
+  width: 50vw;
+  margin-bottom: 60px;
+}
+.Auth-Login .right-div .img {
+  margin-top: 80px;
+  margin-left: 35px;
   width: 323px;
   height: 134px;
   flex-shrink: 0;
   background: url("./Images/biyaLogo.png"), lightgray -101.056px -150.456px/157.895% 378.947% no-repeat;
 }
-.Auth form {
-  position: absolute;
-  top: 33vh;
-  left: 50vw;
+.Auth-Login .right-div .form-holder {
+  margin-top: 20px;
+  margin-left: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 504px;
   height: 375px;
   flex-shrink: 0;
@@ -50,11 +97,11 @@ body {
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
-.Auth form .field-holder {
+.Auth-Login .right-div .form-holder form .field-holder {
   width: fit-content;
   margin: 25px auto;
 }
-.Auth form .field-holder .title {
+.Auth-Login .right-div .form-holder form .field-holder .title {
   width: 120px;
   height: 18px;
   flex-shrink: 0;
@@ -65,7 +112,7 @@ body {
   font-weight: 500;
   line-height: normal;
 }
-.Auth form .field-holder .description {
+.Auth-Login .right-div .form-holder form .field-holder .description {
   width: 80%;
   height: 20px;
   flex-shrink: 0;
@@ -76,10 +123,10 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-.Auth form .field-holder .field {
+.Auth-Login .right-div .form-holder form .field-holder .field {
   position: relative;
 }
-.Auth form .field-holder .field svg {
+.Auth-Login .right-div .form-holder form .field-holder .field svg {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
@@ -87,7 +134,7 @@ body {
   left: 25px;
   top: 5px;
 }
-.Auth form .field-holder .field input {
+.Auth-Login .right-div .form-holder form .field-holder .field input {
   width: 358px;
   height: 36px;
   flex-shrink: 0;
@@ -96,7 +143,7 @@ body {
   background: #f8fbfd;
   padding-left: 50px;
 }
-.Auth form .forgot-password {
+.Auth-Login .right-div .form-holder form .forgot-password {
   margin: 5px auto;
   width: 358px;
   color: #828282;
@@ -106,7 +153,7 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-.Auth form .forgot-password a {
+.Auth-Login .right-div .form-holder form .forgot-password a {
   color: #072c7c;
   font-family: Roboto;
   font-size: 13px;
@@ -115,8 +162,9 @@ body {
   line-height: normal;
   text-decoration: none;
   margin-left: 5px;
+  cursor: pointer;
 }
-.Auth form .forgot-password button {
+.Auth-Login .right-div .form-holder form .forgot-password button {
   width: 129px;
   height: 35px;
   flex-shrink: 0;
@@ -132,4 +180,237 @@ body {
   font-style: normal;
   font-weight: 400;
   line-height: normal;
+}
+
+.Auth-Signup {
+  display: flex;
+  overflow-y: auto;
+  height: 100vh;
+  background-color: #f4f7fa;
+}
+.Auth-Signup .left-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+  height: 100vh;
+  background-image: url("./Images//Frame.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.Auth-Signup .left-div .text .message-1 {
+  width: fit-content;
+  color: #002855;
+  font-family: Roboto;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Auth-Signup .left-div .text .message-2 {
+  width: fit-content;
+  color: #2e2e2e;
+  font-family: Roboto;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Signup .right-div {
+  display: flex;
+  align-items: center;
+  width: 50vw;
+  margin-bottom: 60px;
+}
+.Auth-Signup .right-div .img {
+  margin-top: 80px;
+  margin-left: 35px;
+  width: 323px;
+  height: 134px;
+  flex-shrink: 0;
+  background: url("./Images/biyaLogo.png"), lightgray -101.056px -150.456px/157.895% 378.947% no-repeat;
+}
+.Auth-Signup .right-div .form-holder {
+  margin-top: 20px;
+  margin-left: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 504px;
+  height: 504px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.Auth-Signup .right-div .form-holder form .field-holder {
+  width: fit-content;
+  margin: 25px auto;
+}
+.Auth-Signup .right-div .form-holder form .field-holder .title {
+  width: 120px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #002855;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.Auth-Signup .right-div .form-holder form .field-holder .description {
+  width: 80%;
+  height: 20px;
+  flex-shrink: 0;
+  color: #828282;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Signup .right-div .form-holder form .field-holder .field {
+  position: relative;
+}
+.Auth-Signup .right-div .form-holder form .field-holder .field svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  position: absolute;
+  left: 25px;
+  top: 5px;
+}
+.Auth-Signup .right-div .form-holder form .field-holder .field input {
+  width: 358px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 80px;
+  border: 1px solid #dfe6ec;
+  background: #f8fbfd;
+  padding-left: 50px;
+}
+.Auth-Signup .right-div .form-holder form .forgot-password {
+  margin: 5px auto;
+  width: 358px;
+  color: #828282;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Signup .right-div .form-holder form .forgot-password a {
+  color: #072c7c;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.Auth-Signup .right-div .form-holder form .forgot-password button {
+  width: 129px;
+  height: 35px;
+  flex-shrink: 0;
+  border: 0px;
+  border-radius: 94px;
+  background: #4fadea;
+  cursor: pointer;
+  margin-left: 10px;
+  color: #fff;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
+.Home {
+  background: #f4f7fa;
+  height: 100vh;
+  display: flex;
+}
+.Home .left-div {
+  width: 16vw;
+}
+.Home .left-div img {
+  width: 7vw;
+  margin-top: 2vh;
+  margin-left: 1vw;
+}
+.Home .left-div .side-bar {
+  margin-top: 50px;
+}
+.Home .left-div .side-bar .side-component {
+  width: fit-content;
+  margin-top: 10px;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.Home .left-div .side-bar .side-component img {
+  width: 30px;
+  margin: 5px 10px 5px 20px;
+}
+.Home .left-div .side-bar .side-component:hover {
+  cursor: pointer;
+}
+.Home .right-div .user .holder {
+  width: fit-content;
+  margin: 3vh 1vw 3vh auto;
+  display: flex;
+  align-items: center;
+}
+.Home .right-div .user .holder .userImg {
+  margin-right: 7px;
+}
+.Home .right-div .user .holder img {
+  margin-left: 7px;
+}
+.Home .right-div .user .holder img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content {
+  width: 84vw;
+  height: 92vh;
+  border-radius: 20px 0px 0px 0px;
+  background: #fff;
+}
+.Home .right-div .right-content .card-holder {
+  display: flex;
+}
+.Home .right-div .right-content .card-holder .card {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  border-radius: 20px;
+  background: #fff;
+  width: 390.6px;
+  height: 129.138px;
+  flex-shrink: 0;
+  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) {
+  margin-left: 38px;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(2) {
+  border-radius: 20px;
+  background: #e72f3d;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(3) {
+  border-radius: 20px;
+  background: #049dfe;
+}
+.Home .right-div .right-content .recent-transaction {
+  margin-left: 38px;
+  width: 784px;
+  height: 450px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
 }
