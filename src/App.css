@@ -396,6 +396,68 @@ body {
 .Home .right-div .right-content .card-holder .card:nth-child(1) {
   margin-left: 38px;
 }
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name {
+  display: flex;
+  height: 60px;
+  padding: 5px 5px 5px 18px;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .left {
+  color: #000;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .left svg {
+  padding-top: 6px;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .left svg:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right {
+  flex: 1;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-top: 9px;
+  color: #049dfe;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add img {
+  margin-top: 0px;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add img:nth-child(1) {
+  margin-right: 5px;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .amount {
+  padding: 2px 5px 2px 18px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.Home .right-div .right-content .card-holder .card:nth-child(1) .amount span {
+  color: #000;
+  font-family: Poppins;
+  font-size: 10px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
 .Home .right-div .right-content .card-holder .card:nth-child(2) {
   border-radius: 20px;
   background: #e72f3d;

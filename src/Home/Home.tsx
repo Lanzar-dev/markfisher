@@ -13,8 +13,15 @@ import dnArrow from "../Images/DownArrow.svg";
 import userPic from "../Images/User.svg";
 import agent from "../Images/Agent.svg";
 import favourite from "../Images/Favorite.svg";
+import walletIcon from "../Images/Wallet.svg";
+import rightArrow from "../Images/RightArrow.svg";
+import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
+import { useState } from "react";
+import Table from "./Table";
 
 export const Home = () => {
+  const [showBalance, setShowBalance] = useState<boolean>(false);
+
   return (
     <div className="Home">
       <div className="left-div">
@@ -51,7 +58,34 @@ export const Home = () => {
         </div>
         <div className="right-content">
           <div className="card-holder">
-            <div className="card"></div>
+            <div className="card">
+              <div className="name">
+                <div className="left">
+                  Hey Amina!
+                  {showBalance ? (
+                    <BsEyeFill onClick={() => setShowBalance(!showBalance)} />
+                  ) : (
+                    <BsEyeSlashFill
+                      onClick={() => setShowBalance(!showBalance)}
+                    />
+                  )}
+                </div>
+                <div className="right">
+                  <div className="add">
+                    <img src={walletIcon} alt="WalletLogo1" /> Add money
+                    <img src={rightArrow} alt="rightArrow" />
+                  </div>
+                  <div className="add">
+                    <img src={walletIcon} alt="WalletLogo1" /> Withdraw money
+                    <img src={rightArrow} alt="rightArrow" />
+                  </div>
+                </div>
+              </div>
+              <div className="amount">
+                <span>Current balance</span> <br />{" "}
+                {showBalance ? "NGN267,679.00" : "************"}
+              </div>
+            </div>
             <div className="card">
               <div>
                 Manage Your <br /> Favourites
@@ -63,7 +97,9 @@ export const Home = () => {
               <img src={agent} alt="agentIcon" />
             </div>
           </div>
-          <div className="recent-transaction"></div>
+          <div className="recent-transaction">
+            <Table />
+          </div>
         </div>
       </div>
     </div>
