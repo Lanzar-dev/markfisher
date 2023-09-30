@@ -1,42 +1,137 @@
 import biyaLogo from "../Images/biyaLogo.png";
-import homeIcon from "../Images/HomeButton.svg";
-import scanPayIcon from "../Images/Scanpay.svg";
-import transferIcon from "../Images/Transfer.svg";
-import airtimeIcon from "../Images/Airtime.svg";
-import bundleIcon from "../Images/Bundle.svg";
-import withdrawIcon from "../Images/Withdraw.svg";
-import payBillIcon from "../Images/PayBill.svg";
-import myQrIcon from "../Images/MyQR.svg";
-import merchantIcon from "../Images/Merchant.svg";
-import settingsIcon from "../Images/Settings.svg";
 import dnArrow from "../Images/DownArrow.svg";
 import userPic from "../Images/User.svg";
 import agent from "../Images/Agent.svg";
 import favourite from "../Images/Favorite.svg";
 import walletIcon from "../Images/Wallet.svg";
 import rightArrow from "../Images/RightArrow.svg";
+import biyaTrxRArr from "../Images/BiyaTrxRArrow.svg";
+import bankTrx from "../Images/BankTrx.svg";
+import TrxIcon from "../Images/TrxIcon.svg";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Table from "./Table";
+import { BankTransferForm } from "./BankTransferForm";
+import { BiyaTransferForm } from "./BiyaTransferForm";
+import { PSBTransferForm } from "./PSBTransferForm";
+import { MySVGs } from "../SVGs/MySVGs";
+import { TollForm } from "./TollForm";
+import { AirtimeForm } from "./AirtimeForm";
+import { BundleForm } from "./BundleForm";
+import save from "../Images/SaveToGallery.svg";
+import share from "../Images/ShareQrCode.svg";
+import copyIcon from "../Images/Copy.svg";
+import { QRCodeCanvas } from "qrcode.react";
+import html2canvas from "html2canvas";
+import { saveAs } from "file-saver";
+import copy from "clipboard-copy";
 
 export const Home = () => {
   const [showBalance, setShowBalance] = useState<boolean>(false);
+  const [navIndex, setNavIndex] = useState<number>(1);
+  const [showCardForm, setShowCardForm] = useState<boolean>(false);
+  const [cardFormIndex, setCardFormIndex] = useState<number>(1);
+
+  const decideFormStage = (index: number) => {
+    setCardFormIndex(index);
+    setShowCardForm(!showCardForm);
+  };
+
+  useEffect(() => {
+    if (navIndex === 5 || navIndex === 4) {
+      if (navIndex === 5) setCardFormIndex(6);
+      if (navIndex === 4) setCardFormIndex(4);
+      // setShowCardForm((preValue) => !preValue);
+      setShowCardForm(true);
+    }
+  }, [navIndex]);
+
+  const handleCopyClick = async (text: string) => {
+    try {
+      await copy(text);
+      alert("Text copied to clipboard!");
+    } catch (error) {
+      console.error("Copy failed: ", error);
+    }
+  };
+
+  const qrCodeRef = useRef<any>(null);
+
+  const handleSaveClick = () => {
+    // Get the QR code element
+    const qrCodeElement = qrCodeRef.current;
+
+    // Use html2canvas to capture the QR code element
+    html2canvas(qrCodeElement).then(function (canvas) {
+      // Convert the canvas to a blob
+      canvas.toBlob(function (blob: any) {
+        // Save the blob as a file
+        saveAs(blob, "qrcode.png");
+      });
+    });
+  };
 
   return (
     <div className="Home">
+      {showCardForm && (
+        <div className="card-forms">
+          <div className="card-forms-title">
+            <div className="biyaCircle">
+              {cardFormIndex === 1 && "B"}
+              {cardFormIndex === 2 && <img src={bankTrx} alt="bankTrx" />}
+              {cardFormIndex === 4 && (
+                <MySVGs index={cardFormIndex} fill={"rgba(4, 157, 254, 1)"} />
+              )}
+              {cardFormIndex === 3 && <img src={TrxIcon} alt="TrxIcon" />}
+              {cardFormIndex === 6 && (
+                <MySVGs
+                  index={cardFormIndex - 1}
+                  fill={"rgba(4, 157, 254, 1)"}
+                />
+              )}
+              {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
+            </div>
+            <div className="title">
+              {cardFormIndex === 1 && "Biyawa to Biyawa"}
+              {cardFormIndex === 2 && "Bank transfer"}
+              {cardFormIndex === 3 && "PSB Transfer"}
+              {cardFormIndex === 4 && "Airtime"}
+              {cardFormIndex === 6 && "Buy a bundle"}
+              {cardFormIndex === 7 && "Tolls"}
+            </div>
+          </div>
+          {cardFormIndex === 1 && <BiyaTransferForm />}
+          {cardFormIndex === 2 && <BankTransferForm />}
+          {cardFormIndex === 3 && <PSBTransferForm />}
+          {cardFormIndex === 4 && <AirtimeForm />}
+          {cardFormIndex === 6 && <BundleForm />}
+          {cardFormIndex === 7 && <TollForm />}
+          <div className="card-forms-bottom">
+            <button
+              onClick={() => {
+                if (navIndex === 5 || navIndex === 4) setNavIndex(1);
+                setShowCardForm(!showCardForm);
+              }}
+            >
+              Back
+            </button>
+            <button>Next</button>
+          </div>
+        </div>
+      )}
       <div className="left-div">
-        <img src={biyaLogo} alt="biyaLogo1" />
+        <img src={biyaLogo} alt="biyaLogo1" onClick={() => setNavIndex(1)} />
         <div className="side-bar">
-          {navComponent(homeIcon, "homeIcon", "Home")}
-          {navComponent(scanPayIcon, "transferIcon", "Scan & pay")}
-          {navComponent(transferIcon, "transferIcon", "Transfer")}
-          {navComponent(airtimeIcon, "transferIcon", "Airtime")}
-          {navComponent(bundleIcon, "transferIcon", "Buy Bundle")}
-          {navComponent(withdrawIcon, "transferIcon", "Withdraw")}
-          {navComponent(payBillIcon, "transferIcon", "Pay bill")}
-          {navComponent(myQrIcon, "transferIcon", "My QR")}
-          {navComponent(merchantIcon, "transferIcon", "Pay merchant")}
-          {navComponent(settingsIcon, "transferIcon", "Settings")}
+          {navComponent("Home", 1)}
+          {navComponent("Scan & pay", 2)}
+          {navComponent("Transfer", 3)}
+          {navComponent("Airtime", 4)}
+          {navComponent("Buy Bundle", 5)}
+          {navComponent("Withdraw", 6)}
+          {navComponent("Pay bill", 7)}
+          {navComponent("My QR", 8)}
+          {navComponent("Pay merchant", 9)}
+          {navComponent("Settings", 10)}
         </div>
       </div>
 
@@ -57,59 +152,275 @@ export const Home = () => {
           </div>
         </div>
         <div className="right-content">
-          <div className="card-holder">
-            <div className="card">
-              <div className="name">
-                <div className="left">
-                  Hey Amina!
-                  {showBalance ? (
-                    <BsEyeFill onClick={() => setShowBalance(!showBalance)} />
-                  ) : (
-                    <BsEyeSlashFill
-                      onClick={() => setShowBalance(!showBalance)}
-                    />
-                  )}
-                </div>
-                <div className="right">
-                  <div className="add">
-                    <img src={walletIcon} alt="WalletLogo1" /> Add money
-                    <img src={rightArrow} alt="rightArrow" />
+          {(navIndex === 1 || navIndex === 5 || navIndex === 4) && (
+            <div className="home">
+              <div className="card-holder">
+                <div className="card">
+                  <div className="name">
+                    <div className="left">
+                      Hey Amina!
+                      {showBalance ? (
+                        <BsEyeFill
+                          onClick={() => setShowBalance(!showBalance)}
+                        />
+                      ) : (
+                        <BsEyeSlashFill
+                          onClick={() => setShowBalance(!showBalance)}
+                        />
+                      )}
+                    </div>
+                    <div className="right">
+                      <div className="add">
+                        <img src={walletIcon} alt="WalletLogo1" /> Add money
+                        <img src={rightArrow} alt="rightArrow" />
+                      </div>
+                      <div className="add">
+                        <img src={walletIcon} alt="WalletLogo1" /> Withdraw
+                        money
+                        <img src={rightArrow} alt="rightArrow" />
+                      </div>
+                    </div>
                   </div>
-                  <div className="add">
-                    <img src={walletIcon} alt="WalletLogo1" /> Withdraw money
-                    <img src={rightArrow} alt="rightArrow" />
+                  <div className="amount">
+                    <span>Current balance</span> <br />{" "}
+                    {showBalance ? "NGN267,679.00" : "************"}
+                  </div>
+                </div>
+                <div className="card">
+                  <div>
+                    Manage Your <br /> Favourites
+                  </div>
+                  <img src={favourite} alt="favouriteIcon" />
+                </div>
+                <div className="card">
+                  <div>Find An Agent</div>
+                  <img src={agent} alt="agentIcon" />
+                </div>
+              </div>
+              <div className="recent-transaction">
+                <br />
+                <div className="title">Recent transactions</div>
+                <Table />
+              </div>
+            </div>
+          )}
+          {navIndex === 2 && <div className="scanpay"></div>}
+          {navIndex === 3 && (
+            <div className="transfer">
+              <div className="card">
+                <div className="biyaCircle">B</div>
+                <div className="biyaTrx">Biyawa to Biyawa wallet</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr1"
+                  onClick={() => decideFormStage(1)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={bankTrx} alt="bankTrx" />
+                </div>
+                <div className="biyaTrx">Other accounts and banks</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr2"
+                  onClick={() => decideFormStage(2)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={TrxIcon} alt="bankTrxIcon" />
+                </div>
+                <div className="biyaTrx">Other payment service bank</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(3)}
+                />
+              </div>
+            </div>
+          )}
+          {navIndex === 4 && <></>}
+          {navIndex === 5 && <></>}
+          {navIndex === 6 && (
+            <div className="withdraw">
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={bankTrx} alt="bankTrx" />
+                </div>
+                <div className="biyaTrx">Withdraw via bank</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr2"
+                  onClick={() => decideFormStage(2)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={TrxIcon} alt="bankTrxIcon" />
+                </div>
+                <div className="biyaTrx">Withdraw via payment service bank</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(3)}
+                />
+              </div>
+            </div>
+          )}
+          {navIndex === 7 && (
+            <div className="paybill">
+              <div className="card">
+                <div className="biyaCircle">B</div>
+                <div className="biyaTrx">Solar</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr1"
+                  onClick={() => decideFormStage(1)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={TrxIcon} alt="bankTrxIcon" />
+                </div>
+                <div className="biyaTrx">Electricity postpaid</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr2"
+                  onClick={() => decideFormStage(2)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={TrxIcon} alt="bankTrxIcon" />
+                </div>
+                <div className="biyaTrx">Electricity prepaid</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(3)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <MySVGs index={4} fill={"rgba(4, 157, 254, 1)"} />
+                </div>
+                <div className="biyaTrx">Airtime recharge</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(4)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">B</div>
+                <div className="biyaTrx">Cable TV</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(5)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <MySVGs index={5} fill={"rgba(4, 157, 254, 1)"} />
+                </div>
+                <div className="biyaTrx">Internet subscription</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(6)}
+                />
+              </div>
+              <div className="card">
+                <div className="biyaCircle">
+                  <img src={TrxIcon} alt="bankTrxIcon" />
+                </div>
+                <div className="biyaTrx">Tolls</div>
+                <img
+                  src={biyaTrxRArr}
+                  alt="biyaTrxRArr3"
+                  onClick={() => decideFormStage(7)}
+                />
+              </div>
+            </div>
+          )}
+          {navIndex === 8 && (
+            <div className="myQr">
+              <div className="card-holder">
+                <div className="card">
+                  <div className="name">
+                    <div className="left">
+                      Hey Amina! <br />
+                      <span>Scan this code to receive payemnts</span>
+                    </div>
+                  </div>
+                  <div className="qr-holder">
+                    <div className="qr" ref={qrCodeRef}>
+                      <QRCodeCanvas value="Olaiyapo Raphael Adetunji" />
+                    </div>
+                    <div className="num-holder">
+                      <div className="number">
+                        2372957524034720
+                        <img
+                          src={copyIcon}
+                          alt="copy"
+                          onClick={() => handleCopyClick("2372957524034720")}
+                        />
+                      </div>
+                      <div className="save-share">
+                        <div className="save">
+                          <div className="biyaCircle">
+                            <img
+                              src={save}
+                              alt="save"
+                              onClick={handleSaveClick}
+                            />
+                          </div>
+                          <div className="title">Save to gallery</div>
+                        </div>
+                        <div className="save">
+                          <div className="biyaCircle">
+                            <img src={share} alt="share" />
+                          </div>
+                          <div className="title">Share QR code</div>
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
-              <div className="amount">
-                <span>Current balance</span> <br />{" "}
-                {showBalance ? "NGN267,679.00" : "************"}
+              <div className="recent-transaction">
+                <br />
+                <div className="title">Recent transactions</div>
+                <Table />
               </div>
             </div>
-            <div className="card">
-              <div>
-                Manage Your <br /> Favourites
-              </div>
-              <img src={favourite} alt="favouriteIcon" />
-            </div>
-            <div className="card">
-              <div>Find An Agent</div>
-              <img src={agent} alt="agentIcon" />
-            </div>
-          </div>
-          <div className="recent-transaction">
-            <Table />
-          </div>
+          )}
         </div>
       </div>
     </div>
   );
 
-  function navComponent(icon: any, alt: string, content: string) {
+  function navComponent(content: string, index: number) {
     return (
-      <div className="side-component">
-        <img src={icon} alt={alt} />
-        {content}
+      <div
+        className="side-component"
+        onClick={() => {
+          setNavIndex(index);
+        }}
+      >
+        <MySVGs
+          index={index}
+          fill={navIndex === index ? "rgba(4, 157, 254, 1)" : "#263238"}
+        />
+        <div
+          style={{
+            color: `${navIndex === index ? "rgba(4, 157, 254, 1)" : "#263238"}`,
+          }}
+        >
+          {content}
+        </div>
       </div>
     );
   }

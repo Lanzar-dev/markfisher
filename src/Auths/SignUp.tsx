@@ -120,7 +120,10 @@ export const SignUp = () => {
               </div>
 
               <div className="forgot-password">
-                Forgot password? <a href="#a">Reset here</a>
+                Forgot password?{" "}
+                <a href="#a" onClick={() => navigate(routes.f_password)}>
+                  Reset here
+                </a>
               </div>
               <div className="forgot-password">
                 Have an account?

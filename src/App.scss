@@ -348,6 +348,163 @@ body {
   }
 }
 
+.Auth-Forgot {
+  display: flex;
+  overflow-y: auto;
+  height: 100vh;
+  background-color: #f4f7fa;
+
+  .left-div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 50vw;
+    height: 100vh;
+    background-image: url("./Images//Frame.svg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    .text {
+      .message-1 {
+        width: fit-content;
+        color: #002855;
+        font-family: Roboto;
+        font-size: 96px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+      .message-2 {
+        width: fit-content;
+        color: #2e2e2e;
+        font-family: Roboto;
+        font-size: 36px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+      }
+    }
+  }
+
+  .right-div {
+    display: flex;
+    align-items: center;
+    // justify-content: center;
+    width: 50vw;
+    margin-bottom: 60px;
+
+    .img {
+      margin-top: 80px;
+      margin-left: 35px;
+      width: 323px;
+      height: 134px;
+      flex-shrink: 0;
+      background: url("./Images/biyaLogo.png"),
+        lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
+    }
+
+    .form-holder {
+      margin-top: 20px;
+      margin-left: 35px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 504px;
+      height: 285px;
+      flex-shrink: 0;
+      border-radius: 15px;
+      background: #fff;
+      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+      form {
+        .field-holder {
+          width: fit-content;
+          margin: 25px auto;
+          .title {
+            width: 120px;
+            height: 18px;
+            flex-shrink: 0;
+            color: #002855;
+            font-family: Roboto;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 500;
+            line-height: normal;
+          }
+          .description {
+            width: 80%; //146px
+            height: 20px;
+            flex-shrink: 0;
+            color: #828282;
+            font-family: Roboto;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+          .field {
+            position: relative;
+            svg {
+              width: 24px;
+              height: 24px;
+              flex-shrink: 0;
+              position: absolute;
+              left: 25px;
+              top: 5px;
+            }
+            input {
+              width: 358px;
+              height: 36px;
+              flex-shrink: 0;
+              border-radius: 80px;
+              border: 1px solid #dfe6ec;
+              background: #f8fbfd;
+              padding-left: 50px;
+            }
+          }
+        }
+
+        .forgot-password {
+          margin: 5px auto;
+          width: 358px;
+          color: #828282;
+          font-family: Roboto;
+          font-size: 13px;
+          font-style: normal;
+          font-weight: 400;
+          line-height: normal;
+          a {
+            color: #072c7c;
+            font-family: Roboto;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            text-decoration: none;
+            margin-left: 5px;
+            cursor: pointer;
+          }
+          button {
+            width: 129px;
+            height: 35px;
+            flex-shrink: 0;
+            border: 0px;
+            border-radius: 94px;
+            background: #4fadea;
+            cursor: pointer;
+            margin-left: 10px;
+            color: #fff;
+            text-align: center;
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
+      }
+    }
+  }
+}
+
 .Home {
   background: #f4f7fa;
   height: 100vh;
@@ -360,6 +517,9 @@ body {
       margin-top: 2vh;
       margin-left: 1vw;
     }
+    img:hover {
+      cursor: pointer;
+    }
     .side-bar {
       margin-top: 50px;
       .side-component {
@@ -369,7 +529,7 @@ body {
         display: flex;
         // justify-content: center;
         align-items: center;
-        img {
+        svg {
           width: 30px;
           margin: 5px 10px 5px 20px;
         }
@@ -405,149 +565,1112 @@ body {
       height: 92vh;
       border-radius: 20px 0px 0px 0px;
       background: #fff;
-
-      .card-holder {
-        display: flex;
-        .card {
-          margin-top: 35px;
-          margin-bottom: 35px;
-          border-radius: 20px;
-          background: #fff;
-          width: 390.6px;
-          height: 129.138px;
-          flex-shrink: 0;
-          filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
-        }
-        .card:nth-child(1) {
-          margin-left: 38px;
-          // margin-right: 20px;
-          .name {
-            display: flex;
-            height: 60px;
-            padding: 5px 5px 5px 18px;
-            .left {
+      .home {
+        .card-holder {
+          display: flex;
+          .card {
+            margin-top: 35px;
+            margin-bottom: 35px;
+            border-radius: 20px;
+            background: #fff;
+            width: 390.6px;
+            height: 129.138px;
+            flex-shrink: 0;
+            filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
+          }
+          .card:nth-child(1) {
+            margin-left: 38px;
+            // margin-right: 20px;
+            .name {
+              display: flex;
+              height: 60px;
+              padding: 5px 5px 5px 18px;
+              .left {
+                color: #000;
+                font-family: Poppins;
+                font-size: 25px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                svg {
+                  padding-top: 6px;
+                }
+                svg:hover {
+                  cursor: pointer;
+                }
+              }
+              .right {
+                flex: 1;
+                .add {
+                  display: flex;
+                  align-items: center;
+                  width: fit-content;
+                  margin-left: auto;
+                  margin-top: 9px;
+                  color: #049dfe;
+                  text-align: center;
+                  font-family: Roboto;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: normal;
+                  img {
+                    margin-top: 0px;
+                  }
+                  img:nth-child(1) {
+                    margin-right: 5px;
+                  }
+                  img:hover {
+                    cursor: pointer;
+                  }
+                }
+              }
+            }
+            .amount {
+              padding: 2px 5px 2px 18px;
+              span {
+                color: #000;
+                font-family: Poppins;
+                font-size: 10px;
+                font-style: normal;
+                font-weight: 500;
+                line-height: normal;
+              }
               color: #000;
+              font-family: Poppins;
+              font-size: 25px;
+              font-style: normal;
+              font-weight: 700;
+              line-height: normal;
+            }
+          }
+          .card:nth-child(2) {
+            border-radius: 20px;
+            background: #e72f3d;
+            margin-left: 20px;
+            margin-right: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            div {
+              color: #fff;
               font-family: Poppins;
               font-size: 25px;
               font-style: normal;
               font-weight: 600;
               line-height: normal;
-              svg {
-                padding-top: 6px;
+              margin-right: 25px;
+            }
+            img {
+              display: inline-flex;
+              width: 100.248px;
+              height: 100.248px;
+              transform: rotate(360deg);
+              padding: 1.203px 2.558px 1.536px 0.181px;
+              justify-content: center;
+              align-items: center;
+              flex-shrink: 0;
+            }
+          }
+          .card:nth-child(3) {
+            border-radius: 20px;
+            background: #049dfe;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            div {
+              color: #fff;
+              font-family: Poppins;
+              font-size: 25px;
+              font-style: normal;
+              font-weight: 600;
+              line-height: normal;
+              margin-right: 25px;
+            }
+            img {
+              display: inline-flex;
+              width: 55.345px;
+              height: 55.345px;
+              transform: rotate(360deg);
+              padding: 1.203px 2.558px 1.536px 0.181px;
+              justify-content: center;
+              align-items: center;
+              flex-shrink: 0;
+            }
+          }
+        }
+        .recent-transaction {
+          margin-left: 38px;
+          margin-bottom: 40px;
+          width: 784px;
+          height: 450px;
+          flex-shrink: 0;
+          border-radius: 20px;
+          background: #fff;
+          box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+          .title {
+            width: fit-content;
+            margin-top: 5px;
+            margin-left: 20px;
+            color: rgba(0, 0, 0, 0.8);
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          .table-container {
+            margin-top: 25px;
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              tbody {
+                tr {
+                  .table-cell:nth-child(1) {
+                    color: #212b36;
+                    font-family: var(--font-family-a);
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 22px;
+                    width: 8% !important;
+                    padding: 5px 15px;
+                    div {
+                      border-radius: 55px;
+                      width: 55px;
+                      height: 55px;
+                      flex-shrink: 0;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    }
+                  }
+                  .table-cell:nth-child(2) {
+                    color: rgba(0, 0, 0, 0.8);
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    width: 22%;
+                  }
+                  .table-cell:nth-child(3) {
+                    color: rgba(0, 0, 0, 0.5);
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    width: 15%;
+                  }
+                  .table-cell:nth-child(4) {
+                    color: rgba(0, 0, 0, 0.5);
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    width: 15%;
+                  }
+                  .table-cell:nth-child(5) {
+                    color: #5aaf76;
+                    text-align: left;
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    width: 15%;
+                  }
+                }
+                tr:nth-child(even) {
+                  // background-color: rgba(0, 0, 0, 0.05);
+                }
               }
-              svg:hover {
+            }
+            .pagination {
+              // display: flex;
+              color: #2d699d;
+              padding: 10px 20px;
+              text-align: right;
+              select {
+                margin-left: 15px;
+              }
+              span {
+                margin-left: 15px;
+                margin-right: 15px;
+              }
+              img:hover {
                 cursor: pointer;
               }
             }
-            .right {
-              flex: 1;
-              .add {
-                display: flex;
-                align-items: center;
-                width: fit-content;
-                margin-left: auto;
-                margin-top: 9px;
-                color: #049dfe;
-                text-align: center;
-                font-family: Roboto;
-                font-size: 14px;
+          }
+        }
+      }
+      .transfer {
+        // border: 3px solid;
+        display: flex;
+        .card {
+          margin-top: 30px;
+          margin-left: 40px;
+          width: 250.255px;
+          height: 246.941px;
+          flex-shrink: 0;
+          border-radius: 10px;
+          background: #e6f5ff;
+        }
+        .card:nth-child(1) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            margin-left: 15px;
+            margin-top: 15px;
+            cursor: pointer;
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+        .card:nth-child(2) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            img {
+              width: 35px;
+              position: absolute;
+              left: 17px;
+              top: 15px;
+            }
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+        .card:nth-child(3) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            img {
+              width: 35px;
+              position: absolute;
+              left: 17px;
+              top: 15px;
+            }
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .paybill {
+        // border: 3px solid;
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 10px;
+        margin: 0 auto;
+        // width: fit-content;
+        .card {
+          margin-top: 30px;
+          margin-left: 40px;
+          width: 250.255px;
+          height: 246.941px;
+          flex-shrink: 0;
+          border-radius: 10px;
+          background: #e6f5ff;
+        }
+        .card:nth-child(1),
+        .card:nth-child(5) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            margin-left: 15px;
+            margin-top: 15px;
+            cursor: pointer;
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+        .card:nth-child(2) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            img {
+              width: 35px;
+              position: absolute;
+              left: 17px;
+              top: 15px;
+            }
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+        .card:nth-child(3),
+        .card:nth-child(4),
+        .card:nth-child(6),
+        .card:nth-child(7) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            img,
+            svg {
+              width: 35px;
+              position: absolute;
+              left: 17px;
+              top: 15px;
+            }
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .withdraw {
+        // border: 3px solid;
+        display: flex;
+        .card {
+          margin-top: 30px;
+          margin-left: 40px;
+          width: 250.255px;
+          height: 246.941px;
+          flex-shrink: 0;
+          border-radius: 10px;
+          background: #e6f5ff;
+        }
+        // .card:nth-child(1) {
+        //   position: relative;
+        //   .biyaCircle {
+        //     width: 70.579px;
+        //     height: 70.579px;
+        //     flex-shrink: 0;
+        //     background-color: rgba(4, 157, 254, 0.1);
+        //     border-radius: 50%;
+        //     display: flex;
+        //     align-items: center;
+        //     justify-content: center;
+        //     color: #049dfe;
+        //     font-family: Poppins;
+        //     font-size: 28px;
+        //     font-style: normal;
+        //     font-weight: 600;
+        //     line-height: normal;
+        //     position: absolute;
+        //     margin-left: 15px;
+        //     margin-top: 15px;
+        //     cursor: pointer;
+        //   }
+        //   .biyaTrx {
+        //     width: 162.417px;
+        //     height: 56.349px;
+        //     flex-shrink: 0;
+        //     position: absolute;
+        //     bottom: 15px;
+        //     left: 20px;
+        //     color: #000;
+        //     font-family: Poppins;
+        //     font-size: 15px;
+        //     font-style: normal;
+        //     font-weight: 600;
+        //     line-height: normal;
+        //   }
+        //   img {
+        //     position: absolute;
+        //     right: 10px;
+        //     bottom: 25px;
+        //   }
+        //   img:hover {
+        //     cursor: pointer;
+        //   }
+        // }
+        .card:nth-child(1),
+        .card:nth-child(2) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            img {
+              width: 35px;
+              position: absolute;
+              left: 17px;
+              top: 15px;
+            }
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+        .card:nth-child(3) {
+          position: relative;
+          .biyaCircle {
+            width: 70.579px;
+            height: 70.579px;
+            flex-shrink: 0;
+            background-color: rgba(4, 157, 254, 0.1);
+            border-radius: 50%;
+            // display: flex;
+            // align-items: center;
+            // justify-content: center;
+            color: #049dfe;
+            font-family: Poppins;
+            font-size: 28px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+            position: absolute;
+            left: 15px;
+            top: 15px;
+            img {
+              width: 35px;
+              position: absolute;
+              left: 17px;
+              top: 15px;
+            }
+          }
+          .biyaTrx {
+            width: 162.417px;
+            height: 56.349px;
+            flex-shrink: 0;
+            position: absolute;
+            bottom: 15px;
+            left: 20px;
+            color: #000;
+            font-family: Poppins;
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          img {
+            position: absolute;
+            right: 10px;
+            bottom: 25px;
+          }
+          img:hover {
+            cursor: pointer;
+          }
+        }
+      }
+      .myQr {
+        .card-holder {
+          display: flex;
+          .card {
+            margin-top: 35px;
+            margin-bottom: 35px;
+            border-radius: 20px;
+            background: #fff;
+            width: 415px;
+            height: 260px;
+            flex-shrink: 0;
+            filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
+          }
+          .card:nth-child(1) {
+            margin-left: 38px;
+            // margin-right: 20px;
+            .name {
+              display: flex;
+              height: 60px;
+              padding: 5px 5px 5px 18px;
+              .left {
+                color: #000;
+                font-family: Poppins;
+                font-size: 25px;
                 font-style: normal;
-                font-weight: 400;
+                font-weight: 600;
                 line-height: normal;
-                img {
-                  margin-top: 0px;
+                span {
+                  color: rgba(0, 0, 0, 0.5);
+                  text-align: center;
+                  font-family: Poppins;
+                  font-size: 12px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: normal;
                 }
-                img:nth-child(1) {
-                  margin-right: 5px;
+              }
+              .right {
+                flex: 1;
+                .add {
+                  display: flex;
+                  align-items: center;
+                  width: fit-content;
+                  margin-left: auto;
+                  margin-top: 9px;
+                  color: #049dfe;
+                  text-align: center;
+                  font-family: Roboto;
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: normal;
+                  img {
+                    margin-top: 0px;
+                  }
+                  img:nth-child(1) {
+                    margin-right: 5px;
+                  }
+                  img:hover {
+                    cursor: pointer;
+                  }
                 }
-                img:hover {
-                  cursor: pointer;
+              }
+            }
+            .qr-holder {
+              padding-top: 25px;
+              display: flex;
+              .qr {
+                padding: 2px 5px 2px 18px;
+                color: #000;
+                font-family: Poppins;
+                font-size: 25px;
+                font-style: normal;
+                font-weight: 700;
+                line-height: normal;
+              }
+              .num-holder {
+                flex: 1;
+                .number {
+                  color: #049dfe;
+                  text-align: center;
+                  font-family: Poppins;
+                  font-size: 18px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: normal;
+                  img {
+                    margin-left: 6px;
+                    cursor: pointer;
+                  }
+                }
+                .save-share {
+                  display: flex;
+                  text-align: center;
+                  padding-left: 30px;
+                  margin-top: 30px;
+                  .save {
+                    align-items: center;
+                    .biyaCircle {
+                      width: 49.579px;
+                      height: 49.579px;
+                      flex-shrink: 0;
+                      background-color: rgba(4, 157, 254, 0.1);
+                      border-radius: 50%;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                      color: #049dfe;
+                      font-family: Poppins;
+                      font-size: 28px;
+                      font-style: normal;
+                      font-weight: 600;
+                      line-height: normal;
+                      margin-left: 15px;
+                      margin-right: 20px;
+                      margin-top: 15px;
+                      cursor: pointer;
+                      img {
+                        width: 24px;
+                        left: 17px;
+                        top: 15px;
+                      }
+                    }
+                    .title {
+                      color: rgba(0, 0, 0, 0.5);
+                      text-align: center;
+                      font-family: Poppins;
+                      font-size: 13px;
+                      font-style: normal;
+                      font-weight: 400;
+                      line-height: normal;
+                    }
+                  }
+                  .save:nth-child(2) {
+                    margin-left: 15px;
+                  }
                 }
               }
             }
           }
-          .amount {
-            padding: 2px 5px 2px 18px;
-            span {
-              color: #000;
-              font-family: Poppins;
-              font-size: 10px;
-              font-style: normal;
-              font-weight: 500;
-              line-height: normal;
+        }
+        .recent-transaction {
+          margin-left: 38px;
+          margin-bottom: 40px;
+          width: 784px;
+          height: 450px;
+          flex-shrink: 0;
+          border-radius: 20px;
+          background: #fff;
+          box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+          .title {
+            width: fit-content;
+            margin-top: 5px;
+            margin-left: 20px;
+            color: rgba(0, 0, 0, 0.8);
+            font-family: Poppins;
+            font-size: 18px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: normal;
+          }
+          .table-container {
+            margin-top: 25px;
+            table {
+              width: 100%;
+              border-collapse: collapse;
+              tbody {
+                tr {
+                  .table-cell:nth-child(1) {
+                    color: #212b36;
+                    font-family: var(--font-family-a);
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: 22px;
+                    width: 8% !important;
+                    padding: 5px 15px;
+                    div {
+                      border-radius: 55px;
+                      width: 55px;
+                      height: 55px;
+                      flex-shrink: 0;
+                      display: flex;
+                      align-items: center;
+                      justify-content: center;
+                    }
+                  }
+                  .table-cell:nth-child(2) {
+                    color: rgba(0, 0, 0, 0.8);
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    width: 22%;
+                  }
+                  .table-cell:nth-child(3) {
+                    color: rgba(0, 0, 0, 0.5);
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    width: 15%;
+                  }
+                  .table-cell:nth-child(4) {
+                    color: rgba(0, 0, 0, 0.5);
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 400;
+                    line-height: normal;
+                    width: 15%;
+                  }
+                  .table-cell:nth-child(5) {
+                    color: #5aaf76;
+                    text-align: left;
+                    font-family: Poppins;
+                    font-size: 14px;
+                    font-style: normal;
+                    font-weight: 500;
+                    line-height: normal;
+                    width: 15%;
+                  }
+                }
+                // tr:nth-child(even) {
+                //   // background-color: rgba(0, 0, 0, 0.05);
+                // }
+              }
             }
-            color: #000;
-            font-family: Poppins;
-            font-size: 25px;
-            font-style: normal;
-            font-weight: 700;
-            line-height: normal;
-          }
-        }
-        .card:nth-child(2) {
-          border-radius: 20px;
-          background: #e72f3d;
-          margin-left: 20px;
-          margin-right: 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          div {
-            color: #fff;
-            font-family: Poppins;
-            font-size: 25px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            margin-right: 25px;
-          }
-          img {
-            display: inline-flex;
-            width: 100.248px;
-            height: 100.248px;
-            transform: rotate(360deg);
-            padding: 1.203px 2.558px 1.536px 0.181px;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
-          }
-        }
-        .card:nth-child(3) {
-          border-radius: 20px;
-          background: #049dfe;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          div {
-            color: #fff;
-            font-family: Poppins;
-            font-size: 25px;
-            font-style: normal;
-            font-weight: 600;
-            line-height: normal;
-            margin-right: 25px;
-          }
-          img {
-            display: inline-flex;
-            width: 55.345px;
-            height: 55.345px;
-            transform: rotate(360deg);
-            padding: 1.203px 2.558px 1.536px 0.181px;
-            justify-content: center;
-            align-items: center;
-            flex-shrink: 0;
+            .pagination {
+              // display: flex;
+              color: #2d699d;
+              padding: 10px 20px;
+              text-align: right;
+              select {
+                margin-left: 15px;
+              }
+              span {
+                margin-left: 15px;
+                margin-right: 15px;
+              }
+              img:hover {
+                cursor: pointer;
+              }
+            }
           }
         }
       }
-      .recent-transaction {
-        margin-left: 38px;
-        margin-bottom: 40px;
-        width: 784px;
-        height: 450px;
+    }
+  }
+
+  .card-forms {
+    position: absolute;
+    width: 35vw;
+    height: 100vh;
+    right: 0px;
+    z-index: 2;
+    border-radius: 5px;
+    border: 2px solid #dfe6ec;
+    background: #f8fbfd;
+    .card-forms-title {
+      display: flex;
+      align-items: center;
+      .biyaCircle {
+        width: 60.579px;
+        height: 60.579px;
         flex-shrink: 0;
-        border-radius: 20px;
-        background: #fff;
-        box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+        background-color: rgba(4, 157, 254, 0.1);
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #049dfe;
+        font-family: Poppins;
+        font-size: 28px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        margin-left: 15px;
+        margin-right: 20px;
+        margin-top: 15px;
+        cursor: pointer;
+        img {
+          width: 35px;
+          left: 17px;
+          top: 15px;
+        }
+      }
+
+      .title {
+        color: #000;
+        font-family: Poppins;
+        font-size: 20px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+      }
+    }
+
+    .card-forms-bottom {
+      margin-top: 50px;
+      button {
+        color: #000;
+        text-align: center;
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        width: 127px;
+        height: 35px;
+        flex-shrink: 0;
+        background-color: white;
+        border-radius: 94px;
+        border: 0px solid;
+      }
+      button:nth-child(1) {
+        margin-left: 15px;
+        font-weight: bolder;
+      }
+      button:nth-child(2) {
+        background: #049dfe;
+        color: #fff;
+        text-align: center;
+        font-family: Roboto;
+        font-size: 14px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: normal;
+        margin-left: 10vw;
+      }
+      button:hover {
+        cursor: pointer;
+      }
+    }
+
+    form {
+      margin-top: 70px;
+      padding-left: 35px;
+      height: fit-content;
+      .text-1 {
+        color: rgba(0, 0, 0, 0.5);
+        font-family: Poppins;
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: normal;
+        width: fit-content;
+        margin: 20px 0px;
+      }
+      .field-holder {
+        width: fit-content;
+        margin-bottom: 15px;
+        .title {
+          width: fit-content;
+          height: 18px;
+          flex-shrink: 0;
+          color: rgba(0, 0, 0, 0.9);
+          font-family: Poppins;
+          font-size: 16px;
+          font-style: normal;
+          font-weight: bolder;
+          line-height: normal;
+        }
+        .field {
+          input {
+            width: 358px;
+            height: 36px;
+            flex-shrink: 0;
+            border-top: 0px;
+            border-left: 0px;
+            border-right: 0px;
+            background: #f8fbfd;
+            padding-left: 5px;
+          }
+          input:focus {
+            outline: none;
+          }
+        }
       }
     }
   }

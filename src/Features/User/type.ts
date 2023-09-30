@@ -124,7 +124,38 @@ export interface ISignin {
   Email: string;
   Password: string;
 }
-
+export interface IBankTransferPayload {
+  AccountNumber: string;
+  BankName: string;
+  Beneficiary: string;
+  Narration: string;
+  Amount: string;
+}
+export interface IAirtimePayload {
+  MobileNumber: string;
+  NetworkName: string;
+  Amount: string;
+}
+export interface IPSBTransferPayload {
+  AccountNumber: string;
+  BankName: string;
+  Beneficiary: string;
+  Narration: string;
+  Amount: string;
+}
+export interface IBiyaTransferPayload {
+  AccountNumber: string;
+  Beneficiary: string;
+  Narration: string;
+  Amount: string;
+}
+export interface ITollPayload {
+  CustomerId: string;
+  Amount: string;
+}
+export interface IForgotPass {
+  Email: string;
+}
 export interface ISignUp {
   Email: string;
   PhoneNumber: string;

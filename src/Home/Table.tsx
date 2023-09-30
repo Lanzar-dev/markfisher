@@ -1,6 +1,12 @@
 import React, { useState } from "react";
 import rArrow from "../Images/TabRArrow.svg";
 import lArrow from "../Images/TabLArrow.svg";
+import trxUserBg from "../Images/TrxUser.svg";
+import trxUser from "../Images/trxxUser.png";
+import sporty from "../Images/Sporty.svg";
+import sportyIcon from "../Images/sportyIcon.png";
+import spotify from "../Images/Spotify.svg";
+import spotifyIcon from "../Images/spotifyIcon.png";
 
 export const Table = () => {
   const [rowsPerPage, setRowsPerPage] = useState(5);
@@ -35,10 +41,49 @@ export const Table = () => {
         </thead>
         <tbody>
           <tr>
-            <td className="table-cell">Raphael Adetuni</td>
-            <td className="table-cell">Raphael Adetuni</td>
-            <td className="table-cell">Raphael Adetuni</td>
-            <td className={`table-cell `}>Raphael Adetuni</td>
+            <td className="table-cell">
+              <div
+                style={{
+                  background: `url(${trxUserBg}), lightgray 50% / cover no-repeat`,
+                }}
+              >
+                <img src={trxUser} alt="trxUser" />
+              </div>
+            </td>
+            <td className="table-cell">Jimi Dayo</td>
+            <td className="table-cell">Dec 7th 12:16 PM</td>
+            <td className={`table-cell `}>Succesful</td>
+            <td className={`table-cell`}>+NGN50,000</td>
+          </tr>
+          <tr>
+            <td className="table-cell">
+              <div
+                style={{
+                  background: `url(${sporty}), lightgray 50% / cover no-repeat`,
+                }}
+              >
+                <img src={sportyIcon} alt="trxUser" />
+              </div>
+            </td>
+            <td className="table-cell">Sportybet</td>
+            <td className="table-cell">Dec 7th 12:16 PM</td>
+            <td className={`table-cell `}>Succesful</td>
+            <td className={`table-cell`}>-NGN400</td>
+          </tr>
+          <tr>
+            <td className="table-cell">
+              <div
+                style={{
+                  background: `url(${spotify}), lightgray 50% / cover no-repeat`,
+                }}
+              >
+                <img src={spotifyIcon} alt="trxUser" />
+              </div>
+            </td>
+            <td className="table-cell">Spotify</td>
+            <td className="table-cell">Dec 7th 12:16 PM</td>
+            <td className={`table-cell `}>Failed</td>
+            <td className={`table-cell`}>-NGN1,999</td>
           </tr>
         </tbody>
       </table>

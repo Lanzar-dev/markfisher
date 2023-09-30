@@ -328,6 +328,152 @@ body {
   line-height: normal;
 }
 
+.Auth-Forgot {
+  display: flex;
+  overflow-y: auto;
+  height: 100vh;
+  background-color: #f4f7fa;
+}
+.Auth-Forgot .left-div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 50vw;
+  height: 100vh;
+  background-image: url("./Images//Frame.svg");
+  background-size: cover;
+  background-repeat: no-repeat;
+}
+.Auth-Forgot .left-div .text .message-1 {
+  width: fit-content;
+  color: #002855;
+  font-family: Roboto;
+  font-size: 96px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Auth-Forgot .left-div .text .message-2 {
+  width: fit-content;
+  color: #2e2e2e;
+  font-family: Roboto;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Forgot .right-div {
+  display: flex;
+  align-items: center;
+  width: 50vw;
+  margin-bottom: 60px;
+}
+.Auth-Forgot .right-div .img {
+  margin-top: 80px;
+  margin-left: 35px;
+  width: 323px;
+  height: 134px;
+  flex-shrink: 0;
+  background: url("./Images/biyaLogo.png"), lightgray -101.056px -150.456px/157.895% 378.947% no-repeat;
+}
+.Auth-Forgot .right-div .form-holder {
+  margin-top: 20px;
+  margin-left: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 504px;
+  height: 285px;
+  flex-shrink: 0;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+}
+.Auth-Forgot .right-div .form-holder form .field-holder {
+  width: fit-content;
+  margin: 25px auto;
+}
+.Auth-Forgot .right-div .form-holder form .field-holder .title {
+  width: 120px;
+  height: 18px;
+  flex-shrink: 0;
+  color: #002855;
+  font-family: Roboto;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+.Auth-Forgot .right-div .form-holder form .field-holder .description {
+  width: 80%;
+  height: 20px;
+  flex-shrink: 0;
+  color: #828282;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Forgot .right-div .form-holder form .field-holder .field {
+  position: relative;
+}
+.Auth-Forgot .right-div .form-holder form .field-holder .field svg {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  position: absolute;
+  left: 25px;
+  top: 5px;
+}
+.Auth-Forgot .right-div .form-holder form .field-holder .field input {
+  width: 358px;
+  height: 36px;
+  flex-shrink: 0;
+  border-radius: 80px;
+  border: 1px solid #dfe6ec;
+  background: #f8fbfd;
+  padding-left: 50px;
+}
+.Auth-Forgot .right-div .form-holder form .forgot-password {
+  margin: 5px auto;
+  width: 358px;
+  color: #828282;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Auth-Forgot .right-div .form-holder form .forgot-password a {
+  color: #072c7c;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-decoration: none;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.Auth-Forgot .right-div .form-holder form .forgot-password button {
+  width: 129px;
+  height: 35px;
+  flex-shrink: 0;
+  border: 0px;
+  border-radius: 94px;
+  background: #4fadea;
+  cursor: pointer;
+  margin-left: 10px;
+  color: #fff;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+
 .Home {
   background: #f4f7fa;
   height: 100vh;
@@ -341,6 +487,9 @@ body {
   margin-top: 2vh;
   margin-left: 1vw;
 }
+.Home .left-div img:hover {
+  cursor: pointer;
+}
 .Home .left-div .side-bar {
   margin-top: 50px;
 }
@@ -351,7 +500,7 @@ body {
   display: flex;
   align-items: center;
 }
-.Home .left-div .side-bar .side-component img {
+.Home .left-div .side-bar .side-component svg {
   width: 30px;
   margin: 5px 10px 5px 20px;
 }
@@ -380,10 +529,10 @@ body {
   border-radius: 20px 0px 0px 0px;
   background: #fff;
 }
-.Home .right-div .right-content .card-holder {
+.Home .right-div .right-content .home .card-holder {
   display: flex;
 }
-.Home .right-div .right-content .card-holder .card {
+.Home .right-div .right-content .home .card-holder .card {
   margin-top: 35px;
   margin-bottom: 35px;
   border-radius: 20px;
@@ -393,15 +542,15 @@ body {
   flex-shrink: 0;
   filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) {
   margin-left: 38px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name {
   display: flex;
   height: 60px;
   padding: 5px 5px 5px 18px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .left {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .left {
   color: #000;
   font-family: Poppins;
   font-size: 25px;
@@ -409,16 +558,16 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .left svg {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .left svg {
   padding-top: 6px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .left svg:hover {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .left svg:hover {
   cursor: pointer;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .right {
   flex: 1;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .right .add {
   display: flex;
   align-items: center;
   width: fit-content;
@@ -432,16 +581,16 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add img {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .right .add img {
   margin-top: 0px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add img:nth-child(1) {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .right .add img:nth-child(1) {
   margin-right: 5px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .name .right .add img:hover {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .right .add img:hover {
   cursor: pointer;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .amount {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .amount {
   padding: 2px 5px 2px 18px;
   color: #000;
   font-family: Poppins;
@@ -450,7 +599,7 @@ body {
   font-weight: 700;
   line-height: normal;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(1) .amount span {
+.Home .right-div .right-content .home .card-holder .card:nth-child(1) .amount span {
   color: #000;
   font-family: Poppins;
   font-size: 10px;
@@ -458,7 +607,7 @@ body {
   font-weight: 500;
   line-height: normal;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(2) {
+.Home .right-div .right-content .home .card-holder .card:nth-child(2) {
   border-radius: 20px;
   background: #e72f3d;
   margin-left: 20px;
@@ -467,7 +616,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(2) div {
+.Home .right-div .right-content .home .card-holder .card:nth-child(2) div {
   color: #fff;
   font-family: Poppins;
   font-size: 25px;
@@ -476,7 +625,7 @@ body {
   line-height: normal;
   margin-right: 25px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(2) img {
+.Home .right-div .right-content .home .card-holder .card:nth-child(2) img {
   display: inline-flex;
   width: 100.248px;
   height: 100.248px;
@@ -486,14 +635,14 @@ body {
   align-items: center;
   flex-shrink: 0;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(3) {
+.Home .right-div .right-content .home .card-holder .card:nth-child(3) {
   border-radius: 20px;
   background: #049dfe;
   display: flex;
   align-items: center;
   justify-content: center;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(3) div {
+.Home .right-div .right-content .home .card-holder .card:nth-child(3) div {
   color: #fff;
   font-family: Poppins;
   font-size: 25px;
@@ -502,7 +651,7 @@ body {
   line-height: normal;
   margin-right: 25px;
 }
-.Home .right-div .right-content .card-holder .card:nth-child(3) img {
+.Home .right-div .right-content .home .card-holder .card:nth-child(3) img {
   display: inline-flex;
   width: 55.345px;
   height: 55.345px;
@@ -512,7 +661,7 @@ body {
   align-items: center;
   flex-shrink: 0;
 }
-.Home .right-div .right-content .recent-transaction {
+.Home .right-div .right-content .home .recent-transaction {
   margin-left: 38px;
   margin-bottom: 40px;
   width: 784px;
@@ -521,4 +670,901 @@ body {
   border-radius: 20px;
   background: #fff;
   box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+}
+.Home .right-div .right-content .home .recent-transaction .title {
+  width: fit-content;
+  margin-top: 5px;
+  margin-left: 20px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container {
+  margin-top: 25px;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(1) {
+  color: #212b36;
+  font-family: var(--font-family-a);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  width: 8% !important;
+  padding: 5px 15px;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(1) div {
+  border-radius: 55px;
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(2) {
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 22%;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(3) {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 15%;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(4) {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 15%;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(5) {
+  color: #5aaf76;
+  text-align: left;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 15%;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container .pagination {
+  color: #2d699d;
+  padding: 10px 20px;
+  text-align: right;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container .pagination select {
+  margin-left: 15px;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container .pagination span {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.Home .right-div .right-content .home .recent-transaction .table-container .pagination img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .transfer {
+  display: flex;
+}
+.Home .right-div .right-content .transfer .card {
+  margin-top: 30px;
+  margin-left: 40px;
+  width: 250.255px;
+  height: 246.941px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e6f5ff;
+}
+.Home .right-div .right-content .transfer .card:nth-child(1) {
+  position: relative;
+}
+.Home .right-div .right-content .transfer .card:nth-child(1) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  margin-left: 15px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.Home .right-div .right-content .transfer .card:nth-child(1) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .transfer .card:nth-child(1) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(1) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .transfer .card:nth-child(2) {
+  position: relative;
+}
+.Home .right-div .right-content .transfer .card:nth-child(2) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(2) .biyaCircle img {
+  width: 35px;
+  position: absolute;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(2) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .transfer .card:nth-child(2) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(2) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .transfer .card:nth-child(3) {
+  position: relative;
+}
+.Home .right-div .right-content .transfer .card:nth-child(3) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(3) .biyaCircle img {
+  width: 35px;
+  position: absolute;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(3) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .transfer .card:nth-child(3) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .transfer .card:nth-child(3) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .paybill {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin: 0 auto;
+}
+.Home .right-div .right-content .paybill .card {
+  margin-top: 30px;
+  margin-left: 40px;
+  width: 250.255px;
+  height: 246.941px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e6f5ff;
+}
+.Home .right-div .right-content .paybill .card:nth-child(1),
+.Home .right-div .right-content .paybill .card:nth-child(5) {
+  position: relative;
+}
+.Home .right-div .right-content .paybill .card:nth-child(1) .biyaCircle,
+.Home .right-div .right-content .paybill .card:nth-child(5) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  margin-left: 15px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.Home .right-div .right-content .paybill .card:nth-child(1) .biyaTrx,
+.Home .right-div .right-content .paybill .card:nth-child(5) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .paybill .card:nth-child(1) img,
+.Home .right-div .right-content .paybill .card:nth-child(5) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(1) img:hover,
+.Home .right-div .right-content .paybill .card:nth-child(5) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .paybill .card:nth-child(2) {
+  position: relative;
+}
+.Home .right-div .right-content .paybill .card:nth-child(2) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(2) .biyaCircle img {
+  width: 35px;
+  position: absolute;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(2) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .paybill .card:nth-child(2) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(2) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .paybill .card:nth-child(3),
+.Home .right-div .right-content .paybill .card:nth-child(4),
+.Home .right-div .right-content .paybill .card:nth-child(6),
+.Home .right-div .right-content .paybill .card:nth-child(7) {
+  position: relative;
+}
+.Home .right-div .right-content .paybill .card:nth-child(3) .biyaCircle,
+.Home .right-div .right-content .paybill .card:nth-child(4) .biyaCircle,
+.Home .right-div .right-content .paybill .card:nth-child(6) .biyaCircle,
+.Home .right-div .right-content .paybill .card:nth-child(7) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(3) .biyaCircle img,
+.Home .right-div .right-content .paybill .card:nth-child(3) .biyaCircle svg,
+.Home .right-div .right-content .paybill .card:nth-child(4) .biyaCircle img,
+.Home .right-div .right-content .paybill .card:nth-child(4) .biyaCircle svg,
+.Home .right-div .right-content .paybill .card:nth-child(6) .biyaCircle img,
+.Home .right-div .right-content .paybill .card:nth-child(6) .biyaCircle svg,
+.Home .right-div .right-content .paybill .card:nth-child(7) .biyaCircle img,
+.Home .right-div .right-content .paybill .card:nth-child(7) .biyaCircle svg {
+  width: 35px;
+  position: absolute;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(3) .biyaTrx,
+.Home .right-div .right-content .paybill .card:nth-child(4) .biyaTrx,
+.Home .right-div .right-content .paybill .card:nth-child(6) .biyaTrx,
+.Home .right-div .right-content .paybill .card:nth-child(7) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .paybill .card:nth-child(3) img,
+.Home .right-div .right-content .paybill .card:nth-child(4) img,
+.Home .right-div .right-content .paybill .card:nth-child(6) img,
+.Home .right-div .right-content .paybill .card:nth-child(7) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .paybill .card:nth-child(3) img:hover,
+.Home .right-div .right-content .paybill .card:nth-child(4) img:hover,
+.Home .right-div .right-content .paybill .card:nth-child(6) img:hover,
+.Home .right-div .right-content .paybill .card:nth-child(7) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .withdraw {
+  display: flex;
+}
+.Home .right-div .right-content .withdraw .card {
+  margin-top: 30px;
+  margin-left: 40px;
+  width: 250.255px;
+  height: 246.941px;
+  flex-shrink: 0;
+  border-radius: 10px;
+  background: #e6f5ff;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(1),
+.Home .right-div .right-content .withdraw .card:nth-child(2) {
+  position: relative;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(1) .biyaCircle,
+.Home .right-div .right-content .withdraw .card:nth-child(2) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(1) .biyaCircle img,
+.Home .right-div .right-content .withdraw .card:nth-child(2) .biyaCircle img {
+  width: 35px;
+  position: absolute;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(1) .biyaTrx,
+.Home .right-div .right-content .withdraw .card:nth-child(2) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(1) img,
+.Home .right-div .right-content .withdraw .card:nth-child(2) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(1) img:hover,
+.Home .right-div .right-content .withdraw .card:nth-child(2) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(3) {
+  position: relative;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(3) .biyaCircle {
+  width: 70.579px;
+  height: 70.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  position: absolute;
+  left: 15px;
+  top: 15px;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(3) .biyaCircle img {
+  width: 35px;
+  position: absolute;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(3) .biyaTrx {
+  width: 162.417px;
+  height: 56.349px;
+  flex-shrink: 0;
+  position: absolute;
+  bottom: 15px;
+  left: 20px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(3) img {
+  position: absolute;
+  right: 10px;
+  bottom: 25px;
+}
+.Home .right-div .right-content .withdraw .card:nth-child(3) img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .myQr .card-holder {
+  display: flex;
+}
+.Home .right-div .right-content .myQr .card-holder .card {
+  margin-top: 35px;
+  margin-bottom: 35px;
+  border-radius: 20px;
+  background: #fff;
+  width: 415px;
+  height: 260px;
+  flex-shrink: 0;
+  filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) {
+  margin-left: 38px;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name {
+  display: flex;
+  height: 60px;
+  padding: 5px 5px 5px 18px;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .left {
+  color: #000;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .left span {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .right {
+  flex: 1;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .right .add {
+  display: flex;
+  align-items: center;
+  width: fit-content;
+  margin-left: auto;
+  margin-top: 9px;
+  color: #049dfe;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .right .add img {
+  margin-top: 0px;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .right .add img:nth-child(1) {
+  margin-right: 5px;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .right .add img:hover {
+  cursor: pointer;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder {
+  padding-top: 25px;
+  display: flex;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .qr {
+  padding: 2px 5px 2px 18px;
+  color: #000;
+  font-family: Poppins;
+  font-size: 25px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder {
+  flex: 1;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .number {
+  color: #049dfe;
+  text-align: center;
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .number img {
+  margin-left: 6px;
+  cursor: pointer;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share {
+  display: flex;
+  text-align: center;
+  padding-left: 30px;
+  margin-top: 30px;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share .save {
+  align-items: center;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share .save .biyaCircle {
+  width: 49.579px;
+  height: 49.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 15px;
+  margin-right: 20px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share .save .biyaCircle img {
+  width: 24px;
+  left: 17px;
+  top: 15px;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share .save .title {
+  color: rgba(0, 0, 0, 0.5);
+  text-align: center;
+  font-family: Poppins;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share .save:nth-child(2) {
+  margin-left: 15px;
+}
+.Home .right-div .right-content .myQr .recent-transaction {
+  margin-left: 38px;
+  margin-bottom: 40px;
+  width: 784px;
+  height: 450px;
+  flex-shrink: 0;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+}
+.Home .right-div .right-content .myQr .recent-transaction .title {
+  width: fit-content;
+  margin-top: 5px;
+  margin-left: 20px;
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container {
+  margin-top: 25px;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(1) {
+  color: #212b36;
+  font-family: var(--font-family-a);
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: 22px;
+  width: 8% !important;
+  padding: 5px 15px;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(1) div {
+  border-radius: 55px;
+  width: 55px;
+  height: 55px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(2) {
+  color: rgba(0, 0, 0, 0.8);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 22%;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(3) {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 15%;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(4) {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 15%;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(5) {
+  color: #5aaf76;
+  text-align: left;
+  font-family: Poppins;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+  width: 15%;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container .pagination {
+  color: #2d699d;
+  padding: 10px 20px;
+  text-align: right;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container .pagination select {
+  margin-left: 15px;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container .pagination span {
+  margin-left: 15px;
+  margin-right: 15px;
+}
+.Home .right-div .right-content .myQr .recent-transaction .table-container .pagination img:hover {
+  cursor: pointer;
+}
+.Home .card-forms {
+  position: absolute;
+  width: 35vw;
+  height: 100vh;
+  right: 0px;
+  z-index: 2;
+  border-radius: 5px;
+  border: 2px solid #dfe6ec;
+  background: #f8fbfd;
+}
+.Home .card-forms .card-forms-title {
+  display: flex;
+  align-items: center;
+}
+.Home .card-forms .card-forms-title .biyaCircle {
+  width: 60.579px;
+  height: 60.579px;
+  flex-shrink: 0;
+  background-color: rgba(4, 157, 254, 0.1);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #049dfe;
+  font-family: Poppins;
+  font-size: 28px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  margin-left: 15px;
+  margin-right: 20px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+.Home .card-forms .card-forms-title .biyaCircle img {
+  width: 35px;
+  left: 17px;
+  top: 15px;
+}
+.Home .card-forms .card-forms-title .title {
+  color: #000;
+  font-family: Poppins;
+  font-size: 20px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+}
+.Home .card-forms .card-forms-bottom {
+  margin-top: 50px;
+}
+.Home .card-forms .card-forms-bottom button {
+  color: #000;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  width: 127px;
+  height: 35px;
+  flex-shrink: 0;
+  background-color: white;
+  border-radius: 94px;
+  border: 0px solid;
+}
+.Home .card-forms .card-forms-bottom button:nth-child(1) {
+  margin-left: 15px;
+  font-weight: bolder;
+}
+.Home .card-forms .card-forms-bottom button:nth-child(2) {
+  background: #049dfe;
+  color: #fff;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  margin-left: 10vw;
+}
+.Home .card-forms .card-forms-bottom button:hover {
+  cursor: pointer;
+}
+.Home .card-forms form {
+  margin-top: 70px;
+  padding-left: 35px;
+  height: fit-content;
+}
+.Home .card-forms form .text-1 {
+  color: rgba(0, 0, 0, 0.5);
+  font-family: Poppins;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: 600;
+  line-height: normal;
+  width: fit-content;
+  margin: 20px 0px;
+}
+.Home .card-forms form .field-holder {
+  width: fit-content;
+  margin-bottom: 15px;
+}
+.Home .card-forms form .field-holder .title {
+  width: fit-content;
+  height: 18px;
+  flex-shrink: 0;
+  color: rgba(0, 0, 0, 0.9);
+  font-family: Poppins;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: bolder;
+  line-height: normal;
+}
+.Home .card-forms form .field-holder .field input {
+  width: 358px;
+  height: 36px;
+  flex-shrink: 0;
+  border-top: 0px;
+  border-left: 0px;
+  border-right: 0px;
+  background: #f8fbfd;
+  padding-left: 5px;
+}
+.Home .card-forms form .field-holder .field input:focus {
+  outline: none;
 }

@@ -3,10 +3,10 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
-import { login } from "../Features/User/userSlice";
-import { ISignin } from "../Features/User/type";
+import { forget_password } from "../Features/User/userSlice";
+import { IForgotPass } from "../Features/User/type";
 
-export const Login = () => {
+export const ForgotPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector((state) => state.user);
@@ -26,31 +26,30 @@ export const Login = () => {
   // Initial form values
   const initialValues = {
     Email: "",
-    Password: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
-  const handleSubmit = (values: ISignin) => {
-    dispatch(login(values));
+  const handleSubmit = (values: IForgotPass) => {
+    dispatch(forget_password(values));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
 
   // Formik form handling
-  const formik = useFormik<ISignin>({
+  const formik = useFormik<IForgotPass>({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
   });
 
   return (
-    <div className="Auth-Login">
+    <div className="Auth-Forgot">
       <div className="left-div">
         <div className="text">
-          <div className="message-1">Welcome!</div>
-          <div className="message-2">Log in to get started</div>
+          <div className="message-1">Hello!</div>
+          <div className="message-2">Enter your email to reset password</div>
         </div>
       </div>
       <div className="right-div">
@@ -78,32 +77,6 @@ export const Login = () => {
                 )}
               </div>
 
-              <div className="field-holder">
-                <div className="title">Password</div>
-                <div className="description">Enter your account password</div>
-                <div className="field">
-                  {Pass()}
-                  <input
-                    type="password"
-                    id="Password"
-                    name="Password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Password}
-                    // placeholder="Enter password"
-                  />
-                </div>
-                {formik.touched.Password && formik.errors.Password && (
-                  <div className="error">{formik.errors.Password}</div>
-                )}
-              </div>
-
-              <div className="forgot-password">
-                Forgot password?{" "}
-                <a href="#a" onClick={() => navigate(routes.f_password)}>
-                  Reset here
-                </a>
-              </div>
               <div className="forgot-password">
                 Don't have an account?
                 <a href="#b" onClick={() => navigate(routes.signup)}>

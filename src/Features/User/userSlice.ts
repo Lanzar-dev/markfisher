@@ -6,11 +6,16 @@ import { clearErrors, setError, setSuccess } from "../Error/errorSlice";
 import {
   EachAptDate,
   GetDoctorAptDates,
+  IAirtimePayload,
   IAppointmentHistory,
   IAuth,
+  IBankTransferPayload,
+  IBiyaTransferPayload,
+  IForgotPass,
   IProfile,
   IResetPassword,
   ISignin,
+  ITollPayload,
   IUserState,
 } from "./type";
 
@@ -181,7 +186,7 @@ export const cancelAppointment = (data: IAppointmentHistory): AppThunk => {
   };
 };
 
-export const forget_password = (data: any): AppThunk => {
+export const forget_password = (data: IForgotPass): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
@@ -207,6 +212,122 @@ export const forget_password = (data: any): AppThunk => {
 };
 
 export const login = (data: ISignin): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/LoginPatientAccount";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.status === true) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.status === false) {
+          dispatch(setError(data.message));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const BankTransfer = (data: IBankTransferPayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/LoginPatientAccount";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.status === true) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.status === false) {
+          dispatch(setError(data.message));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/LoginPatientAccount";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.status === true) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.status === false) {
+          dispatch(setError(data.message));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const BiyaTransfer = (data: IBiyaTransferPayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/LoginPatientAccount";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.status === true) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.status === false) {
+          dispatch(setError(data.message));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const TollPayment = (data: ITollPayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
