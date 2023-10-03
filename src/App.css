@@ -9,8 +9,37 @@
   font-family: "PoppinsRegular";
   src: url("./Fonts/Poppins-Regular.ttf") format("truetype");
 }
+@font-face {
+  font-family: "PoppinsBlack";
+  src: url("./Fonts/Poppins-Black.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("./Fonts/Poppins-Bold.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsLight";
+  src: url("./Fonts/Poppins-Light.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsMedium";
+  src: url("./Fonts/Poppins-Medium.ttf") format("truetype");
+}
+@font-face {
+  font-family: "PoppinsThin";
+  src: url("./Fonts/Poppins-Thin.ttf") format("truetype");
+}
+@font-face {
+  font-family: "Helvetica";
+  src: url("./Fonts/helvetica_neu_bold.ttf") format("truetype");
+}
+* {
+  font-family: var(--font-family-a);
+}
+
 * {
   box-sizing: border-box;
+  font-family: var(--font-family-a);
 }
 
 html,
@@ -97,11 +126,11 @@ body {
   background: #fff;
   box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
 }
-.Auth-Login .right-div .form-holder form .field-holder {
+.Auth-Login .right-div .form-holder .lg-form .field-holder {
   width: fit-content;
   margin: 25px auto;
 }
-.Auth-Login .right-div .form-holder form .field-holder .title {
+.Auth-Login .right-div .form-holder .lg-form .field-holder .title {
   width: 120px;
   height: 18px;
   flex-shrink: 0;
@@ -112,7 +141,7 @@ body {
   font-weight: 500;
   line-height: normal;
 }
-.Auth-Login .right-div .form-holder form .field-holder .description {
+.Auth-Login .right-div .form-holder .lg-form .field-holder .description {
   width: 80%;
   height: 20px;
   flex-shrink: 0;
@@ -123,10 +152,10 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-.Auth-Login .right-div .form-holder form .field-holder .field {
+.Auth-Login .right-div .form-holder .lg-form .field-holder .field {
   position: relative;
 }
-.Auth-Login .right-div .form-holder form .field-holder .field svg {
+.Auth-Login .right-div .form-holder .lg-form .field-holder .field svg {
   width: 24px;
   height: 24px;
   flex-shrink: 0;
@@ -134,7 +163,7 @@ body {
   left: 25px;
   top: 5px;
 }
-.Auth-Login .right-div .form-holder form .field-holder .field input {
+.Auth-Login .right-div .form-holder .lg-form .field-holder .field input {
   width: 358px;
   height: 36px;
   flex-shrink: 0;
@@ -143,7 +172,7 @@ body {
   background: #f8fbfd;
   padding-left: 50px;
 }
-.Auth-Login .right-div .form-holder form .forgot-password {
+.Auth-Login .right-div .form-holder .lg-form .forgot-password {
   margin: 5px auto;
   width: 358px;
   color: #828282;
@@ -153,7 +182,7 @@ body {
   font-weight: 400;
   line-height: normal;
 }
-.Auth-Login .right-div .form-holder form .forgot-password a {
+.Auth-Login .right-div .form-holder .lg-form .forgot-password a {
   color: #072c7c;
   font-family: Roboto;
   font-size: 13px;
@@ -164,7 +193,7 @@ body {
   margin-left: 5px;
   cursor: pointer;
 }
-.Auth-Login .right-div .form-holder form .forgot-password button {
+.Auth-Login .right-div .form-holder .lg-form .forgot-password button {
   width: 129px;
   height: 35px;
   flex-shrink: 0;
@@ -507,6 +536,9 @@ body {
 .Home .left-div .side-bar .side-component:hover {
   cursor: pointer;
 }
+.Home .right-div .user {
+  position: relative;
+}
 .Home .right-div .user .holder {
   width: fit-content;
   margin: 3vh 1vw 3vh auto;
@@ -520,6 +552,31 @@ body {
   margin-left: 7px;
 }
 .Home .right-div .user .holder img:hover {
+  cursor: pointer;
+}
+.Home .right-div .user .user-info {
+  position: absolute;
+  top: 40px;
+  right: 10px;
+  width: fit-content;
+  z-index: 3;
+  border: 0.5px solid;
+  border-radius: 7px;
+  background: white;
+  box-shadow: 0px 0px 98.3081741333px 0px rgba(0, 0, 0, 0.05), 0px 0px 50.1572303772px 0px rgba(0, 0, 0, 0.05);
+}
+.Home .right-div .user .user-info ul {
+  padding: 3px 10px;
+}
+.Home .right-div .user .user-info ul li {
+  list-style: none;
+  margin-left: 0px;
+  margin-top: 5px;
+}
+.Home .right-div .user .user-info ul li:nth-child(1) {
+  margin-top: 0px;
+}
+.Home .right-div .user .user-info ul li:hover {
   cursor: pointer;
 }
 .Home .right-div .right-content {
@@ -552,7 +609,7 @@ body {
 }
 .Home .right-div .right-content .home .card-holder .card:nth-child(1) .name .left {
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
@@ -593,15 +650,15 @@ body {
 .Home .right-div .right-content .home .card-holder .card:nth-child(1) .amount {
   padding: 2px 5px 2px 18px;
   color: #000;
-  font-family: Poppins;
-  font-size: 25px;
+  font-family: var(--font-family-a);
+  font-size: 20px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
 }
 .Home .right-div .right-content .home .card-holder .card:nth-child(1) .amount span {
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 10px;
   font-style: normal;
   font-weight: 500;
@@ -618,7 +675,7 @@ body {
 }
 .Home .right-div .right-content .home .card-holder .card:nth-child(2) div {
   color: #fff;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
@@ -644,7 +701,7 @@ body {
 }
 .Home .right-div .right-content .home .card-holder .card:nth-child(3) div {
   color: #fff;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
@@ -676,7 +733,7 @@ body {
   margin-top: 5px;
   margin-left: 20px;
   color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -710,7 +767,7 @@ body {
 }
 .Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(2) {
   color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -719,7 +776,7 @@ body {
 }
 .Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(3) {
   color: rgba(0, 0, 0, 0.5);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -728,7 +785,7 @@ body {
 }
 .Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(4) {
   color: rgba(0, 0, 0, 0.5);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -738,7 +795,7 @@ body {
 .Home .right-div .right-content .home .recent-transaction .table-container table tbody tr .table-cell:nth-child(5) {
   color: #5aaf76;
   text-align: left;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -785,7 +842,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -803,7 +860,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -827,7 +884,7 @@ body {
   background-color: rgba(4, 157, 254, 0.1);
   border-radius: 50%;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -850,7 +907,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -874,7 +931,7 @@ body {
   background-color: rgba(4, 157, 254, 0.1);
   border-radius: 50%;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -897,7 +954,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -941,7 +998,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -960,7 +1017,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -986,7 +1043,7 @@ body {
   background-color: rgba(4, 157, 254, 0.1);
   border-radius: 50%;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -1009,7 +1066,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -1039,7 +1096,7 @@ body {
   background-color: rgba(4, 157, 254, 0.1);
   border-radius: 50%;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -1072,7 +1129,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -1116,7 +1173,7 @@ body {
   background-color: rgba(4, 157, 254, 0.1);
   border-radius: 50%;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -1141,7 +1198,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -1167,7 +1224,7 @@ body {
   background-color: rgba(4, 157, 254, 0.1);
   border-radius: 50%;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -1190,7 +1247,7 @@ body {
   bottom: 15px;
   left: 20px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -1227,7 +1284,7 @@ body {
 }
 .Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .left {
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 25px;
   font-style: normal;
   font-weight: 600;
@@ -1236,7 +1293,7 @@ body {
 .Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .name .left span {
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 12px;
   font-style: normal;
   font-weight: 400;
@@ -1275,7 +1332,7 @@ body {
 .Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .qr {
   padding: 2px 5px 2px 18px;
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 25px;
   font-style: normal;
   font-weight: 700;
@@ -1287,7 +1344,7 @@ body {
 .Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .number {
   color: #049dfe;
   text-align: center;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -1316,7 +1373,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -1334,7 +1391,7 @@ body {
 .Home .right-div .right-content .myQr .card-holder .card:nth-child(1) .qr-holder .num-holder .save-share .save .title {
   color: rgba(0, 0, 0, 0.5);
   text-align: center;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 13px;
   font-style: normal;
   font-weight: 400;
@@ -1358,7 +1415,7 @@ body {
   margin-top: 5px;
   margin-left: 20px;
   color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 18px;
   font-style: normal;
   font-weight: 600;
@@ -1392,7 +1449,7 @@ body {
 }
 .Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(2) {
   color: rgba(0, 0, 0, 0.8);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -1401,7 +1458,7 @@ body {
 }
 .Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(3) {
   color: rgba(0, 0, 0, 0.5);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -1410,7 +1467,7 @@ body {
 }
 .Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(4) {
   color: rgba(0, 0, 0, 0.5);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
@@ -1420,7 +1477,7 @@ body {
 .Home .right-div .right-content .myQr .recent-transaction .table-container table tbody tr .table-cell:nth-child(5) {
   color: #5aaf76;
   text-align: left;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 14px;
   font-style: normal;
   font-weight: 500;
@@ -1466,7 +1523,7 @@ body {
   align-items: center;
   justify-content: center;
   color: #049dfe;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 28px;
   font-style: normal;
   font-weight: 600;
@@ -1483,7 +1540,7 @@ body {
 }
 .Home .card-forms .card-forms-title .title {
   color: #000;
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 20px;
   font-style: normal;
   font-weight: 600;
@@ -1532,7 +1589,7 @@ body {
 }
 .Home .card-forms form .text-1 {
   color: rgba(0, 0, 0, 0.5);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
@@ -1549,7 +1606,7 @@ body {
   height: 18px;
   flex-shrink: 0;
   color: rgba(0, 0, 0, 0.9);
-  font-family: Poppins;
+  font-family: var(--font-family-a);
   font-size: 16px;
   font-style: normal;
   font-weight: bolder;
@@ -1567,4 +1624,251 @@ body {
 }
 .Home .card-forms form .field-holder .field input:focus {
   outline: none;
+}
+
+@media only screen and (max-width: 600px) {
+  .Auth-Login {
+    display: flex;
+    overflow-y: auto;
+    height: 100vh;
+    background-color: white;
+  }
+  .Auth-Login .left-div {
+    display: none;
+  }
+  .Auth-Login .right-div {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    margin-bottom: 60px;
+  }
+  .Auth-Login .right-div .img {
+    margin-top: 45vh;
+    margin-left: 0px;
+    width: 323px;
+    height: 134px;
+    flex-shrink: 0;
+    background: url("./Images/biyaLogo.png"), lightgray -101.056px -150.456px/157.895% 378.947% no-repeat;
+  }
+  .Auth-Login .right-div .form-holder {
+    margin-top: 30px;
+    margin-left: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96vw;
+    height: 375px;
+    flex-shrink: 0;
+    border-radius: 0px;
+    background: #fff;
+    box-shadow: none;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .field-holder {
+    width: 90%;
+    margin: 25px auto;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .field-holder .title {
+    width: 120px;
+    height: 18px;
+    flex-shrink: 0;
+    color: #002855;
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .field-holder .description {
+    width: 80%;
+    height: 20px;
+    flex-shrink: 0;
+    color: #828282;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .field-holder .field {
+    position: relative;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .field-holder .field svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    position: absolute;
+    left: 25px;
+    top: 5px;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .field-holder .field input {
+    width: 86.4vw;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 80px;
+    border: 1px solid #dfe6ec;
+    background: #f8fbfd;
+    padding-left: 50px;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .forgot-password {
+    margin: 10px auto;
+    width: 90%;
+    color: #828282;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .forgot-password a {
+    color: #072c7c;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: none;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  .Auth-Login .right-div .form-holder .lg-form .forgot-password button {
+    width: 86.4vw;
+    height: 40px;
+    flex-shrink: 0;
+    border: 0px;
+    border-radius: 94px;
+    background: #4fadea;
+    cursor: pointer;
+    margin-left: 0px;
+    margin-top: 15px;
+    margin-bottom: 70px;
+    color: #fff;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .Auth-Signup {
+    display: flex;
+    overflow-y: auto;
+    height: 100vh;
+    background-color: white;
+  }
+  .Auth-Signup .left-div {
+    display: none;
+  }
+  .Auth-Signup .right-div {
+    display: flex;
+    align-items: center;
+    width: 100vw;
+    margin-bottom: 60px;
+  }
+  .Auth-Signup .right-div .img {
+    margin-top: 45vh;
+    margin-left: 0px;
+    width: 323px;
+    height: 134px;
+    flex-shrink: 0;
+    background: url("./Images/biyaLogo.png"), lightgray -101.056px -150.456px/157.895% 378.947% no-repeat;
+  }
+  .Auth-Signup .right-div .form-holder {
+    margin-top: 30px;
+    margin-left: 2vw;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 96vw;
+    height: 504px;
+    flex-shrink: 0;
+    border-radius: 15px;
+    background: #fff;
+    box-shadow: none;
+  }
+  .Auth-Signup .right-div .form-holder form .field-holder {
+    width: 90%;
+    margin: 25px auto;
+  }
+  .Auth-Signup .right-div .form-holder form .field-holder .title {
+    width: 120px;
+    height: 18px;
+    flex-shrink: 0;
+    color: #002855;
+    font-family: Roboto;
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+  }
+  .Auth-Signup .right-div .form-holder form .field-holder .description {
+    width: 80%;
+    height: 20px;
+    flex-shrink: 0;
+    color: #828282;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .Auth-Signup .right-div .form-holder form .field-holder .field {
+    position: relative;
+  }
+  .Auth-Signup .right-div .form-holder form .field-holder .field svg {
+    width: 24px;
+    height: 24px;
+    flex-shrink: 0;
+    position: absolute;
+    left: 25px;
+    top: 5px;
+  }
+  .Auth-Signup .right-div .form-holder form .field-holder .field input {
+    width: 86.4vw;
+    height: 40px;
+    flex-shrink: 0;
+    border-radius: 80px;
+    border: 1px solid #dfe6ec;
+    background: #f8fbfd;
+    padding-left: 50px;
+  }
+  .Auth-Signup .right-div .form-holder form .forgot-password {
+    margin: 10px auto;
+    width: 90%;
+    color: #828282;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .Auth-Signup .right-div .form-holder form .forgot-password a {
+    color: #072c7c;
+    font-family: Roboto;
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-decoration: none;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+  .Auth-Signup .right-div .form-holder form .forgot-password button {
+    width: 86.4vw;
+    height: 40px;
+    flex-shrink: 0;
+    border: 0px;
+    border-radius: 94px;
+    background: #4fadea;
+    cursor: pointer;
+    margin-left: 0px;
+    margin-top: 15px;
+    margin-bottom: 70px;
+    color: #fff;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
 }

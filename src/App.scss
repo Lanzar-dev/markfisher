@@ -9,8 +9,42 @@
   src: url("./Fonts/Poppins-Regular.ttf") format("truetype");
 }
 
+@font-face {
+  font-family: "PoppinsBlack";
+  src: url("./Fonts/Poppins-Black.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsBold";
+  src: url("./Fonts/Poppins-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsLight";
+  src: url("./Fonts/Poppins-Light.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsMedium";
+  src: url("./Fonts/Poppins-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "PoppinsThin";
+  src: url("./Fonts/Poppins-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Helvetica";
+  src: url("./Fonts/helvetica_neu_bold.ttf") format("truetype");
+}
+* {
+  font-family: var(--font-family-a);
+}
+
 * {
   box-sizing: border-box;
+  font-family: var(--font-family-a);
 }
 html,
 body {
@@ -100,7 +134,7 @@ body {
       border-radius: 15px;
       background: #fff;
       box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      form {
+      .lg-form {
         .field-holder {
           width: fit-content;
           margin: 25px auto;
@@ -542,6 +576,7 @@ body {
 
   .right-div {
     .user {
+      position: relative;
       .holder {
         width: fit-content;
         margin: 3vh 1vw 3vh auto;
@@ -558,7 +593,34 @@ body {
           cursor: pointer;
         }
       }
+      .user-info {
+        position: absolute;
+        top: 40px;
+        right: 10px;
+        width: fit-content;
+        z-index: 3;
+        border: 0.5px solid;
+        border-radius: 7px;
+        background: white;
+        box-shadow: 0px 0px 98.30817413330078px 0px rgba(0, 0, 0, 0.05),
+          0px 0px 50.157230377197266px 0px rgba(0, 0, 0, 0.05);
+        ul {
+          padding: 3px 10px;
+          li {
+            list-style: none;
+            margin-left: 0px;
+            margin-top: 5px;
+          }
+          li:nth-child(1) {
+            margin-top: 0px;
+          }
+          li:hover {
+            cursor: pointer;
+          }
+        }
+      }
     }
+
     .right-content {
       overflow-y: auto;
       width: 84vw;
@@ -587,7 +649,7 @@ body {
               padding: 5px 5px 5px 18px;
               .left {
                 color: #000;
-                font-family: Poppins;
+                font-family: var(--font-family-a);
                 font-size: 25px;
                 font-style: normal;
                 font-weight: 600;
@@ -630,15 +692,15 @@ body {
               padding: 2px 5px 2px 18px;
               span {
                 color: #000;
-                font-family: Poppins;
+                font-family: var(--font-family-a);
                 font-size: 10px;
                 font-style: normal;
                 font-weight: 500;
                 line-height: normal;
               }
               color: #000;
-              font-family: Poppins;
-              font-size: 25px;
+              font-family: var(--font-family-a);
+              font-size: 20px;
               font-style: normal;
               font-weight: 700;
               line-height: normal;
@@ -654,7 +716,7 @@ body {
             justify-content: center;
             div {
               color: #fff;
-              font-family: Poppins;
+              font-family: var(--font-family-a);
               font-size: 25px;
               font-style: normal;
               font-weight: 600;
@@ -680,7 +742,7 @@ body {
             justify-content: center;
             div {
               color: #fff;
-              font-family: Poppins;
+              font-family: var(--font-family-a);
               font-size: 25px;
               font-style: normal;
               font-weight: 600;
@@ -713,7 +775,7 @@ body {
             margin-top: 5px;
             margin-left: 20px;
             color: rgba(0, 0, 0, 0.8);
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 18px;
             font-style: normal;
             font-weight: 600;
@@ -747,7 +809,7 @@ body {
                   }
                   .table-cell:nth-child(2) {
                     color: rgba(0, 0, 0, 0.8);
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -756,7 +818,7 @@ body {
                   }
                   .table-cell:nth-child(3) {
                     color: rgba(0, 0, 0, 0.5);
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -765,7 +827,7 @@ body {
                   }
                   .table-cell:nth-child(4) {
                     color: rgba(0, 0, 0, 0.5);
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -775,7 +837,7 @@ body {
                   .table-cell:nth-child(5) {
                     color: #5aaf76;
                     text-align: left;
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 500;
@@ -831,7 +893,7 @@ body {
             align-items: center;
             justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -849,7 +911,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -876,7 +938,7 @@ body {
             // align-items: center;
             // justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -899,7 +961,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -926,7 +988,7 @@ body {
             // align-items: center;
             // justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -949,7 +1011,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -994,7 +1056,7 @@ body {
             align-items: center;
             justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -1012,7 +1074,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -1039,7 +1101,7 @@ body {
             // align-items: center;
             // justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -1062,7 +1124,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -1092,7 +1154,7 @@ body {
             // align-items: center;
             // justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -1116,7 +1178,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -1156,7 +1218,7 @@ body {
         //     align-items: center;
         //     justify-content: center;
         //     color: #049dfe;
-        //     font-family: Poppins;
+        //     font-family: var(--font-family-a);
         //     font-size: 28px;
         //     font-style: normal;
         //     font-weight: 600;
@@ -1174,7 +1236,7 @@ body {
         //     bottom: 15px;
         //     left: 20px;
         //     color: #000;
-        //     font-family: Poppins;
+        //     font-family: var(--font-family-a);
         //     font-size: 15px;
         //     font-style: normal;
         //     font-weight: 600;
@@ -1202,7 +1264,7 @@ body {
             // align-items: center;
             // justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -1225,7 +1287,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -1252,7 +1314,7 @@ body {
             // align-items: center;
             // justify-content: center;
             color: #049dfe;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 28px;
             font-style: normal;
             font-weight: 600;
@@ -1275,7 +1337,7 @@ body {
             bottom: 15px;
             left: 20px;
             color: #000;
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
@@ -1313,7 +1375,7 @@ body {
               padding: 5px 5px 5px 18px;
               .left {
                 color: #000;
-                font-family: Poppins;
+                font-family: var(--font-family-a);
                 font-size: 25px;
                 font-style: normal;
                 font-weight: 600;
@@ -1321,7 +1383,7 @@ body {
                 span {
                   color: rgba(0, 0, 0, 0.5);
                   text-align: center;
-                  font-family: Poppins;
+                  font-family: var(--font-family-a);
                   font-size: 12px;
                   font-style: normal;
                   font-weight: 400;
@@ -1361,7 +1423,7 @@ body {
               .qr {
                 padding: 2px 5px 2px 18px;
                 color: #000;
-                font-family: Poppins;
+                font-family: var(--font-family-a);
                 font-size: 25px;
                 font-style: normal;
                 font-weight: 700;
@@ -1372,7 +1434,7 @@ body {
                 .number {
                   color: #049dfe;
                   text-align: center;
-                  font-family: Poppins;
+                  font-family: var(--font-family-a);
                   font-size: 18px;
                   font-style: normal;
                   font-weight: 600;
@@ -1399,7 +1461,7 @@ body {
                       align-items: center;
                       justify-content: center;
                       color: #049dfe;
-                      font-family: Poppins;
+                      font-family: var(--font-family-a);
                       font-size: 28px;
                       font-style: normal;
                       font-weight: 600;
@@ -1417,7 +1479,7 @@ body {
                     .title {
                       color: rgba(0, 0, 0, 0.5);
                       text-align: center;
-                      font-family: Poppins;
+                      font-family: var(--font-family-a);
                       font-size: 13px;
                       font-style: normal;
                       font-weight: 400;
@@ -1446,7 +1508,7 @@ body {
             margin-top: 5px;
             margin-left: 20px;
             color: rgba(0, 0, 0, 0.8);
-            font-family: Poppins;
+            font-family: var(--font-family-a);
             font-size: 18px;
             font-style: normal;
             font-weight: 600;
@@ -1480,7 +1542,7 @@ body {
                   }
                   .table-cell:nth-child(2) {
                     color: rgba(0, 0, 0, 0.8);
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -1489,7 +1551,7 @@ body {
                   }
                   .table-cell:nth-child(3) {
                     color: rgba(0, 0, 0, 0.5);
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -1498,7 +1560,7 @@ body {
                   }
                   .table-cell:nth-child(4) {
                     color: rgba(0, 0, 0, 0.5);
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -1508,7 +1570,7 @@ body {
                   .table-cell:nth-child(5) {
                     color: #5aaf76;
                     text-align: left;
-                    font-family: Poppins;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 500;
@@ -1565,7 +1627,7 @@ body {
         align-items: center;
         justify-content: center;
         color: #049dfe;
-        font-family: Poppins;
+        font-family: var(--font-family-a);
         font-size: 28px;
         font-style: normal;
         font-weight: 600;
@@ -1583,7 +1645,7 @@ body {
 
       .title {
         color: #000;
-        font-family: Poppins;
+        font-family: var(--font-family-a);
         font-size: 20px;
         font-style: normal;
         font-weight: 600;
@@ -1634,7 +1696,7 @@ body {
       height: fit-content;
       .text-1 {
         color: rgba(0, 0, 0, 0.5);
-        font-family: Poppins;
+        font-family: var(--font-family-a);
         font-size: 15px;
         font-style: normal;
         font-weight: 600;
@@ -1650,7 +1712,7 @@ body {
           height: 18px;
           flex-shrink: 0;
           color: rgba(0, 0, 0, 0.9);
-          font-family: Poppins;
+          font-family: var(--font-family-a);
           font-size: 16px;
           font-style: normal;
           font-weight: bolder;
@@ -1669,6 +1731,272 @@ body {
           }
           input:focus {
             outline: none;
+          }
+        }
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .Auth-Login {
+    display: flex;
+    overflow-y: auto;
+    height: 100vh;
+    background-color: white;
+
+    .left-div {
+      display: none;
+    }
+
+    .right-div {
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+      width: 100vw;
+      margin-bottom: 60px;
+
+      .img {
+        margin-top: 45vh;
+        margin-left: 0px;
+        width: 323px;
+        height: 134px;
+        flex-shrink: 0;
+        background: url("./Images/biyaLogo.png"),
+          lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
+      }
+
+      .form-holder {
+        margin-top: 30px;
+        margin-left: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 96vw;
+        height: 375px;
+        flex-shrink: 0;
+        border-radius: 0px;
+        background: #fff;
+        box-shadow: none;
+        .lg-form {
+          .field-holder {
+            width: 90%;
+            margin: 25px auto;
+            .title {
+              width: 120px;
+              height: 18px;
+              flex-shrink: 0;
+              color: #002855;
+              font-family: Roboto;
+              font-size: 18px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: normal;
+            }
+            .description {
+              width: 80%; //146px
+              height: 20px;
+              flex-shrink: 0;
+              color: #828282;
+              font-family: Roboto;
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+            }
+            .field {
+              position: relative;
+              svg {
+                width: 24px;
+                height: 24px;
+                flex-shrink: 0;
+                position: absolute;
+                left: 25px;
+                top: 5px;
+              }
+              input {
+                width: calc(90 / 100 * 96vw);
+                height: 40px;
+                flex-shrink: 0;
+                border-radius: 80px;
+                border: 1px solid #dfe6ec;
+                background: #f8fbfd;
+                padding-left: 50px;
+              }
+            }
+          }
+
+          .forgot-password {
+            margin: 10px auto;
+            width: 90%;
+            color: #828282;
+            font-family: Roboto;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            a {
+              color: #072c7c;
+              font-family: Roboto;
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+              text-decoration: none;
+              margin-left: 5px;
+              cursor: pointer;
+            }
+            button {
+              width: calc(90 / 100 * 96vw);
+              height: 40px;
+              flex-shrink: 0;
+              border: 0px;
+              border-radius: 94px;
+              background: #4fadea;
+              cursor: pointer;
+              margin-left: 0px;
+              margin-top: 15px;
+              margin-bottom: 70px;
+              color: #fff;
+              text-align: center;
+              font-family: Roboto;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .Auth-Signup {
+    display: flex;
+    overflow-y: auto;
+    height: 100vh;
+    background-color: white;
+
+    .left-div {
+      display: none;
+    }
+
+    .right-div {
+      display: flex;
+      align-items: center;
+      // justify-content: center;
+      width: 100vw;
+      margin-bottom: 60px;
+
+      .img {
+        margin-top: 45vh;
+        margin-left: 0px;
+        width: 323px;
+        height: 134px;
+        flex-shrink: 0;
+        background: url("./Images/biyaLogo.png"),
+          lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
+      }
+
+      .form-holder {
+        margin-top: 30px;
+        margin-left: 2vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 96vw;
+        height: 504px;
+        flex-shrink: 0;
+        border-radius: 15px;
+        background: #fff;
+        box-shadow: none;
+        form {
+          .field-holder {
+            width: 90%;
+            margin: 25px auto;
+            .title {
+              width: 120px;
+              height: 18px;
+              flex-shrink: 0;
+              color: #002855;
+              font-family: Roboto;
+              font-size: 18px;
+              font-style: normal;
+              font-weight: 500;
+              line-height: normal;
+            }
+            .description {
+              width: 80%; //146px
+              height: 20px;
+              flex-shrink: 0;
+              color: #828282;
+              font-family: Roboto;
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+            }
+            .field {
+              position: relative;
+              svg {
+                width: 24px;
+                height: 24px;
+                flex-shrink: 0;
+                position: absolute;
+                left: 25px;
+                top: 5px;
+              }
+              input {
+                width: calc(90 / 100 * 96vw);
+                height: 40px;
+                flex-shrink: 0;
+                border-radius: 80px;
+                border: 1px solid #dfe6ec;
+                background: #f8fbfd;
+                padding-left: 50px;
+              }
+            }
+          }
+
+          .forgot-password {
+            margin: 10px auto;
+            width: 90%;
+            color: #828282;
+            font-family: Roboto;
+            font-size: 13px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+            a {
+              color: #072c7c;
+              font-family: Roboto;
+              font-size: 13px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+              text-decoration: none;
+              margin-left: 5px;
+              cursor: pointer;
+            }
+            button {
+              width: calc(90 / 100 * 96vw);
+              height: 40px;
+              flex-shrink: 0;
+              border: 0px;
+              border-radius: 94px;
+              background: #4fadea;
+              cursor: pointer;
+              margin-left: 0px;
+              margin-top: 15px;
+              margin-bottom: 70px;
+              color: #fff;
+              text-align: center;
+              font-family: Roboto;
+              font-size: 14px;
+              font-style: normal;
+              font-weight: 400;
+              line-height: normal;
+            }
           }
         }
       }

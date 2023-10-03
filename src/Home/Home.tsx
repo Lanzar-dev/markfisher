@@ -25,12 +25,15 @@ import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import copy from "clipboard-copy";
+import { useNavigate } from "react-router-dom";
 
 export const Home = () => {
+  const navigate = useNavigate();
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
   const [cardFormIndex, setCardFormIndex] = useState<number>(1);
+  const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);
@@ -69,6 +72,10 @@ export const Home = () => {
         saveAs(blob, "qrcode.png");
       });
     });
+  };
+
+  const LogOut = () => {
+    navigate("/");
   };
 
   return (
@@ -148,8 +155,21 @@ export const Home = () => {
                 background: `url(${userPic}), lightgray 50% / cover no-repeat`,
               }}
             ></div>
-            Welcome, Deji <img src={dnArrow} alt={"dnArrow"} />
+            Welcome, Deji{" "}
+            <img
+              src={dnArrow}
+              alt={"dnArrow"}
+              onClick={() => setShowUserInfo(!showUserInfo)}
+            />
           </div>
+          {showUserInfo && (
+            <div className="user-info">
+              <ul>
+                <li>Profile</li>
+                <li onClick={LogOut}>Log out</li>
+              </ul>
+            </div>
+          )}
         </div>
         <div className="right-content">
           {(navIndex === 1 || navIndex === 5 || navIndex === 4) && (

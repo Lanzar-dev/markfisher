@@ -10,7 +10,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector((state) => state.user);
-
+  console.log(isAuth);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     Email: Yup.string().required("Email is required"),
@@ -57,7 +57,7 @@ export const Login = () => {
         <div className="form">
           <div className="img"></div>
           <div className="form-holder">
-            <form onSubmit={formik.handleSubmit}>
+            <form onSubmit={formik.handleSubmit} className="lg-form">
               <div className="field-holder">
                 <div className="title">Email address</div>
                 <div className="description">Enter your email address</div>
