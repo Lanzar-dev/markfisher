@@ -3153,7 +3153,7 @@ body {
   }
   .Home .xs-screen .down .icons .xs-grid .card {
     margin-top: 15px;
-    width: 100px;
+    width: 85px;
     height: fit-content;
     flex-shrink: 0;
     border-radius: 10px;
@@ -3193,6 +3193,75 @@ body {
   }
   .Home .xs-screen .down .icons .xs-grid .card img:hover {
     cursor: pointer;
+  }
+  .Home .xs-screen .down .card-2 {
+    overflow-x: auto;
+    width: 100vw;
+  }
+  .Home .xs-screen .down .card-2 div {
+    width: fit-content;
+    display: flex;
+  }
+  .Home .xs-screen .down .card-2 div .card {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    border-radius: 7px;
+    background: #fff;
+    width: 170px;
+    height: 65px;
+    flex-shrink: 0;
+    filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
+  }
+  .Home .xs-screen .down .card-2 div .card:nth-child(1) {
+    background: #e72f3d;
+    margin-left: 10px;
+    margin-right: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .Home .xs-screen .down .card-2 div .card:nth-child(1) div {
+    color: #fff;
+    font-family: var(--font-family-a);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-right: 25px;
+  }
+  .Home .xs-screen .down .card-2 div .card:nth-child(1) img {
+    display: inline-flex;
+    width: 40px;
+    transform: rotate(360deg);
+    padding: 1.203px 2.558px 1.536px 0.181px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  .Home .xs-screen .down .card-2 div .card:nth-child(2) {
+    background: #049dfe;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 10px;
+  }
+  .Home .xs-screen .down .card-2 div .card:nth-child(2) div {
+    color: #fff;
+    font-family: var(--font-family-a);
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-right: 25px;
+  }
+  .Home .xs-screen .down .card-2 div .card:nth-child(2) img {
+    display: inline-flex;
+    width: 40px;
+    transform: rotate(360deg);
+    padding: 1.203px 2.558px 1.536px 0.181px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
   }
   .Home .xs-screen .user {
     position: absolute;

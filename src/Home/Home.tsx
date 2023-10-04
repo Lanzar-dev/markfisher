@@ -8,7 +8,7 @@ import rightArrow from "../Images/RightArrow.svg";
 import biyaTrxRArr from "../Images/BiyaTrxRArrow.svg";
 import bankTrx from "../Images/BankTrx.svg";
 import TrxIcon from "../Images/TrxIcon.svg";
-import airtimeIcon from "../Images/Airtime.svg";
+// import airtimeIcon from "../Images/Airtime.svg";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import Table from "./Table";
@@ -529,6 +529,21 @@ export const Home = () => {
                     <MySVGs index={8} fill="rgba(4, 157, 254, 1)" />
                   </div>
                   <div className="biyaTrx">My QR</div>
+                </div>
+              </div>
+            </div>
+
+            <div className="card-2">
+              <div>
+                <div className="card">
+                  <div>
+                    Manage Your <br /> Favourites
+                  </div>
+                  <img src={favourite} alt="favouriteIcon" />
+                </div>
+                <div className="card">
+                  <div>Find An Agent</div>
+                  <img src={agent} alt="agentIcon" />
                 </div>
               </div>
             </div>
