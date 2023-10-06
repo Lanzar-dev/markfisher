@@ -62,21 +62,13 @@ export interface IAuth {
 }
 
 export interface IProfile {
-  address1: string;
-  address2: string;
-  city: string;
-  dob: string;
-  email: string;
-  firstname: string;
-  homephone: string;
-  internalid: number;
-  medicarelineno: string;
-  medicareno: string;
-  mobilephone: string;
-  postcode: any;
-  sexcode: number;
-  surname: string;
-  workphone: string;
+  Id: string;
+  Email: string;
+  PhoneNumber: string;
+  Password: string;
+  IsVerifiedEmail: boolean;
+  IsTwoFacEnabled: boolean;
+  TwoFacSecret: string;
 }
 
 export interface ICreatePin {

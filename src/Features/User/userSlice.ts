@@ -15,11 +15,13 @@ import {
   IProfile,
   IResetPassword,
   ISignin,
+  ISignUp,
   ITollPayload,
   IUserState,
 } from "./type";
+import { AxiosError } from "axios";
 
-const BASE_PATH = "MerredinMedicalCentre";
+const BASE_PATH = "Auth";
 
 const initialState: IUserState = {
   isLoading: false,
@@ -216,25 +218,24 @@ export const login = (data: ISignin): AppThunk => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH + "/LoginPatientAccount";
+      const path = BASE_PATH + "/SignIn";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
+        console.log("data: ", response.data);
 
-        // console.log("data: ", data);
-        if (data.status === true) {
+        if (data.code === 200) {
           const payload: IAuth = {
             userId: data.data.tokenModel.id,
             token: data.data.tokenModel.accessToken,
           };
           dispatch(setAuth(payload));
           dispatch(setProfile(data.data.patientDetailsResponse));
-        } else if (data.status === false) {
-          dispatch(setError(data.message));
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.message));
+      // console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };
@@ -381,25 +382,21 @@ export const updateUserEmail = (data: any): AppThunk => {
   };
 };
 
-export const createPatient = (data: any): AppThunk => {
+export const signup = (data: ISignUp): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     try {
-      const path = BASE_PATH + "/CreatePatientAccount";
+      const path = BASE_PATH + "/SignUp";
 
       const response = await axios.post(path, data);
+      // console.log(response);
       if (response) {
         const data = response.data;
-        console.log("signup response: ", data);
-        if (data.status === true) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+        // console.log("signup response: ", data);
+        if (data.code === 200) {
+          dispatch(setProfile(data.body));
           dispatch(clearErrors());
-          dispatch(setSuccess(data.data?.message.toString()));
+          dispatch(setSuccess(data?.message?.toString()));
         }
       }
     } catch (error: any) {

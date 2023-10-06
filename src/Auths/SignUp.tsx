@@ -3,13 +3,14 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
-import { login } from "../Features/User/userSlice";
+import { signup } from "../Features/User/userSlice";
 import { ISignUp } from "../Features/User/type";
+import { useEffect } from "react";
 
 export const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isAuth } = useAppSelector((state) => state.user);
+  const { currentUser } = useAppSelector((state) => state.user);
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -35,8 +36,8 @@ export const SignUp = () => {
 
   // Submit handler
   const handleSubmit = (values: ISignUp) => {
-    dispatch(login(values));
-    if (isAuth === true) navigate(routes.dashboard);
+    dispatch(signup(values));
+    if (currentUser?.length > 1) navigate(routes.login);
   };
 
   // Formik form handling
@@ -45,6 +46,11 @@ export const SignUp = () => {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    // console.log(currentUser);
+    if (currentUser) navigate(routes.login);
+  }, [currentUser]);
 
   return (
     <div className="Auth-Signup">

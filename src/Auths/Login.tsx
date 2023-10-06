@@ -10,7 +10,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { isAuth } = useAppSelector((state) => state.user);
-  console.log(isAuth);
+  // console.log(isAuth);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     Email: Yup.string().required("Email is required"),
@@ -35,7 +35,7 @@ export const Login = () => {
   const handleSubmit = (values: ISignin) => {
     dispatch(login(values));
     // if (isAuth === true) navigate(routes.homepage);
-    navigate(routes.homepage);
+    // navigate(routes.homepage);
   };
 
   // Formik form handling
