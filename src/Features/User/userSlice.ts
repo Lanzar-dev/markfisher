@@ -18,8 +18,8 @@ import {
   ISignUp,
   ITollPayload,
   IUserState,
+  IVerifyEmail,
 } from "./type";
-import { AxiosError } from "axios";
 
 const BASE_PATH = "Auth";
 
@@ -222,19 +222,61 @@ export const login = (data: ISignin): AppThunk => {
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
-        console.log("data: ", response.data);
+        // console.log("data: ", response.data);
 
         if (data.code === 200) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+          dispatch(setProfile(data.body));
+          dispatch(clearErrors());
+          const resp: any = { code: data.code, message: data.message };
+          dispatch(setSuccess(resp));
         }
       }
     } catch (error: any) {
       // console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const verifyEmail = (data: IVerifyEmail): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/VerifyEmail";
+      const response = await axios.put(path, data);
+      if (response) {
+        const data = response.data;
+        // console.log("data: ", response.data);
+        if (data.code === 200) {
+          dispatch(setSuccess(data));
+        }
+      }
+    } catch (error: any) {
+      // console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const resendVerifyEmail = (data: string): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + `/ResendVerifyEmail?Email=${data}`;
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+        // console.log("data: ", response.data);
+        if (data.code === 200) {
+          dispatch(setSuccess(data));
+        }
+      }
+    } catch (error: any) {
+      console.log(error);
       dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));

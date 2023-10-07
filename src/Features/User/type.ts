@@ -153,3 +153,8 @@ export interface ISignUp {
   PhoneNumber: string;
   Password: string;
 }
+
+export interface IVerifyEmail {
+  EmailOTP: string;
+  Email: string;
+}

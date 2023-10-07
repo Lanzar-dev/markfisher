@@ -3,13 +3,24 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
-import { login } from "../Features/User/userSlice";
-import { ISignin } from "../Features/User/type";
+import {
+  login,
+  resendVerifyEmail,
+  verifyEmail,
+} from "../Features/User/userSlice";
+import { ISignin, IVerifyEmail } from "../Features/User/type";
+import { useEffect, useState } from "react";
+import OTPInput from "../Components/OTPInput";
+import { clearErrors } from "../Features/Error/errorSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { errors } = useAppSelector((state) => state.error);
   const { isAuth } = useAppSelector((state) => state.user);
+  const [showPass, setShowPass] = useState<boolean>(false);
+  const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
+  const [otp, setOTP] = useState<string>("");
   // console.log(isAuth);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -31,9 +42,25 @@ export const Login = () => {
 
   // console.log("init: ", storedValues);
 
+  const getOtp = (otp: string) => {
+    setOTP(otp);
+  };
+
   // Submit handler
   const handleSubmit = (values: ISignin) => {
-    dispatch(login(values));
+    if (!showVerifyEmail) dispatch(login(values));
+    else {
+      if (errors?.length > 0 && errors[0]?.message?.code !== 400) {
+        const verify: IVerifyEmail = {
+          Email: formik.values.Email,
+          EmailOTP: otp,
+        };
+        // console.log(verify);
+        dispatch(verifyEmail(verify));
+      } else {
+        dispatch(resendVerifyEmail(formik.values.Email));
+      }
+    }
     // if (isAuth === true) navigate(routes.homepage);
     // navigate(routes.homepage);
   };
@@ -44,6 +71,25 @@ export const Login = () => {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    if (errors?.length > 0) {
+      if (errors[0]?.message?.code === 403) {
+        setShowVerifyEmail(true);
+        alert("f3");
+      } else if (errors[0]?.message?.code !== 400) {
+        alert("f4");
+        setShowVerifyEmail(false);
+      }
+    }
+  }, [dispatch, errors]);
+
+  useEffect(() => {
+    if (errors?.length > 0 && errors[0]?.message?.message === "login success") {
+      navigate(routes.homepage);
+      dispatch(clearErrors());
+    }
+  }, [navigate, dispatch, errors]);
 
   return (
     <div className="Auth-Login">
@@ -58,59 +104,69 @@ export const Login = () => {
           <div className="img"></div>
           <div className="form-holder">
             <form onSubmit={formik.handleSubmit} className="lg-form">
-              <div className="field-holder">
-                <div className="title">Email address</div>
-                <div className="description">Enter your email address</div>
-                <div className="field">
-                  {Email()}
-                  <input
-                    type="text"
-                    id="Email"
-                    name="Email"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Email}
-                    // placeholder="Enter Email"
-                  />
-                </div>
-                {formik.touched.Email && formik.errors.Email && (
-                  <div className="error">{formik.errors.Email}</div>
-                )}
-              </div>
+              {!showVerifyEmail ? (
+                <>
+                  <div className="field-holder">
+                    <div className="title">Email address</div>
+                    <div className="description">Enter your email address</div>
+                    <div className="field">
+                      {Email()}
+                      <input
+                        type="text"
+                        id="Email"
+                        name="Email"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.Email}
+                        // placeholder="Enter Email"
+                      />
+                    </div>
+                    {formik.touched.Email && formik.errors.Email && (
+                      <div className="error">{formik.errors.Email}</div>
+                    )}
+                  </div>
 
-              <div className="field-holder">
-                <div className="title">Password</div>
-                <div className="description">Enter your account password</div>
-                <div className="field">
-                  {Pass()}
-                  <input
-                    type="password"
-                    id="Password"
-                    name="Password"
-                    onChange={formik.handleChange}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Password}
-                    // placeholder="Enter password"
-                  />
-                </div>
-                {formik.touched.Password && formik.errors.Password && (
-                  <div className="error">{formik.errors.Password}</div>
-                )}
-              </div>
+                  <div className="field-holder">
+                    <div className="title">Password</div>
+                    <div className="description">
+                      Enter your account password
+                    </div>
+                    <div className="field">
+                      {Pass()}
+                      <input
+                        type={showPass ? "text" : "password"}
+                        id="Password"
+                        name="Password"
+                        onChange={formik.handleChange}
+                        onBlur={formik.handleBlur}
+                        value={formik.values.Password}
+                        // placeholder="Enter password"
+                      />
+                    </div>
+                    {formik.touched.Password && formik.errors.Password && (
+                      <div className="error">{formik.errors.Password}</div>
+                    )}
+                  </div>
 
-              <div className="forgot-password">
-                Forgot password?{" "}
-                <a href="#a" onClick={() => navigate(routes.f_password)}>
-                  Reset here
-                </a>
-              </div>
-              <div className="forgot-password">
-                Don't have an account?
-                <a href="#b" onClick={() => navigate(routes.signup)}>
-                  Register now
-                </a>
-                <button type="submit">Continue</button>
-              </div>
+                  <div className="forgot-password">
+                    Forgot password?
+                    <a href="#a" onClick={() => navigate(routes.f_password)}>
+                      Reset here
+                    </a>
+                  </div>
+                  <div className="forgot-password">
+                    Don't have an account?
+                    <a href="#b" onClick={() => navigate(routes.signup)}>
+                      Register now
+                    </a>
+                    <button type="submit">Continue</button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <OTPInput getOTP={getOtp} />
+                </>
+              )}
             </form>
           </div>
         </div>
@@ -145,6 +201,8 @@ export const Login = () => {
         height="24"
         viewBox="0 0 24 24"
         fill="none"
+        onClick={() => setShowPass(!showPass)}
+        style={{ cursor: "pointer" }}
       >
         <path
           fillRule="evenodd"

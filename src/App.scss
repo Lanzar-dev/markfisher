@@ -220,6 +220,38 @@ body {
             line-height: normal;
           }
         }
+
+        .otp-input {
+          text-align: center;
+          h3 {
+            text-align: center;
+          }
+          div {
+            input {
+              width: 35px;
+              height: 35px;
+              margin: 1px 7px;
+              text-align: center;
+            }
+          }
+          button {
+            width: 129px;
+            height: 35px;
+            flex-shrink: 0;
+            border: 0px;
+            border-radius: 94px;
+            background: #4fadea;
+            cursor: pointer;
+            margin-top: 25px;
+            color: #fff;
+            text-align: center;
+            font-family: Roboto;
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: normal;
+          }
+        }
       }
     }
   }
