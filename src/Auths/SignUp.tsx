@@ -5,12 +5,14 @@ import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
 import { signup } from "../Features/User/userSlice";
 import { ISignUp } from "../Features/User/type";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
 export const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { currentUser } = useAppSelector((state) => state.user);
+  const { errors } = useAppSelector((state) => state.error);
+  const [showPass, setShowPass] = useState<boolean>(false);
+  const errText: string = errors[0]?.message?.message;
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -37,7 +39,6 @@ export const SignUp = () => {
   // Submit handler
   const handleSubmit = (values: ISignUp) => {
     dispatch(signup(values));
-    if (currentUser?.length > 1) navigate(routes.login);
   };
 
   // Formik form handling
@@ -49,8 +50,8 @@ export const SignUp = () => {
 
   useEffect(() => {
     // console.log(currentUser);
-    if (currentUser) navigate(routes.login);
-  }, [currentUser]);
+    if (errText === "created successfully") navigate(routes.login);
+  }, [navigate, errText]);
 
   return (
     <div className="Auth-Signup">
@@ -111,7 +112,7 @@ export const SignUp = () => {
                 <div className="field">
                   {Pass()}
                   <input
-                    type="password"
+                    type={showPass ? "text" : "password"}
                     id="Password"
                     name="Password"
                     onChange={formik.handleChange}
@@ -172,6 +173,8 @@ export const SignUp = () => {
         height="24"
         viewBox="0 0 24 24"
         fill="none"
+        onClick={() => setShowPass(!showPass)}
+        style={{ cursor: "pointer" }}
       >
         <path
           fillRule="evenodd"

@@ -18,6 +18,7 @@ function OTPInput({ getOTP }: ILoginProps) {
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
   const { errors } = useAppSelector((state) => state.error);
   const [showResend, setShowResend] = useState<boolean>(false);
+  const errText: string = errors[0]?.message?.message;
 
   // Event handler to update OTP value for each input box
   const handleInputChange = (index: number, value: string) => {
@@ -73,31 +74,39 @@ function OTPInput({ getOTP }: ILoginProps) {
 
   useEffect(() => {
     if (errors?.length > 0) {
-      if (errors[0]?.message?.code === 400) {
+      if (errText === "Expired OTP") {
         setShowResend(true);
       } else if (errors[0]?.message?.code === 200) {
-        // console.log("errMessage: ", errors[0]?.message?.message);
-        if (errors[0]?.message?.message !== "Updated succesfully") {
+        // console.log("errMessage: ", errText);
+        if (errText?.includes("Code to verify")) {
           setShowResend(false);
-        } else if (errors[0]?.message?.message === "Updated succesfully") {
+          setOTP(["", "", "", "", "", ""]);
+        } else if (errText === "Verified email") {
           dispatch(clearErrors());
           //   window.location.reload();
         }
       }
     }
-  }, [dispatch, errors]);
+  }, [dispatch, errors, errText]);
 
   return (
     <div className="otp-input">
       <h3>Enter OTP</h3>
-      {showResend && (
-        <div
-          style={{ color: "red", margin: "0px auto 8px auto", width: "80%" }}
-        >
-          {errors[0]?.message?.message}, Please click the button to receive new
-          OTP
-        </div>
-      )}
+      {/* {showResend && ( */}
+      <div
+        style={{
+          color: !errText?.includes("Code to verify") ? "red" : "green",
+          margin: "0px auto 8px auto",
+          width: "80%",
+        }}
+      >
+        {errText}
+        {errText?.includes("Expired OTP") &&
+          ", Please click the button to receive new OTP"}
+        {errText?.includes("Unverified email") &&
+          ", Please enter the OTP you receive"}
+      </div>
+      {/* )} */}
       <div>
         {otp.map((digit, index) => (
           <input

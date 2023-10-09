@@ -11,7 +11,7 @@ export interface IUserState {
   token?: string;
   appointment?: any;
   availableDoctors?: any[] | null;
-  appointmentHistory?: IAppointmentHistory[] | null;
+  airtimeCategory?: IAirtimeCategory[] | null;
   selectedDoctor?: any | null;
   isBookedApt: boolean;
   doctorAptDatetime?: GetDoctorAptDates[];
@@ -28,25 +28,21 @@ export interface EachAptDate {
   appointmentLength: number;
 }
 
-export interface IAppointmentHistory {
-  recordID: number;
-  internalid: number;
-  recordstatus: number;
-  appointmentdate: string;
-  appointmenttime: number;
-  appointmentlength: number;
-  appointmentcode: number;
-  appointmenttype: number;
-  appointmenttypeValue: string;
-  reason: string;
-  arrivaltime: number;
-  consultationtime: number;
-  visitlength: number;
-  comment: string;
-  created: string;
-  updated: string;
-  doctorsId: number;
-  doctors: IADoctor;
+export interface IAirtimeCategory {
+  id: number;
+  biller_code: string;
+  name: string;
+  default_commission: number;
+  date_added: string;
+  country: string;
+  is_airtime: boolean;
+  biller_name: string;
+  item_code: string;
+  short_name: string;
+  fee: number;
+  commission_on_fee: boolean;
+  label_name: string;
+  amount: number;
 }
 
 interface IADoctor {
@@ -157,4 +153,9 @@ export interface ISignUp {
 export interface IVerifyEmail {
   EmailOTP: string;
   Email: string;
+}
+
+export interface IBillsCategory {
+  QueryParam: string;
+  Index: string;
 }

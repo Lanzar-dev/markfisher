@@ -1,20 +1,21 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useAppDispatch } from "../Store/store";
-import { IAirtimePayload } from "../Features/User/type";
+import { useAppDispatch, useAppSelector } from "../Store/store";
+import { IAirtimeCategory, IAirtimePayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import { BuyAirtime } from "../Features/User/userSlice";
+import { BuyAirtime, getBillsCategories } from "../Features/User/userSlice";
+import { useEffect, useState } from "react";
 
 export const AirtimeForm = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { airtimeCategory } = useAppSelector((state) => state.user);
+  const [airtimes, setAirtimes] = useState<IAirtimeCategory[] | null>(null);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    AccountNumber: Yup.string().required("AccountNumber is required"),
-    BankName: Yup.string().required("BankName is required"),
-    Beneficiary: Yup.string().required("Beneficiary is required"),
-    Narration: Yup.string().required("Narration is required"),
+    MobileNumber: Yup.string().required("Mobile number is required"),
+    NetworkName: Yup.string().required("Network name is required"),
     Amount: Yup.string().required("Amount is required"),
   });
 
@@ -40,6 +41,14 @@ export const AirtimeForm = () => {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    if (!airtimeCategory) {
+      dispatch(getBillsCategories({ QueryParam: "airtime", Index: "1" }));
+      setAirtimes(airtimeCategory);
+    }
+  }, [airtimeCategory]);
+
   return (
     <form>
       <div className="text-1">Pay to</div>
@@ -65,7 +74,7 @@ export const AirtimeForm = () => {
       <div className="field-holder">
         <div className="title">Choose a network</div>
         <div className="field">
-          <input
+          {/* <input
             type="text"
             id="NetworkName"
             name="NetworkName"
@@ -73,7 +82,29 @@ export const AirtimeForm = () => {
             onBlur={formik.handleBlur}
             value={formik.values.NetworkName}
             placeholder="Network name"
-          />
+          /> */}
+          <select
+            id="NetworkName"
+            name="NetworkName"
+            onChange={(e) => {
+              formik.handleChange(e);
+            }}
+            onBlur={formik.handleBlur}
+            value={formik.values.NetworkName}
+            className="field"
+          >
+            {/* <option value="" disabled>
+              Select a Date
+            </option> */}
+            {airtimeCategory?.map(
+              (airtime: IAirtimeCategory, index: number) => (
+                <option value={airtime.name} key={index}>
+                  {airtime.name}
+                </option>
+              )
+            )}
+            {/* Add more options as needed */}
+          </select>
         </div>
         {formik.touched.NetworkName && formik.errors.NetworkName && (
           <div className="error">{formik.errors.NetworkName}</div>

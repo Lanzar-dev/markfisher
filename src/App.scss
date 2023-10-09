@@ -1751,7 +1751,8 @@ body {
           line-height: normal;
         }
         .field {
-          input {
+          input,
+          select {
             width: 358px;
             height: 36px;
             flex-shrink: 0;
@@ -1761,7 +1762,8 @@ body {
             background: #f8fbfd;
             padding-left: 5px;
           }
-          input:focus {
+          input:focus,
+          select:focus {
             outline: none;
           }
         }
@@ -2170,6 +2172,7 @@ body {
     border: 0px solid;
     background: #f4f7fa;
     height: 100vh;
+    overflow-y: auto;
     display: flex;
 
     .left-div {
@@ -3369,158 +3372,10 @@ body {
       position: relative;
       .top {
         width: 100vw;
-        height: 125px;
+        height: 20vh;
         flex-shrink: 0;
         border-radius: 10px 10px 0px 0px;
         background: #049dfe;
-      }
-      .down {
-        border-radius: 0px;
-        background: #f4f7fa;
-        box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-        height: calc(100vh - 125px);
-        h3 {
-          color: rgba(0, 0, 0, 0.8);
-          font-family: Poppins;
-          font-size: 18px;
-          font-style: normal;
-          font-weight: 600;
-          line-height: normal;
-          margin-top: 120px;
-          margin-left: 15px;
-        }
-        .icons {
-          width: 100vw;
-          overflow-x: auto;
-          margin-top: -15px;
-          .xs-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 0px;
-            // margin: 0 auto;
-            // width: fit-content;
-            .card {
-              // border: 1px solid;
-              margin-top: 15px;
-              // margin-left: 10px;
-              width: 85px;
-              height: fit-content;
-              flex-shrink: 0;
-              border-radius: 10px;
-              background: none;
-            }
-            .card {
-              // position: relative;
-              .biyaCircle {
-                width: 70.579px;
-                height: 70.579px;
-                flex-shrink: 0;
-                background-color: rgba(4, 157, 254, 0.1);
-                border-radius: 50%;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                color: #049dfe;
-                font-family: var(--font-family-a);
-                font-size: 28px;
-                font-style: normal;
-                font-weight: 600;
-                line-height: normal;
-                // position: absolute;
-                margin-left: 10px;
-                margin-top: 15px;
-                cursor: pointer;
-                img {
-                  width: 35px;
-                }
-              }
-              .biyaTrx {
-                text-align: center;
-                color: rgba(0, 0, 0, 0.5);
-                text-align: center;
-                font-family: Poppins;
-                font-size: 13px;
-                font-style: normal;
-                font-weight: 400;
-                line-height: normal;
-              }
-              img:hover {
-                cursor: pointer;
-              }
-            }
-          }
-        }
-        .card-2 {
-          overflow-x: auto;
-          width: 100vw;
-          div {
-            width: fit-content;
-            display: flex;
-            .card {
-              margin-top: 35px;
-              margin-bottom: 35px;
-              border-radius: 7px;
-              background: #fff;
-              width: 170px;
-              height: 65px;
-              flex-shrink: 0;
-              filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
-            }
-            .card:nth-child(1) {
-              background: #e72f3d;
-              margin-left: 10px;
-              margin-right: 10px;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              div {
-                color: #fff;
-                font-family: var(--font-family-a);
-                font-size: 13px;
-                font-style: normal;
-                font-weight: 600;
-                line-height: normal;
-                margin-right: 25px;
-              }
-              img {
-                display: inline-flex;
-                width: 40px;
-                // height: 100.248px;
-                transform: rotate(360deg);
-                padding: 1.203px 2.558px 1.536px 0.181px;
-                justify-content: center;
-                align-items: center;
-                flex-shrink: 0;
-              }
-            }
-            .card:nth-child(2) {
-              background: #049dfe;
-              display: flex;
-              align-items: center;
-              justify-content: center;
-              margin-right: 10px;
-              div {
-                color: #fff;
-                font-family: var(--font-family-a);
-                font-size: 13px;
-                font-style: normal;
-                font-weight: 600;
-                line-height: normal;
-                margin-right: 25px;
-              }
-              img {
-                display: inline-flex;
-                width: 40px;
-                // height: 55.345px;
-                transform: rotate(360deg);
-                padding: 1.203px 2.558px 1.536px 0.181px;
-                justify-content: center;
-                align-items: center;
-                flex-shrink: 0;
-              }
-            }
-          }
-        }
       }
       .user {
         position: absolute;
@@ -3602,6 +3457,261 @@ body {
               margin-left: auto;
               margin-right: 25px;
               margin-top: 45px;
+            }
+          }
+        }
+      }
+      .down {
+        border-radius: 0px;
+        background: #f4f7fa;
+        // box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
+        height: calc(100vh - 125px);
+        h3 {
+          color: rgba(0, 0, 0, 0.8);
+          font-family: Poppins;
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+          margin-top: 120px;
+          margin-left: 15px;
+        }
+        .icons {
+          width: 100vw;
+          overflow-x: auto;
+          margin-top: -15px;
+          .xs-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0px;
+            // margin: 0 auto;
+            // width: fit-content;
+            .card {
+              // border: 1px solid;
+              margin-top: 15px;
+              margin-left: auto;
+              margin-right: auto;
+              width: 85px;
+              height: fit-content;
+              flex-shrink: 0;
+              border-radius: 10px;
+              background: none;
+            }
+            .card {
+              // position: relative;
+              .biyaCircle {
+                width: 70.579px;
+                height: 70.579px;
+                flex-shrink: 0;
+                background-color: rgba(4, 157, 254, 0.1);
+                border-radius: 50%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                color: #049dfe;
+                font-family: var(--font-family-a);
+                font-size: 28px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                // position: absolute;
+                margin-left: 10px;
+                margin-top: 15px;
+                cursor: pointer;
+                img {
+                  width: 35px;
+                }
+              }
+              .biyaTrx {
+                text-align: center;
+                color: rgba(0, 0, 0, 0.5);
+                text-align: center;
+                font-family: Poppins;
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 400;
+                line-height: normal;
+              }
+              img:hover {
+                cursor: pointer;
+              }
+            }
+          }
+        }
+        .card-2 {
+          overflow-x: auto;
+          width: 100vw;
+          div {
+            width: fit-content;
+            display: flex;
+            // border: 1px solid;
+            .card {
+              margin-top: 35px;
+              margin-bottom: 35px;
+              border-radius: 7px;
+              background: #fff;
+              width: 50vw;
+              min-width: 170px;
+              height: 80px;
+              flex-shrink: 0;
+              filter: drop-shadow(0px 0px 6px rgba(0, 0, 0, 0.25));
+            }
+            .card:nth-child(1) {
+              background: #e72f3d;
+              margin-left: 10px;
+              margin-right: 10px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              div {
+                color: #fff;
+                font-family: var(--font-family-a);
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                margin-right: 15px;
+                padding-left: 10px;
+              }
+              img {
+                display: inline-flex;
+                width: 40px;
+                // height: 100.248px;
+                transform: rotate(360deg);
+                padding: 1.203px 2.558px 1.536px 0.181px;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+              }
+            }
+            .card:nth-child(2) {
+              background: #049dfe;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              margin-right: 10px;
+              div {
+                color: #fff;
+                font-family: var(--font-family-a);
+                font-size: 13px;
+                font-style: normal;
+                font-weight: 600;
+                line-height: normal;
+                margin-right: 15px;
+                padding-left: 10px;
+              }
+              img {
+                display: inline-flex;
+                width: 40px;
+                // height: 55.345px;
+                transform: rotate(360deg);
+                padding: 1.203px 2.558px 1.536px 0.181px;
+                justify-content: center;
+                align-items: center;
+                flex-shrink: 0;
+              }
+            }
+          }
+        }
+      }
+      .small-table {
+        // margin-bottom: 5px;
+        width: 100vw;
+        height: fit-content;
+        flex-shrink: 0;
+        // border: 1px solid blueviolet;
+        // background: #fff;
+        // box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.25);
+        .title {
+          width: fit-content;
+          margin-top: 20px;
+          margin-left: 20px;
+          color: rgba(0, 0, 0, 0.8);
+          font-family: var(--font-family-a);
+          font-size: 18px;
+          font-style: normal;
+          font-weight: 600;
+          line-height: normal;
+        }
+        .table-container {
+          overflow-x: auto;
+          width: 100vw;
+          margin-top: 25px;
+          // border: 1px solid;
+          table {
+            min-width: 100vw;
+            width: fit-content;
+            border-collapse: collapse;
+            // border: 1px solid;
+            tbody {
+              tr {
+                .table-cell:nth-child(1) {
+                  color: #212b36;
+                  font-family: var(--font-family-a);
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 600;
+                  line-height: 22px;
+                  width: 10% !important;
+                  padding: 5px 15px;
+                  div {
+                    border-radius: 55px;
+                    width: 55px;
+                    height: 55px;
+                    flex-shrink: 0;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                  }
+                }
+                .table-cell:nth-child(2) {
+                  color: rgba(0, 0, 0, 0.8);
+                  font-family: var(--font-family-a);
+                  font-size: 15px;
+                  font-style: normal;
+                  font-weight: 400;
+                  line-height: normal;
+                  width: 40% !important;
+                  .datetime {
+                    color: rgba(0, 0, 0, 0.5);
+                    font-family: var(--font-family-a);
+                    font-size: 12px;
+                    font-style: normal;
+                    font-weight: 600;
+                    line-height: normal;
+                  }
+                }
+                .table-cell:nth-child(3) {
+                  color: #5aaf76;
+                  text-align: left;
+                  font-family: var(--font-family-a);
+                  font-size: 14px;
+                  font-style: normal;
+                  font-weight: 500;
+                  line-height: normal;
+                  width: 40% !important;
+                }
+              }
+              tr:nth-child(even) {
+                // background-color: rgba(0, 0, 0, 0.05);
+              }
+            }
+          }
+          .pagination {
+            // display: flex;
+            width: 100vw;
+            color: #2d699d;
+            padding: 10px 20px;
+            text-align: right;
+            select {
+              margin-left: 15px;
+            }
+            span {
+              margin-left: 15px;
+              margin-right: 15px;
+            }
+            img:hover {
+              cursor: pointer;
             }
           }
         }

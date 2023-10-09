@@ -28,6 +28,7 @@ import { saveAs } from "file-saver";
 import copy from "clipboard-copy";
 import { useNavigate } from "react-router-dom";
 import { MediaQueryMatchers, useMediaQuery } from "react-responsive";
+import SmallTable from "./SmallTable";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -548,7 +549,12 @@ export const Home = () => {
               </div>
             </div>
           </div>
-          <div className="bottom-tab"></div>
+          <div className="small-table">
+            <br />
+            <div className="title">Recent transactions</div>
+            <SmallTable />
+            {/* <br /> */}
+          </div>
         </div>
       )}
     </div>

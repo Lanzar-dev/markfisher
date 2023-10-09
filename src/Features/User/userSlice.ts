@@ -6,10 +6,11 @@ import { clearErrors, setError, setSuccess } from "../Error/errorSlice";
 import {
   EachAptDate,
   GetDoctorAptDates,
+  IAirtimeCategory,
   IAirtimePayload,
-  IAppointmentHistory,
   IAuth,
   IBankTransferPayload,
+  IBillsCategory,
   IBiyaTransferPayload,
   IForgotPass,
   IProfile,
@@ -22,6 +23,7 @@ import {
 } from "./type";
 
 const BASE_PATH = "Auth";
+const BASE_PATH_FL = "FL";
 
 const initialState: IUserState = {
   isLoading: false,
@@ -45,7 +47,7 @@ const userSlice = createSlice({
       state.userId = "";
       state.currentUser = null;
       state.availableDoctors = null;
-      state.appointmentHistory = null;
+      state.airtimeCategory = null;
     },
 
     setProfile: (state, { payload }: PayloadAction<IProfile>) => {
@@ -67,11 +69,11 @@ const userSlice = createSlice({
       state.isBookedApt = payload;
     },
 
-    setAppointmentHistory: (
+    setAirtimeCategory: (
       state,
-      { payload }: PayloadAction<IAppointmentHistory[]>
+      { payload }: PayloadAction<IAirtimeCategory[]>
     ) => {
-      state.appointmentHistory = payload;
+      state.airtimeCategory = payload;
     },
 
     setAuth: (state, { payload }: PayloadAction<IAuth>) => {
@@ -158,7 +160,7 @@ export const bookAppointment = (data: any): AppThunk => {
   };
 };
 
-export const cancelAppointment = (data: IAppointmentHistory): AppThunk => {
+export const cancelAppointment = (data: any): AppThunk => {
   return async (dispatch, getState) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
@@ -424,26 +426,28 @@ export const updateUserEmail = (data: any): AppThunk => {
   };
 };
 
-export const signup = (data: ISignUp): AppThunk => {
+export const getBillsCategories = (data: IBillsCategory): AppThunk => {
   return async (dispatch) => {
+    dispatch(clearErrors());
     dispatch(setLoading(true));
     try {
-      const path = BASE_PATH + "/SignUp";
+      const path = BASE_PATH_FL + "/GetBillCategories";
 
       const response = await axios.post(path, data);
       // console.log(response);
       if (response) {
         const data = response.data;
         // console.log("signup response: ", data);
+        dispatch(setAirtimeCategory(data));
         if (data.code === 200) {
           dispatch(setProfile(data.body));
-          dispatch(clearErrors());
-          dispatch(setSuccess(data?.message?.toString()));
+
+          const resp: any = { code: data.code, message: data.message };
+          dispatch(setSuccess(resp));
         }
       }
     } catch (error: any) {
-      console.log(" error: ", error);
-      // dispatch(setError(error?.message));
+      // console.log(" error: ", error);
       dispatch(setError(error?.response?.data?.message));
     }
     dispatch(setLoading(false));
@@ -489,7 +493,7 @@ export const getAppointmentHistoryById = (
       if (response) {
         const data = response?.data;
         if (data?.status === true) {
-          if (data?.data) dispatch(setAppointmentHistory(data?.data));
+          // if (data?.data) dispatch(setAppointmentHistory(data?.data));
         }
       }
     } catch (error: any) {
@@ -525,6 +529,32 @@ export const getDocAptDatesById = (userId: number): AppThunk => {
   };
 };
 
+export const signup = (data: ISignUp): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    try {
+      const path = BASE_PATH + "/SignUp";
+
+      const response = await axios.post(path, data);
+      // console.log(response);
+      if (response) {
+        const data = response.data;
+        // console.log("signup response: ", data);
+        if (data.code === 200) {
+          dispatch(setProfile(data.body));
+          dispatch(clearErrors());
+          const resp: any = { code: data.code, message: data.message };
+          dispatch(setSuccess(resp));
+        }
+      }
+    } catch (error: any) {
+      // console.log(" error: ", error);
+      dispatch(setError(error?.response?.data?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
 function formatDate(inputDate: string) {
   const dateObject = new Date(inputDate);
 
@@ -544,7 +574,7 @@ export const {
   setDoctorsList,
   setAppointment,
   setSelectedDoctor,
-  setAppointmentHistory,
+  setAirtimeCategory,
   setIsBookedApt,
   setDoctorAptDate,
   setSelectedDocAptDate,
