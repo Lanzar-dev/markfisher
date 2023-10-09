@@ -4,14 +4,21 @@ import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import { IAirtimeCategory, IAirtimePayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import { BuyAirtime, getBillsCategories } from "../Features/User/userSlice";
+import {
+  BuyAirtime,
+  getBillsCategories,
+  validateCustomerDetails,
+} from "../Features/User/userSlice";
 import { useEffect, useState } from "react";
 
-export const AirtimeForm = () => {
+type IAirtimeFormProps = {
+  fnShowCardForm: (index: boolean) => void;
+};
+
+export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { airtimeCategory } = useAppSelector((state) => state.user);
-  const [airtimes, setAirtimes] = useState<IAirtimeCategory[] | null>(null);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     MobileNumber: Yup.string().required("Mobile number is required"),
@@ -30,7 +37,18 @@ export const AirtimeForm = () => {
 
   // Submit handler
   const handleSubmit = (values: IAirtimePayload) => {
-    dispatch(BuyAirtime(values));
+    const selectedCat: IAirtimeCategory = airtimeCategory?.find(
+      (obj: IAirtimeCategory) => obj.name === formik.values.NetworkName
+    );
+    const payload = {
+      code: selectedCat.biller_code,
+      customer: values.MobileNumber,
+      item_code: selectedCat.item_code,
+      network_name: values.NetworkName,
+    };
+    // console.log(payload);
+    dispatch(validateCustomerDetails(payload));
+    // dispatch(BuyAirtime(values));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
@@ -45,12 +63,11 @@ export const AirtimeForm = () => {
   useEffect(() => {
     if (!airtimeCategory) {
       dispatch(getBillsCategories({ QueryParam: "airtime", Index: "1" }));
-      setAirtimes(airtimeCategory);
     }
-  }, [airtimeCategory]);
+  }, [dispatch, airtimeCategory]);
 
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="text-1">Pay to</div>
 
       <div className="field-holder">
@@ -74,15 +91,6 @@ export const AirtimeForm = () => {
       <div className="field-holder">
         <div className="title">Choose a network</div>
         <div className="field">
-          {/* <input
-            type="text"
-            id="NetworkName"
-            name="NetworkName"
-            onChange={formik.handleChange}
-            onBlur={formik.handleBlur}
-            value={formik.values.NetworkName}
-            placeholder="Network name"
-          /> */}
           <select
             id="NetworkName"
             name="NetworkName"
@@ -127,6 +135,17 @@ export const AirtimeForm = () => {
         {formik.touched.Amount && formik.errors.Amount && (
           <div className="error">{formik.errors.Amount}</div>
         )}
+      </div>
+
+      <div className="card-forms-bottom">
+        <button
+          onClick={() => {
+            fnShowCardForm(false);
+          }}
+        >
+          Back
+        </button>
+        <button type="submit">Next</button>
       </div>
     </form>
   );

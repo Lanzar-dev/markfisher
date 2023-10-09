@@ -19,6 +19,7 @@ import {
   ISignUp,
   ITollPayload,
   IUserState,
+  IValidateCustomer,
   IVerifyEmail,
 } from "./type";
 
@@ -532,6 +533,7 @@ export const getDocAptDatesById = (userId: number): AppThunk => {
 export const signup = (data: ISignUp): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
+    dispatch(clearErrors());
     try {
       const path = BASE_PATH + "/SignUp";
 
@@ -550,6 +552,28 @@ export const signup = (data: ISignUp): AppThunk => {
     } catch (error: any) {
       // console.log(" error: ", error);
       dispatch(setError(error?.response?.data?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/ValidateCustomerDetails";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+        console.log("data: ", response.data);
+        if (data.code === 200) {
+          dispatch(setSuccess(data));
+        }
+      }
+    } catch (error: any) {
+      // console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };

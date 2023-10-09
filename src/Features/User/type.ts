@@ -45,11 +45,21 @@ export interface IAirtimeCategory {
   amount: number;
 }
 
-interface IADoctor {
-  surname: string;
-  firstname: string;
-  title: string;
-  photoUrl: string;
+export interface IBillsPaymentPayload {
+  country: string;
+  customer: string;
+  amount: string;
+  recurrence: string;
+  type: string;
+  reference: string;
+  biller_name: string;
+}
+
+export interface IValidateCustomer {
+  customer: string;
+  code: string;
+  item_code: string;
+  network_name: string;
 }
 
 export interface IAuth {

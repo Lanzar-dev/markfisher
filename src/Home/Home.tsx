@@ -83,6 +83,11 @@ export const Home = () => {
     navigate("/");
   };
 
+  const funcSetShowCard = (isBool: boolean) => {
+    if (navIndex === 5 || navIndex === 4) setNavIndex(1);
+    setShowCardForm(isBool);
+  };
+
   return (
     <div className="Home">
       {!isMobile && (
@@ -120,20 +125,11 @@ export const Home = () => {
               {cardFormIndex === 1 && <BiyaTransferForm />}
               {cardFormIndex === 2 && <BankTransferForm />}
               {cardFormIndex === 3 && <PSBTransferForm />}
-              {cardFormIndex === 4 && <AirtimeForm />}
+              {cardFormIndex === 4 && (
+                <AirtimeForm fnShowCardForm={funcSetShowCard} />
+              )}
               {cardFormIndex === 6 && <BundleForm />}
               {cardFormIndex === 7 && <TollForm />}
-              <div className="card-forms-bottom">
-                <button
-                  onClick={() => {
-                    if (navIndex === 5 || navIndex === 4) setNavIndex(1);
-                    setShowCardForm(!showCardForm);
-                  }}
-                >
-                  Back
-                </button>
-                <button>Next</button>
-              </div>
             </div>
           )}
           <div className="left-div">
