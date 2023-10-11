@@ -4,12 +4,8 @@ import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import { IAirtimeCategory, IAirtimePayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import {
-  BuyAirtime,
-  getBillsCategories,
-  validateCustomerDetails,
-} from "../Features/User/userSlice";
-import { useEffect, useState } from "react";
+import { BuyAirtime, getBillsCategories } from "../Features/User/userSlice";
+import { useEffect } from "react";
 
 type IAirtimeFormProps = {
   fnShowCardForm: (index: boolean) => void;
@@ -18,7 +14,9 @@ type IAirtimeFormProps = {
 export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { airtimeCategory } = useAppSelector((state) => state.user);
+  const { airtimeCategory, currentUser } = useAppSelector(
+    (state) => state.user
+  );
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     MobileNumber: Yup.string().required("Mobile number is required"),
@@ -31,24 +29,15 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
     MobileNumber: "",
     NetworkName: "",
     Amount: "",
+    Email: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
   const handleSubmit = (values: IAirtimePayload) => {
-    const selectedCat: IAirtimeCategory = airtimeCategory?.find(
-      (obj: IAirtimeCategory) => obj.name === formik.values.NetworkName
-    );
-    const payload = {
-      code: selectedCat.biller_code,
-      customer: values.MobileNumber,
-      item_code: selectedCat.item_code,
-      network_name: values.NetworkName,
-    };
-    // console.log(payload);
-    dispatch(validateCustomerDetails(payload));
-    // dispatch(BuyAirtime(values));
+    const newPayload = { ...values, Email: currentUser.Email };
+    dispatch(BuyAirtime(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };

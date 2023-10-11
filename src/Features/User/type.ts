@@ -133,6 +133,13 @@ export interface IAirtimePayload {
   MobileNumber: string;
   NetworkName: string;
   Amount: string;
+  Email: string;
+}
+export interface IBundlePayload {
+  MobileNumber: string;
+  NetworkName: string;
+  Amount: string;
+  Email: string;
 }
 export interface IPSBTransferPayload {
   AccountNumber: string;

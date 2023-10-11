@@ -320,21 +320,21 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH + "/LoginPatientAccount";
+      const path = BASE_PATH_FL + "/BuyAirtime";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
 
         // console.log("data: ", data);
-        if (data.status === true) {
+        if (data.code === 200) {
           const payload: IAuth = {
             userId: data.data.tokenModel.id,
             token: data.data.tokenModel.accessToken,
           };
           dispatch(setAuth(payload));
           dispatch(setProfile(data.data.patientDetailsResponse));
-        } else if (data.status === false) {
-          dispatch(setError(data.message));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
         }
       }
     } catch (error: any) {

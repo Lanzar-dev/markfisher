@@ -1607,7 +1607,7 @@ body {
 }
 .Home .card-forms form .field-holder .field input,
 .Home .card-forms form .field-holder .field select {
-  width: 358px;
+  width: 28vw;
   height: 36px;
   flex-shrink: 0;
   border-top: 0px;

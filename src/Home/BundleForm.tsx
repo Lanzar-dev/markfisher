@@ -1,14 +1,19 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useAppDispatch } from "../Store/store";
-import { IAirtimePayload } from "../Features/User/type";
+import { useAppDispatch, useAppSelector } from "../Store/store";
+import { IAirtimePayload, IBundlePayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import { BuyAirtime } from "../Features/User/userSlice";
 
-export const BundleForm = () => {
+type IBundleFormProps = {
+  fnShowCardForm: (index: boolean) => void;
+};
+
+export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { currentUser } = useAppSelector((state) => state.user);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     MobileNumber: Yup.string().required("AccountNumber is required"),
@@ -21,13 +26,15 @@ export const BundleForm = () => {
     MobileNumber: "",
     NetworkName: "",
     Amount: "",
+    Email: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
-  const handleSubmit = (values: IAirtimePayload) => {
-    dispatch(BuyAirtime(values));
+  const handleSubmit = (values: IBundlePayload) => {
+    const newPayload = { ...values, Email: currentUser.Email };
+    dispatch(BuyAirtime(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
@@ -94,6 +101,17 @@ export const BundleForm = () => {
         {formik.touched.Amount && formik.errors.Amount && (
           <div className="error">{formik.errors.Amount}</div>
         )}
+      </div>
+
+      <div className="card-forms-bottom">
+        <button
+          onClick={() => {
+            fnShowCardForm(false);
+          }}
+        >
+          Back
+        </button>
+        <button type="submit">Next</button>
       </div>
     </form>
   );

@@ -128,7 +128,9 @@ export const Home = () => {
               {cardFormIndex === 4 && (
                 <AirtimeForm fnShowCardForm={funcSetShowCard} />
               )}
-              {cardFormIndex === 6 && <BundleForm />}
+              {cardFormIndex === 6 && (
+                <BundleForm fnShowCardForm={funcSetShowCard} />
+              )}
               {cardFormIndex === 7 && <TollForm />}
             </div>
           )}
