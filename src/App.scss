@@ -1704,7 +1704,7 @@ body {
         margin-bottom: 15px;
         .title {
           width: fit-content;
-          height: 18px;
+          height: 22px;
           flex-shrink: 0;
           color: rgba(0, 0, 0, 0.9);
           font-family: var(--font-family-a);
@@ -1724,6 +1724,7 @@ body {
             border-right: 0px;
             background: #f8fbfd;
             padding-left: 5px;
+            font-family: "PoppinsMedium";
           }
           input:focus,
           select:focus {

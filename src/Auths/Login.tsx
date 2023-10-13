@@ -6,6 +6,7 @@ import * as routes from "../Data/Routes";
 import {
   login,
   resendVerifyEmail,
+  setUserId,
   verifyEmail,
 } from "../Features/User/userSlice";
 import { ISignin, IVerifyEmail } from "../Features/User/type";
@@ -17,7 +18,7 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  // const { isAuth } = useAppSelector((state) => state.user);
+  const { userId } = useAppSelector((state) => state.user);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
@@ -40,22 +41,25 @@ export const Login = () => {
     Email: "",
     Password: "",
   };
-
-  // console.log("init: ", storedValues);
+  // console.log(initialValues);
 
   const getOtp = (otp: string) => {
+    // alert(otp);
     setOTP(otp);
   };
 
+  const verify: IVerifyEmail = {
+    Email: userId,
+    EmailOTP: otp,
+  };
+  // console.log("verify: ", verify);
   // Submit handler
   const handleSubmit = (values: ISignin) => {
-    if (!showVerifyEmail) dispatch(login(values));
-    else {
+    // console.log("verify: ", verify);
+    if (!showVerifyEmail) {
+      dispatch(login(values));
+    } else {
       if (errors?.length > 0 && errors[0]?.message?.code !== 400) {
-        const verify: IVerifyEmail = {
-          Email: formik.values.Email,
-          EmailOTP: otp,
-        };
         // console.log(verify);
         dispatch(verifyEmail(verify));
       } else {
@@ -75,9 +79,16 @@ export const Login = () => {
 
   useEffect(() => {
     if (errors?.length > 0) {
-      if (errText === "Unverified email") {
+      if (
+        errText === "Unverified email" ||
+        errText === "created successfully"
+      ) {
         setShowVerifyEmail(true);
+        formik.setFieldValue("Email", userId);
+        formik.setFieldValue("Password", "Abcde1&&&");
       } else if (errText === "Verified email") {
+        formik.setFieldValue("Email", "");
+        formik.setFieldValue("Password", "");
         setShowVerifyEmail(false);
       }
     }
@@ -114,7 +125,10 @@ export const Login = () => {
                         type="text"
                         id="Email"
                         name="Email"
-                        onChange={formik.handleChange}
+                        onChange={(e) => {
+                          formik.handleChange(e);
+                          dispatch(setUserId(e.currentTarget.value));
+                        }}
                         onBlur={formik.handleBlur}
                         value={formik.values.Email}
                         // placeholder="Enter Email"

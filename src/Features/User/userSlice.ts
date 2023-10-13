@@ -9,10 +9,12 @@ import {
   IAirtimeCategory,
   IAirtimePayload,
   IAuth,
+  IBanksPayload,
   IBankTransferPayload,
   IBillsCategory,
   IBiyaTransferPayload,
   IBundlePayload,
+  ICablePayload,
   IElectricityPayload,
   IForgotPass,
   IProfile,
@@ -22,6 +24,8 @@ import {
   ITollPayload,
   IUserState,
   IValidateCustomer,
+  IVerifiedAcct,
+  IVerifyBankAcct,
   IVerifyEmail,
 } from "./type";
 
@@ -49,7 +53,7 @@ const userSlice = createSlice({
       state.token = "";
       state.userId = "";
       state.currentUser = null;
-      state.availableDoctors = null;
+      state.banks = null;
       state.airtimeCategory = null;
     },
 
@@ -57,12 +61,15 @@ const userSlice = createSlice({
       state.currentUser = payload;
     },
 
-    setAppointment: (state, { payload }: PayloadAction<any>) => {
-      state.appointment = payload;
+    setBanks: (state, { payload }: PayloadAction<IBanksPayload[]>) => {
+      state.banks = payload;
     },
 
-    setDoctorsList: (state, { payload }: PayloadAction<any[]>) => {
-      state.availableDoctors = payload;
+    setCableCategory: (
+      state,
+      { payload }: PayloadAction<IAirtimeCategory[]>
+    ) => {
+      state.cableCategory = payload;
     },
 
     setElectricityCategory: (
@@ -93,11 +100,14 @@ const userSlice = createSlice({
     },
 
     setToken: (state, { payload }: PayloadAction<string>) => {},
-    setDoctorAptDate: (
+    setUserId: (state, { payload }: PayloadAction<string>) => {
+      state.userId = payload;
+    },
+    setVerifiedAcct: (
       state,
-      { payload }: PayloadAction<GetDoctorAptDates[]>
+      { payload }: PayloadAction<IVerifiedAcct | null>
     ) => {
-      state.doctorAptDatetime = payload;
+      state.verifiedAcct = payload;
     },
     setSelectedDocAptDate: (
       state,
@@ -407,6 +417,84 @@ export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
   };
 };
 
+export const DstvPayment = (data: ICablePayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/BuyAirtime";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.code === 200) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const GetBanks = (): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/GetBanks";
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.code === 200) {
+          dispatch(setBanks(data.body));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const VerifyBankAccount = (data: IVerifyBankAcct): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/VerifyBankAccount";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        console.log("data: ", data);
+        if (data.code === 200) {
+          dispatch(setVerifiedAcct(data.body.data));
+          // dispatch(setBanks(data.body));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
 export const BiyaTransfer = (data: IBiyaTransferPayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -508,6 +596,8 @@ export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
           dispatch(setBundleCategory(data));
         } else if (payload.QueryParam === "power") {
           dispatch(setElectricityCategory(data));
+        } else if (payload.QueryParam === "cable") {
+          dispatch(setCableCategory(data));
         }
         if (data.code === 200) {
           dispatch(setProfile(data.body));
@@ -536,7 +626,6 @@ export const getDoctorsList = (): AppThunk => {
       if (response) {
         const data = response?.data?.data;
         // console.log("first; ", response);
-        dispatch(setDoctorsList(data));
       }
     } catch (error: any) {
       // dispatch(setError(error?.message));
@@ -588,7 +677,7 @@ export const getDocAptDatesById = (userId: number): AppThunk => {
         const data = response?.data;
         // console.log("aptDates: ", data);
         if (data.status === true) {
-          if (data?.data) dispatch(setDoctorAptDate(data?.data));
+          //
         }
       }
     } catch (error: any) {
@@ -659,17 +748,18 @@ function formatDate(inputDate: string) {
 }
 
 export const {
+  setUserId,
   setLoading,
   setAuth,
   setLogout,
   setProfile,
   setToken,
-  setDoctorsList,
-  setAppointment,
+  setCableCategory,
+  setBanks,
   setElectricityCategory,
   setAirtimeCategory,
   setBundleCategory,
-  setDoctorAptDate,
+  setVerifiedAcct,
   setSelectedDocAptDate,
 } = userSlice.actions;
 export default userSlice.reducer;

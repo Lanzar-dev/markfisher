@@ -2,11 +2,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import {
-  IAirtimeCategory,
-  IAirtimePayload,
-  IBundlePayload,
-} from "../Features/User/type";
+import { IAirtimeCategory, IBundlePayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import { BuyBundle, getBillsCategories } from "../Features/User/userSlice";
 import { useEffect, useState } from "react";
@@ -73,7 +69,7 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
       (obj: IAirtimeCategory) => obj.biller_name.includes(e)
     );
     setNetworkBundles(selectedCat);
-    formik.setFieldValue("Amount", selectedCat[0].amount.toString());
+    formik.setFieldValue("Amount", selectedCat[0]?.amount.toString());
   };
 
   useEffect(() => {
@@ -82,7 +78,7 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
         (obj: IAirtimeCategory) => obj.biller_name.includes("AIRTEL")
       );
       setNetworkBundles(selectedCat);
-      formik.setFieldValue("Amount", selectedCat[0].amount.toString());
+      formik.setFieldValue("Amount", selectedCat[0]?.amount.toString());
     };
     thisFnc();
   }, []);

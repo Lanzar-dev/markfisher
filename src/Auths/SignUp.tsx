@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
-import { signup } from "../Features/User/userSlice";
+import { setUserId, signup } from "../Features/User/userSlice";
 import { ISignUp } from "../Features/User/type";
 import { useEffect, useState } from "react";
 
@@ -75,7 +75,10 @@ export const SignUp = () => {
                     type="text"
                     id="Email"
                     name="Email"
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      dispatch(setUserId(e.currentTarget.value));
+                    }}
                     onBlur={formik.handleBlur}
                     value={formik.values.Email}
                     // placeholder="Enter Email"

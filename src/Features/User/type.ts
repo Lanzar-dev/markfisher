@@ -10,10 +10,12 @@ export interface IUserState {
   userId?: string;
   token?: string;
   appointment?: any;
-  availableDoctors?: any[] | null;
+  banks?: IBanksPayload[] | null;
   airtimeCategory?: IAirtimeCategory[] | null;
   electricityCategory?: IAirtimeCategory[] | null;
   bundleCategory?: IAirtimeCategory[] | null;
+  cableCategory?: IAirtimeCategory[] | null;
+  verifiedAcct?: IVerifiedAcct | null;
   selectedDoctor?: any | null;
   isBookedApt: boolean;
   doctorAptDatetime?: GetDoctorAptDates[];
@@ -79,9 +81,14 @@ export interface IProfile {
   TwoFacSecret: string;
 }
 
-export interface ICreatePin {
-  email: string;
-  pin: string;
+export interface IVerifyBankAcct {
+  acctNum: string;
+  bankCode: string;
+}
+export interface IVerifiedAcct {
+  account_name: string;
+  account_number: string;
+  bank_id: number;
 }
 
 export interface IPasswordUpdate {
@@ -122,7 +129,7 @@ export interface IResetPassword {
 
 export interface ISignin {
   Email: string;
-  Password: string;
+  Password?: string;
 }
 export interface IBankTransferPayload {
   AccountNumber: string;
@@ -135,6 +142,17 @@ export interface IElectricityPayload {
   MeterNumber: string;
   OfficeName: string;
   Amount: string;
+}
+export interface ICablePayload {
+  DecoderNumber: string;
+  OfficeName: string;
+  Amount: string;
+}
+
+export interface IBanksPayload {
+  id: string;
+  code: string;
+  name: string;
 }
 export interface IAirtimePayload {
   MobileNumber: string;

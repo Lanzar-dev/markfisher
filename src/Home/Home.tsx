@@ -31,9 +31,12 @@ import { MediaQueryMatchers, useMediaQuery } from "react-responsive";
 import SmallTable from "./SmallTable";
 import { ElectricityForm } from "./ElectricityForm";
 import { CableTvForm } from "./CableTvForm";
+import { useAppDispatch } from "../Store/store";
+import { setLogout } from "../Features/User/userSlice";
 
 export const Home = () => {
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
@@ -82,6 +85,7 @@ export const Home = () => {
   };
 
   const LogOut = () => {
+    dispatch(setLogout());
     navigate("/");
   };
 
@@ -117,8 +121,14 @@ export const Home = () => {
                 </div>
                 <div className="title">
                   {cardFormIndex === 1 && "Biyawa to Biyawa"}
-                  {cardFormIndex === 2 && "Electricity postpaid"}
-                  {cardFormIndex === 3 && "Electricity prepaid"}
+                  {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
+                  {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
+                  {cardFormIndex === 2 &&
+                    navIndex === 7 &&
+                    "Electricity postpaid"}
+                  {cardFormIndex === 3 &&
+                    navIndex === 7 &&
+                    "Electricity prepaid"}
                   {cardFormIndex === 4 && "Airtime"}
                   {cardFormIndex === 6 && "Buy a bundle"}
                   {cardFormIndex === 7 && "Tolls"}
@@ -127,7 +137,13 @@ export const Home = () => {
               {cardFormIndex === 1 && (
                 <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
               )}
-              {cardFormIndex === 2 && (
+              {cardFormIndex === 2 && navIndex === 3 && (
+                <BankTransferForm fnShowCardForm={funcSetShowCard} />
+              )}
+              {cardFormIndex === 3 && navIndex === 3 && (
+                <PSBTransferForm fnShowCardForm={funcSetShowCard} />
+              )}
+              {cardFormIndex === 2 && navIndex === 7 && (
                 <ElectricityForm
                   fnShowCardForm={funcSetShowCard}
                   isPostpaid={true}
@@ -143,10 +159,7 @@ export const Home = () => {
                 <AirtimeForm fnShowCardForm={funcSetShowCard} />
               )}
               {cardFormIndex === 5 && (
-                <CableTvForm
-                  fnShowCardForm={funcSetShowCard}
-                  isPostpaid={false}
-                />
+                <CableTvForm fnShowCardForm={funcSetShowCard} />
               )}
               {cardFormIndex === 6 && (
                 <BundleForm fnShowCardForm={funcSetShowCard} />

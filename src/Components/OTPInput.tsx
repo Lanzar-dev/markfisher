@@ -95,12 +95,18 @@ function OTPInput({ getOTP }: ILoginProps) {
       {/* {showResend && ( */}
       <div
         style={{
-          color: !errText?.includes("Code to verify") ? "red" : "green",
+          color:
+            errText?.includes("Code to verify") ||
+            errText?.includes("created successfully")
+              ? "green"
+              : "red",
           margin: "0px auto 8px auto",
           width: "80%",
         }}
       >
         {errText}
+        {errText?.includes("created successfully") &&
+          ", Please enter the OTP you received in your email in below boxes"}
         {errText?.includes("Expired OTP") &&
           ", Please click the button to receive new OTP"}
         {errText?.includes("Unverified email") &&
