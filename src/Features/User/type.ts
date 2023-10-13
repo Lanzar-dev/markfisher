@@ -12,6 +12,8 @@ export interface IUserState {
   appointment?: any;
   availableDoctors?: any[] | null;
   airtimeCategory?: IAirtimeCategory[] | null;
+  electricityCategory?: IAirtimeCategory[] | null;
+  bundleCategory?: IAirtimeCategory[] | null;
   selectedDoctor?: any | null;
   isBookedApt: boolean;
   doctorAptDatetime?: GetDoctorAptDates[];
@@ -129,6 +131,11 @@ export interface IBankTransferPayload {
   Narration: string;
   Amount: string;
 }
+export interface IElectricityPayload {
+  MeterNumber: string;
+  OfficeName: string;
+  Amount: string;
+}
 export interface IAirtimePayload {
   MobileNumber: string;
   NetworkName: string;
@@ -137,7 +144,8 @@ export interface IAirtimePayload {
 }
 export interface IBundlePayload {
   MobileNumber: string;
-  NetworkName: string;
+  Network: string;
+  BundleName: string;
   Amount: string;
   Email: string;
 }

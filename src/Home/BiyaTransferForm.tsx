@@ -6,7 +6,13 @@ import { IBiyaTransferPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import { BiyaTransfer } from "../Features/User/userSlice";
 
-export const BiyaTransferForm = () => {
+type IBiyaTransferFormProps = {
+  fnShowCardForm: (index: boolean) => void;
+};
+
+export const BiyaTransferForm = ({
+  fnShowCardForm,
+}: IBiyaTransferFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   // Define the validation schema using Yup
@@ -114,6 +120,17 @@ export const BiyaTransferForm = () => {
         {formik.touched.Amount && formik.errors.Amount && (
           <div className="error">{formik.errors.Amount}</div>
         )}
+      </div>
+
+      <div className="card-forms-bottom">
+        <button
+          onClick={() => {
+            fnShowCardForm(false);
+          }}
+        >
+          Back
+        </button>
+        <button type="submit">Next</button>
       </div>
     </form>
   );

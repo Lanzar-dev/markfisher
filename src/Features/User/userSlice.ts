@@ -12,6 +12,8 @@ import {
   IBankTransferPayload,
   IBillsCategory,
   IBiyaTransferPayload,
+  IBundlePayload,
+  IElectricityPayload,
   IForgotPass,
   IProfile,
   IResetPassword,
@@ -63,11 +65,17 @@ const userSlice = createSlice({
       state.availableDoctors = payload;
     },
 
-    setSelectedDoctor: (state, { payload }: PayloadAction<any>) => {
-      state.selectedDoctor = payload;
+    setElectricityCategory: (
+      state,
+      { payload }: PayloadAction<IAirtimeCategory[]>
+    ) => {
+      state.electricityCategory = payload;
     },
-    setIsBookedApt: (state, { payload }: PayloadAction<boolean>) => {
-      state.isBookedApt = payload;
+    setBundleCategory: (
+      state,
+      { payload }: PayloadAction<IAirtimeCategory[]>
+    ) => {
+      state.bundleCategory = payload;
     },
 
     setAirtimeCategory: (
@@ -131,7 +139,6 @@ export const bookAppointment = (data: any): AppThunk => {
   return async (dispatch, getState) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
-    dispatch(setIsBookedApt(false));
     try {
       const path = BASE_PATH + "/CreateAppointment";
       const newData = { ...data };
@@ -147,10 +154,8 @@ export const bookAppointment = (data: any): AppThunk => {
         if (data.status === true) {
           // console.log("first-1: ", data.message);
           dispatch(setSuccess(data.message));
-          dispatch(setIsBookedApt(true));
         } else if (data.status === false) {
           // console.log("first-2: ", data.message);
-          dispatch(setIsBookedApt(false));
           dispatch(setSuccess(data.message));
         }
       }
@@ -344,6 +349,64 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
   };
 };
 
+export const BuyBundle = (data: IBundlePayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/BuyAirtime";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.code === 200) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/BuyAirtime";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        // console.log("data: ", data);
+        if (data.code === 200) {
+          const payload: IAuth = {
+            userId: data.data.tokenModel.id,
+            token: data.data.tokenModel.accessToken,
+          };
+          dispatch(setAuth(payload));
+          dispatch(setProfile(data.data.patientDetailsResponse));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
+        }
+      }
+    } catch (error: any) {
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
 export const BiyaTransfer = (data: IBiyaTransferPayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -427,19 +490,25 @@ export const updateUserEmail = (data: any): AppThunk => {
   };
 };
 
-export const getBillsCategories = (data: IBillsCategory): AppThunk => {
+export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
   return async (dispatch) => {
     dispatch(clearErrors());
     dispatch(setLoading(true));
     try {
       const path = BASE_PATH_FL + "/GetBillCategories";
 
-      const response = await axios.post(path, data);
+      const response = await axios.post(path, payload);
       // console.log(response);
       if (response) {
         const data = response.data;
-        // console.log("signup response: ", data);
-        dispatch(setAirtimeCategory(data));
+        // console.log("billCats response: ", data);
+        if (payload.QueryParam === "airtime") {
+          dispatch(setAirtimeCategory(data));
+        } else if (payload.QueryParam === "data_bundle") {
+          dispatch(setBundleCategory(data));
+        } else if (payload.QueryParam === "power") {
+          dispatch(setElectricityCategory(data));
+        }
         if (data.code === 200) {
           dispatch(setProfile(data.body));
 
@@ -597,9 +666,9 @@ export const {
   setToken,
   setDoctorsList,
   setAppointment,
-  setSelectedDoctor,
+  setElectricityCategory,
   setAirtimeCategory,
-  setIsBookedApt,
+  setBundleCategory,
   setDoctorAptDate,
   setSelectedDocAptDate,
 } = userSlice.actions;

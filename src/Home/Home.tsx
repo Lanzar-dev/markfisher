@@ -29,6 +29,8 @@ import copy from "clipboard-copy";
 import { useNavigate } from "react-router-dom";
 import { MediaQueryMatchers, useMediaQuery } from "react-responsive";
 import SmallTable from "./SmallTable";
+import { ElectricityForm } from "./ElectricityForm";
+import { CableTvForm } from "./CableTvForm";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -115,18 +117,36 @@ export const Home = () => {
                 </div>
                 <div className="title">
                   {cardFormIndex === 1 && "Biyawa to Biyawa"}
-                  {cardFormIndex === 2 && "Bank transfer"}
-                  {cardFormIndex === 3 && "PSB Transfer"}
+                  {cardFormIndex === 2 && "Electricity postpaid"}
+                  {cardFormIndex === 3 && "Electricity prepaid"}
                   {cardFormIndex === 4 && "Airtime"}
                   {cardFormIndex === 6 && "Buy a bundle"}
                   {cardFormIndex === 7 && "Tolls"}
                 </div>
               </div>
-              {cardFormIndex === 1 && <BiyaTransferForm />}
-              {cardFormIndex === 2 && <BankTransferForm />}
-              {cardFormIndex === 3 && <PSBTransferForm />}
+              {cardFormIndex === 1 && (
+                <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
+              )}
+              {cardFormIndex === 2 && (
+                <ElectricityForm
+                  fnShowCardForm={funcSetShowCard}
+                  isPostpaid={true}
+                />
+              )}
+              {cardFormIndex === 3 && (
+                <ElectricityForm
+                  fnShowCardForm={funcSetShowCard}
+                  isPostpaid={false}
+                />
+              )}
               {cardFormIndex === 4 && (
                 <AirtimeForm fnShowCardForm={funcSetShowCard} />
+              )}
+              {cardFormIndex === 5 && (
+                <CableTvForm
+                  fnShowCardForm={funcSetShowCard}
+                  isPostpaid={false}
+                />
               )}
               {cardFormIndex === 6 && (
                 <BundleForm fnShowCardForm={funcSetShowCard} />

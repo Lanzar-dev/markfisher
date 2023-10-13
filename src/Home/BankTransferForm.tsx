@@ -6,7 +6,13 @@ import { IBankTransferPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import { BankTransfer } from "../Features/User/userSlice";
 
-export const BankTransferForm = () => {
+type IBankTransferFormProps = {
+  fnShowCardForm: (index: boolean) => void;
+};
+
+export const BankTransferForm = ({
+  fnShowCardForm,
+}: IBankTransferFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   // Define the validation schema using Yup
@@ -134,6 +140,17 @@ export const BankTransferForm = () => {
         {formik.touched.Amount && formik.errors.Amount && (
           <div className="error">{formik.errors.Amount}</div>
         )}
+      </div>
+
+      <div className="card-forms-bottom">
+        <button
+          onClick={() => {
+            fnShowCardForm(false);
+          }}
+        >
+          Back
+        </button>
+        <button type="submit">Next</button>
       </div>
     </form>
   );

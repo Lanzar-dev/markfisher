@@ -2,109 +2,131 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import { IAirtimeCategory, IAirtimePayload } from "../Features/User/type";
+import {
+  IAirtimeCategory,
+  IBankTransferPayload,
+  IElectricityPayload,
+} from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import { BuyAirtime, getBillsCategories } from "../Features/User/userSlice";
-import { useEffect } from "react";
+import { BuyElectricity, getBillsCategories } from "../Features/User/userSlice";
+import { useEffect, useState } from "react";
 
-type IAirtimeFormProps = {
+type IElectricityFormProps = {
   fnShowCardForm: (index: boolean) => void;
+  isPostpaid: boolean;
 };
 
-export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
+export const ElectricityForm = ({
+  fnShowCardForm,
+  isPostpaid,
+}: IElectricityFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { airtimeCategory, currentUser } = useAppSelector(
+  const [office, setOffice] = useState<IAirtimeCategory[] | null>();
+  const { electricityCategory, currentUser } = useAppSelector(
     (state) => state.user
   );
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    MobileNumber: Yup.string().required("Mobile number is required"),
-    NetworkName: Yup.string().required("Network name is required"),
+    MeterNumber: Yup.string().required("Meter number is required"),
+    OfficeName: Yup.string().required("Bank name is required"),
     Amount: Yup.string().required("Amount is required"),
   });
 
   // Initial form values
   const initialValues = {
-    MobileNumber: "",
-    NetworkName: "",
+    MeterNumber: "",
+    OfficeName: "",
     Amount: "",
-    Email: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
-  const handleSubmit = (values: IAirtimePayload) => {
-    const newPayload = { ...values, Email: currentUser.Email };
-    dispatch(BuyAirtime(newPayload));
+  const handleSubmit = (values: IElectricityPayload) => {
+    dispatch(BuyElectricity(values));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
 
   // Formik form handling
-  const formik = useFormik<IAirtimePayload>({
+  const formik = useFormik<IElectricityPayload>({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
   });
 
   useEffect(() => {
-    if (!airtimeCategory) {
-      dispatch(getBillsCategories({ QueryParam: "airtime", Index: "1" }));
+    if (!electricityCategory) {
+      dispatch(getBillsCategories({ QueryParam: "power", Index: "1" }));
     }
-  }, [dispatch, airtimeCategory]);
+  }, [dispatch, electricityCategory]);
+
+  useEffect(() => {
+    if (electricityCategory) {
+      var select: string;
+      if (isPostpaid) {
+        select = "POSTPAID";
+      } else {
+        select = "PREPAID";
+      }
+      const selectedCat: IAirtimeCategory[] = electricityCategory?.filter(
+        (obj: IAirtimeCategory) =>
+          obj.biller_name.toUpperCase().includes(select)
+      );
+
+      setOffice(selectedCat);
+    }
+  }, [electricityCategory, isPostpaid]);
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="text-1">Pay to</div>
+    <form>
+      <div className="text-1">Transfer to</div>
 
       <div className="field-holder">
-        <div className="title">Mobile number</div>
+        <div className="title">Enter meter number</div>
         <div className="field">
           <input
             type="text"
-            id="MobileNumber"
-            name="MobileNumber"
+            id="MeterNumber"
+            name="MeterNumber"
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
-            value={formik.values.MobileNumber}
-            placeholder="Mobile number"
+            value={formik.values.MeterNumber}
+            placeholder="Meter number"
           />
         </div>
-        {formik.touched.MobileNumber && formik.errors.MobileNumber && (
-          <div className="error">{formik.errors.MobileNumber}</div>
+        {formik.touched.MeterNumber && formik.errors.MeterNumber && (
+          <div className="error">{formik.errors.MeterNumber}</div>
         )}
       </div>
 
       <div className="field-holder">
-        <div className="title">Choose a network</div>
+        <div className="title">Choose Office</div>
         <div className="field">
           <select
-            id="NetworkName"
-            name="NetworkName"
+            id="OfficeName"
+            name="OfficeName"
             onChange={(e) => {
               formik.handleChange(e);
             }}
             onBlur={formik.handleBlur}
-            value={formik.values.NetworkName}
+            value={formik.values.OfficeName}
             className="field"
           >
             {/* <option value="" disabled>
               Select a Date
             </option> */}
-            {airtimeCategory?.map(
-              (airtime: IAirtimeCategory, index: number) => (
-                <option value={airtime.short_name} key={index}>
-                  {airtime.short_name}
-                </option>
-              )
-            )}
+            {office?.map((airtime: IAirtimeCategory, index: number) => (
+              <option value={airtime.biller_name} key={index}>
+                {airtime.name}
+              </option>
+            ))}
             {/* Add more options as needed */}
           </select>
         </div>
-        {formik.touched.NetworkName && formik.errors.NetworkName && (
-          <div className="error">{formik.errors.NetworkName}</div>
+        {formik.touched.OfficeName && formik.errors.OfficeName && (
+          <div className="error">{formik.errors.OfficeName}</div>
         )}
       </div>
 
