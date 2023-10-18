@@ -1,14 +1,20 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useAppDispatch } from "../Store/store";
-import { ITollPayload } from "../Features/User/type";
+import { useAppDispatch, useAppSelector } from "../Store/store";
+import { IAirtimeCategory, ITollPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import { TollPayment } from "../Features/User/userSlice";
+import { TollPayment, getBillsCategories } from "../Features/User/userSlice";
+import { useEffect } from "react";
 
-export const TollForm = () => {
+type ITollFormProps = {
+  fnShowCardForm: (index: boolean) => void;
+};
+
+export const TollForm = ({ fnShowCardForm }: ITollFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { tollCategory } = useAppSelector((state) => state.user);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     CustomerId: Yup.string().required("AccountNumber is required"),
@@ -19,6 +25,7 @@ export const TollForm = () => {
   const initialValues = {
     CustomerId: "",
     Amount: "",
+    TollName: "",
   };
 
   // console.log("init: ", storedValues);
@@ -36,6 +43,13 @@ export const TollForm = () => {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    if (!tollCategory) {
+      dispatch(getBillsCategories({ QueryParam: "toll", Index: "1" }));
+    }
+  }, [dispatch, tollCategory]);
+
   return (
     <form>
       <div className="text-1">Pay to</div>
@@ -59,6 +73,35 @@ export const TollForm = () => {
       </div>
 
       <div className="field-holder">
+        <div className="title">Choose Toll</div>
+        <div className="field">
+          <select
+            id="TollName"
+            name="TollName"
+            onChange={(e) => {
+              formik.handleChange(e);
+            }}
+            onBlur={formik.handleBlur}
+            value={formik.values.TollName}
+            className="field"
+          >
+            {/* <option value="" disabled>
+              Select a Date
+            </option> */}
+            {tollCategory?.map((toll: IAirtimeCategory, index: number) => (
+              <option value={toll.biller_name} key={index}>
+                {toll.name}
+              </option>
+            ))}
+            {/* Add more options as needed */}
+          </select>
+        </div>
+        {formik.touched.TollName && formik.errors.TollName && (
+          <div className="error">{formik.errors.TollName}</div>
+        )}
+      </div>
+
+      <div className="field-holder">
         <div className="title">Enter amount</div>
         <div className="field">
           <input
@@ -74,6 +117,17 @@ export const TollForm = () => {
         {formik.touched.Amount && formik.errors.Amount && (
           <div className="error">{formik.errors.Amount}</div>
         )}
+      </div>
+
+      <div className="card-forms-bottom">
+        <button
+          onClick={() => {
+            fnShowCardForm(false);
+          }}
+        >
+          Back
+        </button>
+        <button type="submit">Next</button>
       </div>
     </form>
   );

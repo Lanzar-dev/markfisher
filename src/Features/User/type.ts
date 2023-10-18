@@ -12,6 +12,7 @@ export interface IUserState {
   appointment?: any;
   banks?: IBanksPayload[] | null;
   airtimeCategory?: IAirtimeCategory[] | null;
+  tollCategory?: IAirtimeCategory[] | null;
   electricityCategory?: IAirtimeCategory[] | null;
   bundleCategory?: IAirtimeCategory[] | null;
   cableCategory?: IAirtimeCategory[] | null;
@@ -82,8 +83,8 @@ export interface IProfile {
 }
 
 export interface IVerifyBankAcct {
-  acctNum: string;
-  bankCode: string;
+  account_number: string;
+  account_bank: string;
 }
 export interface IVerifiedAcct {
   account_name: string;
@@ -142,6 +143,11 @@ export interface IElectricityPayload {
   MeterNumber: string;
   OfficeName: string;
   Amount: string;
+  BillerCode: string;
+  ItemCode: string;
+  Email: string;
+  BillerName: string;
+  IsPrepaid: boolean;
 }
 export interface ICablePayload {
   DecoderNumber: string;
@@ -159,13 +165,17 @@ export interface IAirtimePayload {
   NetworkName: string;
   Amount: string;
   Email: string;
+  BillerCode: string;
+  ItemCode: string;
 }
 export interface IBundlePayload {
   MobileNumber: string;
-  Network: string;
+  NetworkName: string;
   BundleName: string;
   Amount: string;
   Email: string;
+  BillerCode: string;
+  ItemCode: string;
 }
 export interface IPSBTransferPayload {
   AccountNumber: string;
@@ -183,6 +193,7 @@ export interface IBiyaTransferPayload {
 export interface ITollPayload {
   CustomerId: string;
   Amount: string;
+  TollName: string;
 }
 export interface IForgotPass {
   Email: string;

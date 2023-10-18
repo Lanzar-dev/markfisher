@@ -2,11 +2,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import {
-  IBankTransferPayload,
-  IBanksPayload,
-  IVerifiedAcct,
-} from "../Features/User/type";
+import { IBankTransferPayload, IBanksPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import {
   BankTransfer,
@@ -14,7 +10,7 @@ import {
   VerifyBankAccount,
   setVerifiedAcct,
 } from "../Features/User/userSlice";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 
 type IBankTransferFormProps = {
   fnShowCardForm: (index: boolean) => void;
@@ -25,11 +21,16 @@ export const BankTransferForm = ({
 }: IBankTransferFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { errors } = useAppSelector((state) => state.error);
   const { verifiedAcct, banks } = useAppSelector((state) => state.user);
+  const errText: string = errors[0]?.message?.message;
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    AccountNumber: Yup.string().required("AccountNumber is required"),
-    BankName: Yup.string().required("BankName is required"),
+    AccountNumber: Yup.string()
+      .min(10, "Cannot be less than ten digits")
+      .max(10, "Must be ten digits")
+      .required("Account number is required"),
+    BankName: Yup.string().required("Bank name is required"),
     Beneficiary: Yup.string().required("Beneficiary is required"),
     Narration: Yup.string().required("Narration is required"),
     Amount: Yup.string().required("Amount is required"),
@@ -62,7 +63,7 @@ export const BankTransferForm = ({
 
   useEffect(() => {
     dispatch(setVerifiedAcct(null));
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     if (!banks) {
@@ -70,41 +71,62 @@ export const BankTransferForm = ({
     }
   }, [dispatch, banks]);
 
-  const filteredBanks = banks?.filter((bank: IBanksPayload) =>
-    bank.name.toLowerCase().includes("bank")
+  let filteredBanks = banks?.filter(
+    (bank: IBanksPayload) =>
+      bank.name.toLowerCase().includes("bank") &&
+      !bank.name.toLowerCase().startsWith("9") &&
+      !bank.name.toLowerCase().startsWith("smartcash")
   );
 
+  const setField = useCallback(() => {
+    formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
+  }, [formik, verifiedAcct]);
+
   useEffect(() => {
-    if (formik.values.AccountNumber.length === 10 && !verifiedAcct) {
+    if (verifiedAcct) {
+      setField();
+    }
+  }, [verifiedAcct]);
+
+  filteredBanks?.sort((a: any, b: any) => {
+    let nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    let nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    // names must be equal
+    return 0;
+  });
+
+  const checkAcctNum = (accName: any) => {
+    let accNum = formik.values.AccountNumber;
+    if (accNum.length === 10 && !verifiedAcct) {
       const bank: IBanksPayload = filteredBanks?.find(
-        (obj: IBanksPayload) => obj.name === formik.values.BankName
+        (obj: IBanksPayload) => obj.name === accName
       );
       // console.log(bank);
       dispatch(
         VerifyBankAccount({
-          acctNum: formik.values.AccountNumber,
-          bankCode: bank?.code,
+          account_number: formik.values.AccountNumber,
+          account_bank: bank?.code,
         })
       );
-    } else if (formik.values.AccountNumber.length < 10 && verifiedAcct) {
+    } else if (accNum.length < 10) {
       dispatch(setVerifiedAcct(null));
       formik.setFieldValue("Beneficiary", "");
     }
-  }, [
-    dispatch,
-    filteredBanks,
-    formik.values.BankName,
-    formik.values.AccountNumber,
-  ]);
-
-  useEffect(() => {
-    if (verifiedAcct) {
-      formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
-    }
-  }, [verifiedAcct]);
+  };
 
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
+      <>
+        {errText === "Unverified account number" && (
+          <div style={{ color: "orangered" }}>**{errText}**</div>
+        )}
+      </>
       <div className="text-1">Transfer to</div>
 
       <div className="field-holder">
@@ -114,7 +136,14 @@ export const BankTransferForm = ({
             type="text"
             id="AccountNumber"
             name="AccountNumber"
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              formik.handleChange(e);
+              if (verifiedAcct || errText === "Unverified account number") {
+                dispatch(setVerifiedAcct(null));
+                formik.setFieldValue("Beneficiary", "");
+                formik.setFieldValue("BankName", "");
+              }
+            }}
             onBlur={formik.handleBlur}
             value={formik.values.AccountNumber}
             placeholder="Account number"
@@ -133,14 +162,16 @@ export const BankTransferForm = ({
             name="BankName"
             onChange={(e) => {
               formik.handleChange(e);
+              checkAcctNum(e.currentTarget.value);
             }}
             onBlur={formik.handleBlur}
             value={formik.values.BankName}
             className="field"
+            disabled={verifiedAcct ? true : false}
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {filteredBanks?.map((bank: IBanksPayload, index: number) => (
               <option value={bank.name} key={index}>
                 {bank.name}
@@ -217,7 +248,11 @@ export const BankTransferForm = ({
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        {verifiedAcct && (
+          <button type="submit" disabled={!formik.isValid}>
+            Next
+          </button>
+        )}
       </div>
     </form>
   );

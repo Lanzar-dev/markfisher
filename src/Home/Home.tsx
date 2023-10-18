@@ -164,7 +164,9 @@ export const Home = () => {
               {cardFormIndex === 6 && (
                 <BundleForm fnShowCardForm={funcSetShowCard} />
               )}
-              {cardFormIndex === 7 && <TollForm />}
+              {cardFormIndex === 7 && (
+                <TollForm fnShowCardForm={funcSetShowCard} />
+              )}
             </div>
           )}
           <div className="left-div">

@@ -2,11 +2,7 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import {
-  IAirtimeCategory,
-  IBankTransferPayload,
-  IElectricityPayload,
-} from "../Features/User/type";
+import { IAirtimeCategory, IElectricityPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import { BuyElectricity, getBillsCategories } from "../Features/User/userSlice";
 import { useEffect, useState } from "react";
@@ -29,8 +25,11 @@ export const ElectricityForm = ({
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     MeterNumber: Yup.string().required("Meter number is required"),
-    OfficeName: Yup.string().required("Bank name is required"),
+    OfficeName: Yup.string().required("Office name is required"),
     Amount: Yup.string().required("Amount is required"),
+    BillerCode: Yup.string().required("Biller code is required"),
+    BillerName: Yup.string().required("Biller name is required"),
+    ItemCode: Yup.string().required("Item code is required"),
   });
 
   // Initial form values
@@ -38,13 +37,20 @@ export const ElectricityForm = ({
     MeterNumber: "",
     OfficeName: "",
     Amount: "",
+    Email: "",
+    BillerCode: "",
+    ItemCode: "",
+    BillerName: "",
+    IsPrepaid: false,
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
   const handleSubmit = (values: IElectricityPayload) => {
-    dispatch(BuyElectricity(values));
+    const newPayload = { ...values, Email: currentUser.Email };
+    console.log(newPayload);
+    dispatch(BuyElectricity(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
@@ -67,8 +73,10 @@ export const ElectricityForm = ({
       var select: string;
       if (isPostpaid) {
         select = "POSTPAID";
+        formik.setFieldValue("IsPrepaid", false);
       } else {
         select = "PREPAID";
+        formik.setFieldValue("IsPrepaid", true);
       }
       const selectedCat: IAirtimeCategory[] = electricityCategory?.filter(
         (obj: IAirtimeCategory) =>
@@ -79,8 +87,17 @@ export const ElectricityForm = ({
     }
   }, [electricityCategory, isPostpaid]);
 
+  const SetOtherFormFields = (e: any) => {
+    const selectedCat: IAirtimeCategory[] = electricityCategory?.filter(
+      (obj: IAirtimeCategory) => obj.biller_name.includes(e)
+    );
+    formik.setFieldValue("BillerCode", selectedCat[0]?.biller_code);
+    formik.setFieldValue("BillerName", selectedCat[0]?.biller_name);
+    formik.setFieldValue("ItemCode", selectedCat[0]?.item_code);
+  };
+
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="text-1">Transfer to</div>
 
       <div className="field-holder">
@@ -109,14 +126,15 @@ export const ElectricityForm = ({
             name="OfficeName"
             onChange={(e) => {
               formik.handleChange(e);
+              SetOtherFormFields(e.currentTarget.value);
             }}
             onBlur={formik.handleBlur}
             value={formik.values.OfficeName}
             className="field"
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {office?.map((airtime: IAirtimeCategory, index: number) => (
               <option value={airtime.biller_name} key={index}>
                 {airtime.name}

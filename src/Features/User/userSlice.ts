@@ -5,7 +5,6 @@ import { axios, axiosWithAuth } from "../utils";
 import { clearErrors, setError, setSuccess } from "../Error/errorSlice";
 import {
   EachAptDate,
-  GetDoctorAptDates,
   IAirtimeCategory,
   IAirtimePayload,
   IAuth,
@@ -63,6 +62,13 @@ const userSlice = createSlice({
 
     setBanks: (state, { payload }: PayloadAction<IBanksPayload[]>) => {
       state.banks = payload;
+    },
+
+    setTollCategory: (
+      state,
+      { payload }: PayloadAction<IAirtimeCategory[]>
+    ) => {
+      state.tollCategory = payload;
     },
 
     setCableCategory: (
@@ -353,7 +359,8 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.message));
+      // console.log(error);
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };
@@ -364,7 +371,7 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH_FL + "/BuyAirtime";
+      const path = BASE_PATH_FL + "/BuyBundle";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
@@ -382,7 +389,7 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.message));
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };
@@ -393,7 +400,7 @@ export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH_FL + "/BuyAirtime";
+      const path = BASE_PATH_FL + "/BuyElectricity";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
@@ -411,7 +418,7 @@ export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.message));
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };
@@ -477,10 +484,11 @@ export const VerifyBankAccount = (data: IVerifyBankAcct): AppThunk => {
     try {
       const path = BASE_PATH_FL + "/VerifyBankAccount";
       const response = await axios.post(path, data);
+      // console.log(data);
       if (response) {
         const data = response.data;
 
-        console.log("data: ", data);
+        // console.log("data: ", data);
         if (data.code === 200) {
           dispatch(setVerifiedAcct(data.body.data));
           // dispatch(setBanks(data.body));
@@ -489,6 +497,7 @@ export const VerifyBankAccount = (data: IVerifyBankAcct): AppThunk => {
         }
       }
     } catch (error: any) {
+      // dispatch(clearErrors());
       dispatch(setError(error?.message));
     }
     dispatch(setLoading(false));
@@ -598,6 +607,8 @@ export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
           dispatch(setElectricityCategory(data));
         } else if (payload.QueryParam === "cable") {
           dispatch(setCableCategory(data));
+        } else if (payload.QueryParam === "toll") {
+          dispatch(setTollCategory(data));
         }
         if (data.code === 200) {
           dispatch(setProfile(data.body));
@@ -608,27 +619,6 @@ export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
       }
     } catch (error: any) {
       // console.log(" error: ", error);
-      dispatch(setError(error?.response?.data?.message));
-    }
-    dispatch(setLoading(false));
-  };
-};
-
-export const getDoctorsList = (): AppThunk => {
-  return async (dispatch, getState) => {
-    dispatch(setLoading(true));
-    try {
-      const path = BASE_PATH + "/GetListOfDoctor";
-      // console.log("getdoctors: ", getState().patient.token);
-      const response = await axiosWithAuth(
-        getState().patient.token as string
-      ).get(path);
-      if (response) {
-        const data = response?.data?.data;
-        // console.log("first; ", response);
-      }
-    } catch (error: any) {
-      // dispatch(setError(error?.message));
       dispatch(setError(error?.response?.data?.message));
     }
     dispatch(setLoading(false));
@@ -724,7 +714,7 @@ export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
-        console.log("data: ", response.data);
+        // console.log("data: ", response.data);
         if (data.code === 200) {
           dispatch(setSuccess(data));
         }
@@ -754,8 +744,9 @@ export const {
   setLogout,
   setProfile,
   setToken,
-  setCableCategory,
   setBanks,
+  setCableCategory,
+  setTollCategory,
   setElectricityCategory,
   setAirtimeCategory,
   setBundleCategory,

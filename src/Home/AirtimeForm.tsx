@@ -22,6 +22,8 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
     MobileNumber: Yup.string().required("Mobile number is required"),
     NetworkName: Yup.string().required("Network name is required"),
     Amount: Yup.string().required("Amount is required"),
+    BillerCode: Yup.string().required("Biller code is required"),
+    ItemCode: Yup.string().required("Item code is required"),
   });
 
   // Initial form values
@@ -30,13 +32,16 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
     NetworkName: "",
     Amount: "",
     Email: "",
+    BillerCode: "",
+    ItemCode: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
   const handleSubmit = (values: IAirtimePayload) => {
-    const newPayload = { ...values, Email: currentUser.Email };
+    const newPayload: IAirtimePayload = { ...values, Email: currentUser.Email };
+    // console.log("payload: ", newPayload);
     dispatch(BuyAirtime(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
@@ -54,6 +59,14 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
       dispatch(getBillsCategories({ QueryParam: "airtime", Index: "1" }));
     }
   }, [dispatch, airtimeCategory]);
+
+  const SetOtherFormFields = (e: any) => {
+    const selectedCat: IAirtimeCategory[] = airtimeCategory?.filter(
+      (obj: IAirtimeCategory) => obj.short_name.includes(e)
+    );
+    formik.setFieldValue("BillerCode", selectedCat[0]?.biller_code);
+    formik.setFieldValue("ItemCode", selectedCat[0]?.item_code);
+  };
 
   return (
     <form onSubmit={formik.handleSubmit}>
@@ -85,14 +98,15 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
             name="NetworkName"
             onChange={(e) => {
               formik.handleChange(e);
+              SetOtherFormFields(e.currentTarget.value);
             }}
             onBlur={formik.handleBlur}
             value={formik.values.NetworkName}
             className="field"
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {airtimeCategory?.map(
               (airtime: IAirtimeCategory, index: number) => (
                 <option value={airtime.short_name} key={index}>

@@ -20,18 +20,22 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
   const { currentUser, bundleCategory } = useAppSelector((state) => state.user);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    MobileNumber: Yup.string().required("AccountNumber is required"),
-    BundleName: Yup.string().required("BankName is required"),
+    MobileNumber: Yup.string().required("Mobile number is required"),
+    BundleName: Yup.string().required("Bundle name is required"),
     Amount: Yup.string().required("Amount is required"),
+    BillerCode: Yup.string().required("Biller code is required"),
+    ItemCode: Yup.string().required("Item code is required"),
   });
 
   // Initial form values
   const initialValues = {
     MobileNumber: "",
-    Network: "",
+    NetworkName: "",
     BundleName: "",
     Amount: "",
     Email: "",
+    BillerCode: "",
+    ItemCode: "",
   };
 
   // console.log("init: ", storedValues);
@@ -39,6 +43,7 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
   // Submit handler
   const handleSubmit = (values: IBundlePayload) => {
     const newPayload = { ...values, Email: currentUser.Email };
+    // console.log(newPayload);
     dispatch(BuyBundle(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
@@ -69,22 +74,22 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
       (obj: IAirtimeCategory) => obj.biller_name.includes(e)
     );
     setNetworkBundles(selectedCat);
+    formik.setFieldValue("BundleName", selectedCat[0]?.biller_name.toString());
     formik.setFieldValue("Amount", selectedCat[0]?.amount.toString());
+    formik.setFieldValue("BillerCode", selectedCat[0]?.biller_code);
+    formik.setFieldValue("ItemCode", selectedCat[0]?.item_code);
   };
 
-  useEffect(() => {
-    const thisFnc = () => {
-      const selectedCat: IAirtimeCategory[] = bundleCategory?.filter(
-        (obj: IAirtimeCategory) => obj.biller_name.includes("AIRTEL")
-      );
-      setNetworkBundles(selectedCat);
-      formik.setFieldValue("Amount", selectedCat[0]?.amount.toString());
-    };
-    thisFnc();
-  }, []);
+  const SetOtherFormFields = (e: any) => {
+    const selectedCat: IAirtimeCategory[] = bundleCategory?.filter(
+      (obj: IAirtimeCategory) => obj.biller_name.includes(e)
+    );
+    formik.setFieldValue("BillerCode", selectedCat[0]?.biller_code);
+    formik.setFieldValue("ItemCode", selectedCat[0]?.item_code);
+  };
 
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="text-1">Pay to</div>
 
       <div className="field-holder">
@@ -109,19 +114,19 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
         <div className="title">Choose a network</div>
         <div className="field">
           <select
-            id="Network"
-            name="Network"
+            id="NetworkName"
+            name="NetworkName"
             onChange={(e) => {
               formik.handleChange(e);
               ChangeNetworkBundles(e.currentTarget.value);
             }}
             onBlur={formik.handleBlur}
-            value={formik.values.Network}
+            value={formik.values.NetworkName}
             className="field"
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {["AIRTEL", "MTN", "9MOBILE", "GLO"].map(
               (network: any, index: number) => (
                 <option value={network} key={index}>
@@ -132,8 +137,8 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
             {/* Add more options as needed */}
           </select>
         </div>
-        {formik.touched.Network && formik.errors.Network && (
-          <div className="error">{formik.errors.Network}</div>
+        {formik.touched.NetworkName && formik.errors.NetworkName && (
+          <div className="error">{formik.errors.NetworkName}</div>
         )}
       </div>
 
@@ -145,15 +150,16 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
             name="BundleName"
             onChange={(e) => {
               formik.handleChange(e);
+              SetOtherFormFields(e.currentTarget.value);
               ChangeAmount(e.currentTarget.value);
             }}
             onBlur={formik.handleBlur}
             value={formik.values.BundleName}
             className="field"
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {networkBundles?.map((airtime: IAirtimeCategory, index: number) => (
               <option value={airtime.biller_name} key={index}>
                 {airtime.biller_name}

@@ -1,10 +1,16 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useAppDispatch } from "../Store/store";
-import { IPSBTransferPayload } from "../Features/User/type";
+import { useAppDispatch, useAppSelector } from "../Store/store";
+import { IBanksPayload, IPSBTransferPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import { BankTransfer } from "../Features/User/userSlice";
+import {
+  BankTransfer,
+  GetBanks,
+  VerifyBankAccount,
+  setVerifiedAcct,
+} from "../Features/User/userSlice";
+import { useEffect } from "react";
 
 type IPSBTransferFormProps = {
   fnShowCardForm: (index: boolean) => void;
@@ -13,10 +19,13 @@ type IPSBTransferFormProps = {
 export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { errors } = useAppSelector((state) => state.error);
+  const errText: string = errors[0]?.message?.message;
+  const { verifiedAcct, banks } = useAppSelector((state) => state.user);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    AccountNumber: Yup.string().required("AccountNumber is required"),
-    BankName: Yup.string().required("BankName is required"),
+    AccountNumber: Yup.string().required("Account number is required"),
+    BankName: Yup.string().required("Bank name is required"),
     Beneficiary: Yup.string().required("Beneficiary is required"),
     Narration: Yup.string().required("Narration is required"),
     Amount: Yup.string().required("Amount is required"),
@@ -46,8 +55,69 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    dispatch(setVerifiedAcct(null));
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (!banks) {
+      dispatch(GetBanks());
+    }
+  }, [dispatch, banks]);
+
+  let filteredBanks = banks?.filter(
+    (bank: IBanksPayload) =>
+      bank.name.toLowerCase().includes("psb") ||
+      bank.name.toLowerCase().startsWith("9") ||
+      bank.name.toLowerCase().startsWith("smartcash")
+  );
+
+  useEffect(() => {
+    if (verifiedAcct) {
+      formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
+    }
+  }, [verifiedAcct]);
+
+  filteredBanks?.sort((a: any, b: any) => {
+    let nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    let nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+    // names must be equal
+    return 0;
+  });
+
+  const checkAcctNum = (accName: any) => {
+    let accNum = formik.values.AccountNumber;
+    if (accNum.length === 10 && !verifiedAcct) {
+      const bank: IBanksPayload = filteredBanks?.find(
+        (obj: IBanksPayload) => obj.name === accName
+      );
+      // console.log(bank);
+      dispatch(
+        VerifyBankAccount({
+          account_number: formik.values.AccountNumber,
+          account_bank: bank?.code,
+        })
+      );
+    } else if (accNum.length < 10) {
+      dispatch(setVerifiedAcct(null));
+      formik.setFieldValue("Beneficiary", "");
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
+      <>
+        {errText === "Unverified account number" && (
+          <div style={{ color: "orangered" }}>**{errText}**</div>
+        )}
+      </>
       <div className="text-1">Transfer to</div>
 
       <div className="field-holder">
@@ -57,7 +127,14 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
             type="text"
             id="AccountNumber"
             name="AccountNumber"
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              formik.handleChange(e);
+              if (verifiedAcct || errText === "Unverified account number") {
+                dispatch(setVerifiedAcct(null));
+                formik.setFieldValue("Beneficiary", "");
+                formik.setFieldValue("BankName", "");
+              }
+            }}
             onBlur={formik.handleBlur}
             value={formik.values.AccountNumber}
             placeholder="Account/phone number"
@@ -71,15 +148,27 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
       <div className="field-holder">
         <div className="title">Choose a PSB</div>
         <div className="field">
-          <input
-            type="text"
+          <select
             id="BankName"
             name="BankName"
-            onChange={formik.handleChange}
+            onChange={(e) => {
+              formik.handleChange(e);
+              checkAcctNum(e.currentTarget.value);
+            }}
             onBlur={formik.handleBlur}
             value={formik.values.BankName}
-            placeholder="Bank Name"
-          />
+            className="field"
+          >
+            <option value="" disabled>
+              ...
+            </option>
+            {filteredBanks?.map((bank: IBanksPayload, index: number) => (
+              <option value={bank.name} key={index}>
+                {bank.name}
+              </option>
+            ))}
+            {/* Add more options as needed */}
+          </select>
         </div>
         {formik.touched.BankName && formik.errors.BankName && (
           <div className="error">{formik.errors.BankName}</div>
@@ -97,6 +186,7 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
             onBlur={formik.handleBlur}
             value={formik.values.Beneficiary}
             placeholder="Beneficiary name"
+            disabled
           />
         </div>
         {formik.touched.Beneficiary && formik.errors.Beneficiary && (
@@ -148,7 +238,11 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        {verifiedAcct && (
+          <button type="submit" disabled={!formik.isValid}>
+            Next
+          </button>
+        )}
       </div>
     </form>
   );
