@@ -14,6 +14,7 @@ import {
   IBiyaTransferPayload,
   IBundlePayload,
   ICablePayload,
+  ICreatePaymentLink,
   IElectricityPayload,
   IForgotPass,
   IProfile,
@@ -21,6 +22,7 @@ import {
   ISignin,
   ISignUp,
   ITollPayload,
+  ITransferPayload,
   IUserState,
   IValidateCustomer,
   IVerifiedAcct,
@@ -307,12 +309,12 @@ export const resendVerifyEmail = (data: string): AppThunk => {
   };
 };
 
-export const BankTransfer = (data: IBankTransferPayload): AppThunk => {
+export const BankTransfer = (data: ITransferPayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH + "/LoginPatientAccount";
+      const path = BASE_PATH_FL + "/BankTransfer";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
@@ -330,7 +332,7 @@ export const BankTransfer = (data: IBankTransferPayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.message));
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };
@@ -429,7 +431,7 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH_FL + "/BuyAirtime";
+      const path = BASE_PATH_FL + "/CableSubscription";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
@@ -447,7 +449,7 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.message));
+      dispatch(setError(error?.response?.message));
     }
     dispatch(setLoading(false));
   };
@@ -557,6 +559,28 @@ export const TollPayment = (data: ITollPayload): AppThunk => {
       }
     } catch (error: any) {
       dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const FundWallet = (data: ICreatePaymentLink): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + "/FundWallet";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+        // console.log("data: ", data);
+        if (data.code === 200) {
+          window.location.href = data.body.link;
+        }
+      }
+    } catch (error: any) {
+      console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
   };

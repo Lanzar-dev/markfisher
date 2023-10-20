@@ -5,7 +5,7 @@ import { useAppDispatch, useAppSelector } from "../Store/store";
 import { IAirtimeCategory, ICablePayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import { DstvPayment, getBillsCategories } from "../Features/User/userSlice";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 
 type IElectricityFormProps = {
   fnShowCardForm: (index: boolean) => void;
@@ -17,23 +17,32 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
   const { cableCategory, currentUser } = useAppSelector((state) => state.user);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    DecoderNumber: Yup.string().required("Meter number is required"),
-    OfficeName: Yup.string().required("Bank name is required"),
+    DecoderNumber: Yup.string().required("Decoder number is required"),
+    SubscriptionName: Yup.string().required("Subscription name is required"),
     Amount: Yup.string().required("Amount is required"),
+    BillerCode: Yup.string().required("Biller code is required"),
+    BillerName: Yup.string().required("Biller name is required"),
+    ItemCode: Yup.string().required("Item code is required"),
   });
 
   // Initial form values
   const initialValues = {
     DecoderNumber: "",
-    OfficeName: "",
+    SubscriptionName: "",
     Amount: "",
+    Email: "",
+    BillerCode: "",
+    BillerName: "",
+    ItemCode: "",
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
   const handleSubmit = (values: ICablePayload) => {
-    dispatch(DstvPayment(values));
+    const newPayload = { ...values, Email: currentUser.Email };
+    // console.log(newPayload);
+    dispatch(DstvPayment(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
@@ -61,11 +70,14 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
     const selectedCat: IAirtimeCategory[] = cableCategory?.filter(
       (obj: IAirtimeCategory) => obj.biller_name === e
     );
+    formik.setFieldValue("BillerCode", selectedCat[0]?.biller_code);
+    formik.setFieldValue("BillerName", selectedCat[0]?.biller_name);
+    formik.setFieldValue("ItemCode", selectedCat[0]?.item_code);
     formik.setFieldValue("Amount", selectedCat[0].amount.toString());
   };
 
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="text-1">Transfer to</div>
 
       <div className="field-holder">
@@ -90,19 +102,19 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
         <div className="title">Choose subscription</div>
         <div className="field">
           <select
-            id="OfficeName"
-            name="OfficeName"
+            id="SubscriptionName"
+            name="SubscriptionName"
             onChange={(e) => {
               formik.handleChange(e);
               ChangeAmount(e.currentTarget.value);
             }}
             onBlur={formik.handleBlur}
-            value={formik.values.OfficeName}
+            value={formik.values.SubscriptionName}
             className="field"
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {cableCategory?.map((airtime: IAirtimeCategory, index: number) => (
               <option value={airtime.biller_name} key={index}>
                 {airtime.biller_name}
@@ -111,8 +123,8 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
             {/* Add more options as needed */}
           </select>
         </div>
-        {formik.touched.OfficeName && formik.errors.OfficeName && (
-          <div className="error">{formik.errors.OfficeName}</div>
+        {formik.touched.SubscriptionName && formik.errors.SubscriptionName && (
+          <div className="error">{formik.errors.SubscriptionName}</div>
         )}
       </div>
 

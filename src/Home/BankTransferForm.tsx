@@ -2,7 +2,11 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import { IBankTransferPayload, IBanksPayload } from "../Features/User/type";
+import {
+  IBankTransferPayload,
+  IBanksPayload,
+  ITransferPayload,
+} from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import {
   BankTransfer,
@@ -10,7 +14,7 @@ import {
   VerifyBankAccount,
   setVerifiedAcct,
 } from "../Features/User/userSlice";
-import { useCallback, useEffect } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 type IBankTransferFormProps = {
   fnShowCardForm: (index: boolean) => void;
@@ -22,7 +26,10 @@ export const BankTransferForm = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  const { verifiedAcct, banks } = useAppSelector((state) => state.user);
+  const { verifiedAcct, banks, currentUser } = useAppSelector(
+    (state) => state.user
+  );
+  const [check, setCheck] = useState<boolean>(false);
   const errText: string = errors[0]?.message?.message;
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -49,7 +56,20 @@ export const BankTransferForm = ({
 
   // Submit handler
   const handleSubmit = (values: IBankTransferPayload) => {
-    dispatch(BankTransfer(values));
+    const bank = banks?.find(
+      (bank: IBanksPayload) => bank.name === values.BankName
+    );
+
+    const newPayload: ITransferPayload = {
+      AccountNumber: values.AccountNumber,
+      Amount: values.Amount,
+      Currency: "NGN",
+      Narration: values.Narration,
+      BankCode: bank.code,
+      Email: currentUser?.Email,
+    };
+    // console.log(newPayload);
+    dispatch(BankTransfer(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };
@@ -120,6 +140,14 @@ export const BankTransferForm = ({
     }
   };
 
+  useEffect(() => {
+    if (formik.values.AccountNumber.length < 10) {
+      setCheck(true);
+    } else {
+      setCheck(false);
+    }
+  }, [formik.values.AccountNumber]);
+
   return (
     <form onSubmit={formik.handleSubmit}>
       <>
@@ -167,7 +195,7 @@ export const BankTransferForm = ({
             onBlur={formik.handleBlur}
             value={formik.values.BankName}
             className="field"
-            disabled={verifiedAcct ? true : false}
+            disabled={verifiedAcct || check ? true : false}
           >
             <option value="" disabled>
               ...

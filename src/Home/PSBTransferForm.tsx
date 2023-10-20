@@ -2,7 +2,11 @@ import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import { IBanksPayload, IPSBTransferPayload } from "../Features/User/type";
+import {
+  IBanksPayload,
+  IPSBTransferPayload,
+  ITransferPayload,
+} from "../Features/User/type";
 import * as routes from "../Data/Routes";
 import {
   BankTransfer,
@@ -21,7 +25,9 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
   const errText: string = errors[0]?.message?.message;
-  const { verifiedAcct, banks } = useAppSelector((state) => state.user);
+  const { verifiedAcct, banks, currentUser } = useAppSelector(
+    (state) => state.user
+  );
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     AccountNumber: Yup.string().required("Account number is required"),
@@ -44,7 +50,18 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
 
   // Submit handler
   const handleSubmit = (values: IPSBTransferPayload) => {
-    dispatch(BankTransfer(values));
+    const bank: IBanksPayload = banks?.find(
+      (bank: IBanksPayload) => (bank.name = values.BankName)
+    );
+    const newPayload: ITransferPayload = {
+      AccountNumber: values.AccountNumber,
+      Amount: values.Amount,
+      Currency: "NGN",
+      Narration: values.Narration,
+      BankCode: bank.code,
+      Email: currentUser?.Email,
+    };
+    dispatch(BankTransfer(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
   };

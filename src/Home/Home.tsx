@@ -33,6 +33,7 @@ import { ElectricityForm } from "./ElectricityForm";
 import { CableTvForm } from "./CableTvForm";
 import { useAppDispatch } from "../Store/store";
 import { setLogout } from "../Features/User/userSlice";
+import { FundWalletForm } from "./FundWalletForm";
 
 export const Home = () => {
   const navigate = useNavigate();
@@ -40,7 +41,7 @@ export const Home = () => {
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
-  const [cardFormIndex, setCardFormIndex] = useState<number>(1);
+  const [cardFormIndex, setCardFormIndex] = useState<number>(0);
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
   const isMobile = useMediaQuery({ maxWidth: 600 } as MediaQueryMatchers);
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
@@ -103,7 +104,9 @@ export const Home = () => {
               <div className="card-forms-title">
                 <div className="biyaCircle">
                   {cardFormIndex === 1 && "B"}
-                  {cardFormIndex === 2 && <img src={bankTrx} alt="bankTrx" />}
+                  {(cardFormIndex === 2 || cardFormIndex === 8) && (
+                    <img src={bankTrx} alt="bankTrx" />
+                  )}
                   {cardFormIndex === 4 && (
                     <MySVGs
                       index={cardFormIndex}
@@ -132,6 +135,7 @@ export const Home = () => {
                   {cardFormIndex === 4 && "Airtime"}
                   {cardFormIndex === 6 && "Buy a bundle"}
                   {cardFormIndex === 7 && "Tolls"}
+                  {cardFormIndex === 8 && "Fund wallet"}
                 </div>
               </div>
               {cardFormIndex === 1 && (
@@ -166,6 +170,9 @@ export const Home = () => {
               )}
               {cardFormIndex === 7 && (
                 <TollForm fnShowCardForm={funcSetShowCard} />
+              )}
+              {cardFormIndex === 8 && (
+                <FundWalletForm fnShowCardForm={funcSetShowCard} />
               )}
             </div>
           )}
@@ -237,11 +244,22 @@ export const Home = () => {
                           )}
                         </div>
                         <div className="right">
-                          <div className="add">
+                          <div
+                            className="add"
+                            onClick={() => {
+                              setCardFormIndex(8);
+                              funcSetShowCard(!showCardForm);
+                            }}
+                          >
                             <img src={walletIcon} alt="WalletLogo1" /> Add money
                             <img src={rightArrow} alt="rightArrow" />
                           </div>
-                          <div className="add">
+                          <div
+                            className="add"
+                            onClick={() => {
+                              setNavIndex(6);
+                            }}
+                          >
                             <img src={walletIcon} alt="WalletLogo1" /> Withdraw
                             money
                             <img src={rightArrow} alt="rightArrow" />

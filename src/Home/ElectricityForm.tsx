@@ -49,7 +49,7 @@ export const ElectricityForm = ({
   // Submit handler
   const handleSubmit = (values: IElectricityPayload) => {
     const newPayload = { ...values, Email: currentUser.Email };
-    console.log(newPayload);
+    // console.log(newPayload);
     dispatch(BuyElectricity(newPayload));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);

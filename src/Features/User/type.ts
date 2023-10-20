@@ -139,6 +139,16 @@ export interface IBankTransferPayload {
   Narration: string;
   Amount: string;
 }
+
+export interface ITransferPayload {
+  BankCode: string;
+  AccountNumber: string;
+  Amount: string;
+  Narration: string;
+  Currency: string;
+  Email: string;
+}
+
 export interface IElectricityPayload {
   MeterNumber: string;
   OfficeName: string;
@@ -151,8 +161,12 @@ export interface IElectricityPayload {
 }
 export interface ICablePayload {
   DecoderNumber: string;
-  OfficeName: string;
+  SubscriptionName: string;
   Amount: string;
+  ItemCode: string;
+  BillerCode: string;
+  BillerName: string;
+  Email: string;
 }
 
 export interface IBanksPayload {
@@ -212,4 +226,31 @@ export interface IVerifyEmail {
 export interface IBillsCategory {
   QueryParam: string;
   Index: string;
+}
+
+export interface ICreatePaymentLink {
+  customer: ICustomer;
+  amount: string;
+  currency: string;
+  tx_ref?: string;
+  redirect_url?: string;
+  meta?: IMeta;
+  customizations?: ICustomizations;
+}
+
+interface ICustomer {
+  email: String;
+  phonenumber: String;
+  name: string;
+}
+
+interface IMeta {
+  consumer_id?: number;
+  consumer_mac?: string;
+}
+
+interface ICustomizations {
+  title?: string;
+  logo?: string;
+  description?: string;
 }
