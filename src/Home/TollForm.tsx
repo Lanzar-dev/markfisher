@@ -85,9 +85,9 @@ export const TollForm = ({ fnShowCardForm }: ITollFormProps) => {
             value={formik.values.TollName}
             className="field"
           >
-            {/* <option value="" disabled>
-              Select a Date
-            </option> */}
+            <option value="" disabled>
+              ...
+            </option>
             {tollCategory?.map((toll: IAirtimeCategory, index: number) => (
               <option value={toll.biller_name} key={index}>
                 {toll.name}

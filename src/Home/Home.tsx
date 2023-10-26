@@ -6,8 +6,10 @@ import favourite from "../Images/Favorite.svg";
 import walletIcon from "../Images/Wallet.svg";
 import rightArrow from "../Images/RightArrow.svg";
 import biyaTrxRArr from "../Images/BiyaTrxRArrow.svg";
+import biyaToBiya from "../Images/BiyaToBiya.svg";
 import bankTrx from "../Images/BankTrx.svg";
 import TrxIcon from "../Images/TrxIcon.svg";
+import backArrow from "../Images/BackArrow.svg";
 // import airtimeIcon from "../Images/Airtime.svg";
 import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
@@ -43,6 +45,7 @@ export const Home = () => {
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
   const [cardFormIndex, setCardFormIndex] = useState<number>(0);
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
+  const [zindex, setZindex] = useState<number>(4);
   const isMobile = useMediaQuery({ maxWidth: 600 } as MediaQueryMatchers);
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
 
@@ -97,85 +100,82 @@ export const Home = () => {
 
   return (
     <div className="Home">
-      {!isMobile && (
-        <>
-          {showCardForm && (
-            <div className="card-forms">
-              <div className="card-forms-title">
-                <div className="biyaCircle">
-                  {cardFormIndex === 1 && "B"}
-                  {(cardFormIndex === 2 || cardFormIndex === 8) && (
-                    <img src={bankTrx} alt="bankTrx" />
-                  )}
-                  {cardFormIndex === 4 && (
-                    <MySVGs
-                      index={cardFormIndex}
-                      fill={"rgba(4, 157, 254, 1)"}
-                    />
-                  )}
-                  {cardFormIndex === 3 && <img src={TrxIcon} alt="TrxIcon" />}
-                  {cardFormIndex === 6 && (
-                    <MySVGs
-                      index={cardFormIndex - 1}
-                      fill={"rgba(4, 157, 254, 1)"}
-                    />
-                  )}
-                  {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
-                </div>
-                <div className="title">
-                  {cardFormIndex === 1 && "Biyawa to Biyawa"}
-                  {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
-                  {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
-                  {cardFormIndex === 2 &&
-                    navIndex === 7 &&
-                    "Electricity postpaid"}
-                  {cardFormIndex === 3 &&
-                    navIndex === 7 &&
-                    "Electricity prepaid"}
-                  {cardFormIndex === 4 && "Airtime"}
-                  {cardFormIndex === 6 && "Buy a bundle"}
-                  {cardFormIndex === 7 && "Tolls"}
-                  {cardFormIndex === 8 && "Fund wallet"}
-                </div>
-              </div>
-              {cardFormIndex === 1 && (
-                <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
-              )}
-              {cardFormIndex === 2 && navIndex === 3 && (
-                <BankTransferForm fnShowCardForm={funcSetShowCard} />
-              )}
-              {cardFormIndex === 3 && navIndex === 3 && (
-                <PSBTransferForm fnShowCardForm={funcSetShowCard} />
-              )}
-              {cardFormIndex === 2 && navIndex === 7 && (
-                <ElectricityForm
-                  fnShowCardForm={funcSetShowCard}
-                  isPostpaid={true}
-                />
-              )}
-              {cardFormIndex === 3 && (
-                <ElectricityForm
-                  fnShowCardForm={funcSetShowCard}
-                  isPostpaid={false}
-                />
+      {showCardForm && (
+        <div
+          className="card-forms"
+          style={{
+            width: isMobile ? "100vw" : "35vw",
+            height: isMobile ? "93vh" : "100vh",
+          }}
+        >
+          <div className="card-forms-title">
+            <div className="biyaCircle">
+              {cardFormIndex === 1 && "B"}
+              {(cardFormIndex === 2 || cardFormIndex === 8) && (
+                <img src={bankTrx} alt="bankTrx" />
               )}
               {cardFormIndex === 4 && (
-                <AirtimeForm fnShowCardForm={funcSetShowCard} />
+                <MySVGs index={cardFormIndex} fill={"rgba(4, 157, 254, 1)"} />
               )}
-              {cardFormIndex === 5 && (
-                <CableTvForm fnShowCardForm={funcSetShowCard} />
-              )}
+              {cardFormIndex === 3 && <img src={TrxIcon} alt="TrxIcon" />}
               {cardFormIndex === 6 && (
-                <BundleForm fnShowCardForm={funcSetShowCard} />
+                <MySVGs
+                  index={cardFormIndex - 1}
+                  fill={"rgba(4, 157, 254, 1)"}
+                />
               )}
-              {cardFormIndex === 7 && (
-                <TollForm fnShowCardForm={funcSetShowCard} />
-              )}
-              {cardFormIndex === 8 && (
-                <FundWalletForm fnShowCardForm={funcSetShowCard} />
-              )}
+              {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
             </div>
+            <div className="title">
+              {cardFormIndex === 1 && "Biyawa to Biyawa"}
+              {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
+              {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
+              {cardFormIndex === 2 && navIndex === 7 && "Electricity postpaid"}
+              {cardFormIndex === 3 && navIndex === 7 && "Electricity prepaid"}
+              {cardFormIndex === 4 && "Airtime"}
+              {cardFormIndex === 6 && "Buy a bundle"}
+              {cardFormIndex === 7 && "Tolls"}
+              {cardFormIndex === 8 && "Fund wallet"}
+            </div>
+          </div>
+          {cardFormIndex === 1 && (
+            <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
           )}
+          {cardFormIndex === 2 && navIndex === 3 && (
+            <BankTransferForm fnShowCardForm={funcSetShowCard} />
+          )}
+          {cardFormIndex === 3 && navIndex === 3 && (
+            <PSBTransferForm fnShowCardForm={funcSetShowCard} />
+          )}
+          {cardFormIndex === 2 && navIndex === 7 && (
+            <ElectricityForm
+              fnShowCardForm={funcSetShowCard}
+              isPostpaid={true}
+            />
+          )}
+          {cardFormIndex === 3 && (
+            <ElectricityForm
+              fnShowCardForm={funcSetShowCard}
+              isPostpaid={false}
+            />
+          )}
+          {cardFormIndex === 4 && (
+            <AirtimeForm fnShowCardForm={funcSetShowCard} />
+          )}
+          {cardFormIndex === 5 && (
+            <CableTvForm fnShowCardForm={funcSetShowCard} />
+          )}
+          {cardFormIndex === 6 && (
+            <BundleForm fnShowCardForm={funcSetShowCard} />
+          )}
+          {cardFormIndex === 7 && <TollForm fnShowCardForm={funcSetShowCard} />}
+          {cardFormIndex === 8 && (
+            <FundWalletForm fnShowCardForm={funcSetShowCard} />
+          )}
+        </div>
+      )}
+      {!isMobile && (
+        <>
           <div className="left-div">
             <img
               src={biyaLogo}
@@ -492,119 +492,405 @@ export const Home = () => {
       )}
       {isMobile && (
         <div className="xs-screen">
-          <div className="top"></div>
-          <div className="user">
-            <div className="card">
-              <div className="name">
-                <div className="left">Hey Amina!</div>
-                <div className="right">
-                  <div className="add">
-                    <img src={walletIcon} alt="WalletLogo1" /> Add money
-                    <img src={rightArrow} alt="rightArrow" />
-                  </div>
-                  <div className="add">
-                    <img src={walletIcon} alt="WalletLogo1" /> Withdraw money
-                    <img src={rightArrow} alt="rightArrow" />
-                  </div>
-                </div>
+          {navIndex === 6 && (
+            <div className="withdraw" style={{ zIndex: zindex }}>
+              <div className="mobile-title">
+                <img
+                  src={backArrow}
+                  alt="bankTrx"
+                  onClick={() => setNavIndex(1)}
+                />
+                Withdraw Money
               </div>
-              <div className="amount">
-                <div>
-                  <span>Current balance</span> <br />{" "}
-                  {showBalance ? "NGN267,679.00" : "************"}
-                </div>
-                {showBalance ? (
-                  <BsEyeFill onClick={() => setShowBalance(!showBalance)} />
-                ) : (
-                  <BsEyeSlashFill
-                    onClick={() => setShowBalance(!showBalance)}
-                  />
-                )}
-              </div>
+              <ul>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={bankTrx} alt="bankTrx" />
+                    </div>
+                    <div className="text">Withdraw via bank</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => decideFormStage(2)}
+                    />
+                  </div>
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">
+                      Withdraw via payment service bank
+                    </div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => decideFormStage(2)}
+                    />
+                  </div>
+                </li>
+              </ul>
             </div>
-          </div>
-          <div className="down">
-            <br />
-            <h3>Quick Actions</h3>
-            <div className="icons">
-              <div className="xs-grid">
-                <div className="card">
-                  <div className="biyaCircle">
-                    <img src={walletIcon} alt="bankTrxIcon" />
+          )}
+          {navIndex === 3 && (
+            <div className="withdraw" style={{ zIndex: zindex }}>
+              <div className="mobile-title">
+                <img
+                  src={backArrow}
+                  alt="bankTrx"
+                  onClick={() => setNavIndex(1)}
+                />
+                Transfer Money
+              </div>
+              <ul>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={biyaToBiya} alt="bankTrx" />
+                    </div>
+                    <div className="text">Biyawa to Biyawa wallet</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(1);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
                   </div>
-                  <div className="biyaTrx">Add Money</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    <img src={TrxIcon} alt="bankTrxIcon" />
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={bankTrx} alt="bankTrx" />
+                    </div>
+                    <div className="text">Other accounts and banks</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(2);
+                        // setNavIndex(3);
+                        setZindex(3);
+                      }}
+                    />
                   </div>
-                  <div className="biyaTrx">Transfer Money</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    {/* <img src={airtimeIcon} alt="bankTrxIcon" /> */}
-                    <MySVGs index={4} fill="rgba(4, 157, 254, 1)" />
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">Other payment service bank</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => decideFormStage(2)}
+                    />
                   </div>
-                  <div className="biyaTrx">Recharge Airtime</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                    <MySVGs index={5} fill="rgba(4, 157, 254, 1)" />
+                </li>
+              </ul>
+            </div>
+          )}
+          {navIndex === 7 && (
+            <div className="withdraw" style={{ zIndex: zindex }}>
+              <div className="mobile-title">
+                <img
+                  src={backArrow}
+                  alt="bankTrx"
+                  onClick={() => setNavIndex(1)}
+                />
+                Pay Bills
+              </div>
+              <ul>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={biyaToBiya} alt="bankTrx" />
+                    </div>
+                    <div className="text">Solar</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => decideFormStage(2)}
+                    />
                   </div>
-                  <div className="biyaTrx">Buy Bundle</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                    <MySVGs index={6} fill="rgba(4, 157, 254, 1)" />
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={bankTrx} alt="bankTrx" />
+                    </div>
+                    <div className="text">Electricity postpaid</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(2);
+                        setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
                   </div>
-                  <div className="biyaTrx">Withdraw Cash</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                    <MySVGs index={7} fill="rgba(4, 157, 254, 1)" />
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">Electricity prepaid</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(3);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
                   </div>
-                  <div className="biyaTrx">Pay Bill</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                    <MySVGs index={9} fill="rgba(4, 157, 254, 1)" />
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">Airtime recharge</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(4);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
                   </div>
-                  <div className="biyaTrx">Pay Merchant</div>
-                </div>
-                <div className="card">
-                  <div className="biyaCircle">
-                    {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                    <MySVGs index={8} fill="rgba(4, 157, 254, 1)" />
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">Internet subscription</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(6);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
                   </div>
-                  <div className="biyaTrx">My QR</div>
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">Cable TV</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(5);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
+                  </div>
+                </li>
+                <li>
+                  <div className="mobile-list">
+                    <div className="list-icon">
+                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    </div>
+                    <div className="text">Tolls</div>
+                    <img
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(7);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
+                  </div>
+                </li>
+              </ul>
+            </div>
+          )}
+          {navIndex === 1 && (
+            <>
+              <div className="top"></div>
+              <div className="user">
+                <div className="card">
+                  <div className="name">
+                    <div className="left">Hey Amina!</div>
+                    <div className="right">
+                      <div className="add">
+                        <img src={walletIcon} alt="WalletLogo1" /> Add money
+                        <img src={rightArrow} alt="rightArrow" />
+                      </div>
+                      <div className="add">
+                        <img src={walletIcon} alt="WalletLogo1" /> Withdraw
+                        money
+                        <img src={rightArrow} alt="rightArrow" />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="amount">
+                    <div>
+                      <span>Current balance</span> <br />{" "}
+                      {showBalance ? "NGN267,679.00" : "************"}
+                    </div>
+                    {showBalance ? (
+                      <BsEyeFill onClick={() => setShowBalance(!showBalance)} />
+                    ) : (
+                      <BsEyeSlashFill
+                        onClick={() => setShowBalance(!showBalance)}
+                      />
+                    )}
+                  </div>
                 </div>
               </div>
-            </div>
-
-            <div className="card-2">
-              <div>
-                <div className="card">
+              <div className="down">
+                <br />
+                <h3>Quick Actions</h3>
+                <div className="icons">
+                  <div className="xs-grid">
+                    <div className="card">
+                      <div className="biyaCircle">
+                        <img src={walletIcon} alt="bankTrxIcon" />
+                      </div>
+                      <div className="biyaTrx">Add Money</div>
+                    </div>
+                    <div className="card" onClick={() => setNavIndex(3)}>
+                      <div className="biyaCircle">
+                        <img src={TrxIcon} alt="bankTrxIcon" />
+                      </div>
+                      <div className="biyaTrx">Transfer Money</div>
+                    </div>
+                    <div
+                      className="card"
+                      onClick={() => {
+                        setNavIndex(4);
+                      }}
+                    >
+                      <div className="biyaCircle">
+                        {/* <img src={airtimeIcon} alt="bankTrxIcon" /> */}
+                        <MySVGs index={4} fill="rgba(4, 157, 254, 1)" />
+                      </div>
+                      <div className="biyaTrx">Recharge Airtime</div>
+                    </div>
+                    <div
+                      className="card"
+                      onClick={() => {
+                        setNavIndex(5);
+                      }}
+                    >
+                      <div className="biyaCircle">
+                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
+                        <MySVGs index={5} fill="rgba(4, 157, 254, 1)" />
+                      </div>
+                      <div className="biyaTrx">Buy Bundle</div>
+                    </div>
+                    <div
+                      className="card"
+                      onClick={() => {
+                        setNavIndex(6);
+                      }}
+                    >
+                      <div className="biyaCircle">
+                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
+                        <MySVGs index={6} fill="rgba(4, 157, 254, 1)" />
+                      </div>
+                      <div className="biyaTrx">Withdraw Cash</div>
+                    </div>
+                    <div
+                      className="card"
+                      onClick={() => {
+                        setNavIndex(7);
+                      }}
+                    >
+                      <div className="biyaCircle">
+                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
+                        <MySVGs index={7} fill="rgba(4, 157, 254, 1)" />
+                      </div>
+                      <div className="biyaTrx">Pay Bill</div>
+                    </div>
+                    <div className="card">
+                      <div className="biyaCircle">
+                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
+                        <MySVGs index={9} fill="rgba(4, 157, 254, 1)" />
+                      </div>
+                      <div className="biyaTrx">Pay Merchant</div>
+                    </div>
+                    <div className="card">
+                      <div className="biyaCircle">
+                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
+                        <MySVGs index={8} fill="rgba(4, 157, 254, 1)" />
+                      </div>
+                      <div className="biyaTrx">My QR</div>
+                    </div>
+                  </div>
+                </div>
+                <div className="card-2">
                   <div>
-                    Manage Your <br /> Favourites
+                    <div className="card">
+                      <div>
+                        Manage Your <br /> Favourites
+                      </div>
+                      <img src={favourite} alt="favouriteIcon" />
+                    </div>
+                    <div className="card">
+                      <div>Find An Agent</div>
+                      <img src={agent} alt="agentIcon" />
+                    </div>
                   </div>
-                  <img src={favourite} alt="favouriteIcon" />
-                </div>
-                <div className="card">
-                  <div>Find An Agent</div>
-                  <img src={agent} alt="agentIcon" />
                 </div>
               </div>
+              <div className="small-table">
+                <br />
+                <div className="title">Recent transactions</div>
+                <SmallTable />
+                {/* <br /> */}
+              </div>
+            </>
+          )}
+          <div className="bottom-nav">
+            <div className="bNav" onClick={() => setNavIndex(1)}>
+              <MySVGs
+                fill={navIndex === 1 ? "rgba(4, 157, 254, 1)" : "#263238"}
+                index={1}
+              />
+              Home
             </div>
-          </div>
-          <div className="small-table">
-            <br />
-            <div className="title">Recent transactions</div>
-            <SmallTable />
-            {/* <br /> */}
+            <div className="bNav" onClick={() => setNavIndex(2)}>
+              <MySVGs
+                fill={navIndex === 2 ? "rgba(4, 157, 254, 1)" : "#263238"}
+                index={2}
+              />
+              Scan & pay
+            </div>
+            <div className="bNav" onClick={() => setNavIndex(3)}>
+              <MySVGs
+                fill={navIndex === 3 ? "rgba(4, 157, 254, 1)" : "#263238"}
+                index={3}
+              />
+              Transfer
+            </div>
+            <div className="bNav" onClick={() => setNavIndex(11)}>
+              <MySVGs
+                fill={navIndex === 11 ? "rgba(4, 157, 254, 1)" : "#263238"}
+                index={11}
+              />
+              More
+            </div>
           </div>
         </div>
       )}

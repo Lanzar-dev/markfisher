@@ -72,7 +72,9 @@ export const SmallTable = () => {
               <div>To: Sportybet</div>
               <div className="datetime">Dec 7th . 12:16 PM</div>
             </td>
-            <td className={`table-cell`}>-NGN400</td>
+            <td className={`table-cell`} style={{ color: "red" }}>
+              -NGN400
+            </td>
           </tr>
 
           <tr>
@@ -89,7 +91,9 @@ export const SmallTable = () => {
               <div>To: Spotify</div>
               <div className="datetime">Dec 7th . 12:16 PM</div>
             </td>
-            <td className={`table-cell`}>-NGN1,999</td>
+            <td className={`table-cell`} style={{ color: "red" }}>
+              -NGN1,999
+            </td>
           </tr>
         </tbody>
       </table>
