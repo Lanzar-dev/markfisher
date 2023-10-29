@@ -1,10 +1,15 @@
 import { useFormik } from "formik";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { useAppDispatch } from "../Store/store";
+import { useAppDispatch, useAppSelector } from "../Store/store";
 import { IBiyaTransferPayload } from "../Features/User/type";
 import * as routes from "../Data/Routes";
-import { BiyaTransfer } from "../Features/User/userSlice";
+import {
+  BiyaTransfer,
+  VerifyBiyaAccount,
+  setVerifiedAcct,
+} from "../Features/User/userSlice";
+import { useCallback, useEffect } from "react";
 
 type IBiyaTransferFormProps = {
   fnShowCardForm: (index: boolean) => void;
@@ -15,9 +20,12 @@ export const BiyaTransferForm = ({
 }: IBiyaTransferFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  // const { errors } = useAppSelector((state) => state.error);
+  const { verifiedAcct, currentUser } = useAppSelector((state) => state.user);
+  // const errText: string = errors[0]?.message?.message;
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    AccountNumber: Yup.string().required("AccountNumber is required"),
+    AccountNumber: Yup.string().required("Account number is required"),
     Beneficiary: Yup.string().required("Beneficiary is required"),
     Narration: Yup.string().required("Narration is required"),
     Amount: Yup.string().required("Amount is required"),
@@ -29,12 +37,15 @@ export const BiyaTransferForm = ({
     Beneficiary: "",
     Narration: "",
     Amount: "",
+    Currency: "NGN",
+    Email: currentUser.Email,
   };
 
   // console.log("init: ", storedValues);
 
   // Submit handler
   const handleSubmit = (values: IBiyaTransferPayload) => {
+    // console.log(values);
     dispatch(BiyaTransfer(values));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);
@@ -46,8 +57,33 @@ export const BiyaTransferForm = ({
     validationSchema,
     onSubmit: handleSubmit,
   });
+
+  useEffect(() => {
+    dispatch(setVerifiedAcct(null));
+  }, [dispatch]);
+
+  const setField = useCallback(() => {
+    formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
+  }, [formik, verifiedAcct]);
+
+  useEffect(() => {
+    if (verifiedAcct) {
+      setField();
+    }
+  }, [verifiedAcct]);
+
+  const checkAcctNum = (accNum: any) => {
+    // let accNum = formik.values.AccountNumber;
+    if (accNum.length === 10 && !verifiedAcct) {
+      dispatch(VerifyBiyaAccount(accNum));
+    } else if (accNum.length < 10) {
+      dispatch(setVerifiedAcct(null));
+      formik.setFieldValue("Beneficiary", "");
+    }
+  };
+
   return (
-    <form>
+    <form onSubmit={formik.handleSubmit}>
       <div className="text-1">Transfer to</div>
 
       <div className="field-holder">
@@ -61,6 +97,16 @@ export const BiyaTransferForm = ({
             onBlur={formik.handleBlur}
             value={formik.values.AccountNumber}
             placeholder="Account or Phone number"
+            onFocus={(e) => {
+              const acctNum = e.currentTarget.value;
+              if (acctNum && !verifiedAcct) {
+                checkAcctNum(acctNum);
+              }
+              if (acctNum.length < 10) {
+                dispatch(setVerifiedAcct(null));
+                formik.setFieldValue("Beneficiary", "");
+              }
+            }}
           />
         </div>
         {formik.touched.AccountNumber && formik.errors.AccountNumber && (
@@ -79,6 +125,7 @@ export const BiyaTransferForm = ({
             onBlur={formik.handleBlur}
             value={formik.values.Beneficiary}
             placeholder="amina.adewale@gmail.com"
+            disabled
           />
         </div>
         {formik.touched.Beneficiary && formik.errors.Beneficiary && (
@@ -115,6 +162,12 @@ export const BiyaTransferForm = ({
             onBlur={formik.handleBlur}
             value={formik.values.Amount}
             placeholder="NGN 0.00"
+            onFocus={() => {
+              const acctNum = formik.values.AccountNumber;
+              if (acctNum && !verifiedAcct) {
+                checkAcctNum(acctNum);
+              }
+            }}
           />
         </div>
         {formik.touched.Amount && formik.errors.Amount && (
@@ -130,7 +183,11 @@ export const BiyaTransferForm = ({
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        {verifiedAcct && (
+          <button type="submit" disabled={!formik.isValid}>
+            Next
+          </button>
+        )}
       </div>
     </form>
   );

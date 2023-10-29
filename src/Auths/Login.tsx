@@ -97,7 +97,7 @@ export const Login = () => {
   useEffect(() => {
     if (errors?.length > 0 && errText === "login success") {
       navigate(routes.homepage);
-      dispatch(clearErrors());
+      // dispatch(clearErrors());
     }
   }, [navigate, dispatch, errors, errText]);
 

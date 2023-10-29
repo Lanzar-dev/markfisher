@@ -4,12 +4,11 @@ import { AppThunk } from "../../Store/store";
 import { axios, axiosWithAuth } from "../utils";
 import { clearErrors, setError, setSuccess } from "../Error/errorSlice";
 import {
-  EachAptDate,
   IAirtimeCategory,
   IAirtimePayload,
   IAuth,
   IBanksPayload,
-  IBankTransferPayload,
+  // IBankTransferPayload,
   IBillsCategory,
   IBiyaTransferPayload,
   IBundlePayload,
@@ -17,6 +16,7 @@ import {
   ICreatePaymentLink,
   IElectricityPayload,
   IForgotPass,
+  INotify,
   IProfile,
   IResetPassword,
   ISignin,
@@ -36,7 +36,7 @@ const BASE_PATH_FL = "FL";
 const initialState: IUserState = {
   isLoading: false,
   userId: "",
-  isBookedApt: false,
+  isNotify: false,
 };
 
 const userSlice = createSlice({
@@ -46,11 +46,14 @@ const userSlice = createSlice({
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isLoading = payload;
     },
-
+    setIsNotify: (state, { payload }: PayloadAction<boolean>) => {
+      state.isNotify = payload;
+    },
+    setNotify: (state, { payload }: PayloadAction<INotify | null>) => {
+      state.notify = payload;
+    },
     setLogout: (state) => {
       state.isAuth = false;
-      state.selectedDocAptDate = null;
-      state.selectedDoctor = null;
       state.token = "";
       state.userId = "";
       state.currentUser = null;
@@ -117,12 +120,6 @@ const userSlice = createSlice({
     ) => {
       state.verifiedAcct = payload;
     },
-    setSelectedDocAptDate: (
-      state,
-      { payload }: PayloadAction<EachAptDate[]>
-    ) => {
-      state.selectedDocAptDate = payload;
-    },
   },
 });
 
@@ -144,67 +141,6 @@ export const reset_password = (data: IResetPassword): AppThunk => {
         } else if (data && data.token) {
           dispatch(setProfile(data.profile));
           dispatch(setToken(data.token));
-        }
-      }
-    } catch (error: any) {
-      dispatch(setError(error?.message));
-    }
-    dispatch(setLoading(false));
-  };
-};
-
-export const bookAppointment = (data: any): AppThunk => {
-  return async (dispatch, getState) => {
-    dispatch(setLoading(true));
-    dispatch(clearErrors());
-    try {
-      const path = BASE_PATH + "/CreateAppointment";
-      const newData = { ...data };
-      newData.aptdate = formatDate(newData.aptdate);
-      // console.log("checking ResetPassword path: ", path, " data: ", newData);
-      const response = await axiosWithAuth(
-        getState().patient.token as string
-      ).post(path, data);
-
-      if (response) {
-        const data = response.data;
-        // console.log("bookApt response: ", data);
-        if (data.status === true) {
-          // console.log("first-1: ", data.message);
-          dispatch(setSuccess(data.message));
-        } else if (data.status === false) {
-          // console.log("first-2: ", data.message);
-          dispatch(setSuccess(data.message));
-        }
-      }
-    } catch (error: any) {
-      dispatch(setError(error?.message));
-    }
-    dispatch(setLoading(false));
-  };
-};
-
-export const cancelAppointment = (data: any): AppThunk => {
-  return async (dispatch, getState) => {
-    dispatch(setLoading(true));
-    dispatch(clearErrors());
-    try {
-      const path = BASE_PATH + "/CancelAppointmentRequest";
-      const payload: any = {
-        appointmentId: data.recordID.toString(),
-        UserId: getState().patient.userId,
-      };
-      const response = await axiosWithAuth(
-        getState().patient.token as string
-      ).post(path, payload);
-
-      if (response) {
-        const data = response.data;
-        // console.log("data: ", data);
-        if (data.status === true) {
-          if ((data.message = "Success")) {
-            dispatch(setSuccess(data.data));
-          }
         }
       }
     } catch (error: any) {
@@ -243,6 +179,8 @@ export const login = (data: ISignin): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH + "/SignIn";
       const response = await axios.post(path, data);
@@ -252,13 +190,51 @@ export const login = (data: ISignin): AppThunk => {
 
         if (data.code === 200) {
           dispatch(setProfile(data.body));
-          dispatch(clearErrors());
+          // dispatch(clearErrors());
+          const resp: any = { code: data.code, message: data.message };
+          dispatch(setSuccess(resp));
+          dispatch(setNotify({ text: "Login success", color: "green" }));
+          dispatch(setIsNotify(true));
+        } else if (data.code === 400) {
+          if (data.message === "User not found") {
+            dispatch(
+              setNotify({
+                text: "User not found, please register",
+                color: "red",
+              })
+            );
+            dispatch(setIsNotify(true));
+          }
+        }
+      }
+    } catch (error: any) {
+      console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const fetchUserWallet = (data: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + `/FetchUserWallet?Email=${data}`;
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+        // console.log("data: ", response.data);
+
+        if (data.code === 200) {
+          dispatch(setProfile(data.body));
+          // dispatch(clearErrors());
           const resp: any = { code: data.code, message: data.message };
           dispatch(setSuccess(resp));
         }
       }
     } catch (error: any) {
-      // console.log(error?.response?.data);
+      console.log(error?.response?.data);
       dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
@@ -309,24 +285,19 @@ export const resendVerifyEmail = (data: string): AppThunk => {
   };
 };
 
-export const BankTransfer = (data: ITransferPayload): AppThunk => {
+export const GetTransferFee = (data: any): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH_FL + "/BankTransfer";
-      const response = await axios.post(path, data);
+      const path = BASE_PATH_FL + `/GetTransferFee?Amount=${data}`;
+      const response = await axios.get(path);
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
+        console.log("data: ", data);
         if (data.status === true) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+          //
         } else if (data.status === false) {
           dispatch(setError(data.message));
         }
@@ -338,26 +309,61 @@ export const BankTransfer = (data: ITransferPayload): AppThunk => {
   };
 };
 
+export const BankTransfer = (data: ITransferPayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
+    try {
+      const path = BASE_PATH_FL + "/BankTransfer";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+
+        console.log("bank transfer data: ", data);
+        if (data.code === 200) {
+          dispatch(setSuccess(data));
+          const msg = `NGN${data?.body?.Amount} has been sent to ${data?.body?.Receiver}`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
+        } else if (data.code === 400) {
+          const msg = `Could not verify account number`;
+          dispatch(setNotify({ text: msg, color: "red" }));
+          dispatch(setIsNotify(true));
+        }
+      }
+    } catch (error: any) {
+      const errText = error?.response?.data;
+      console.log("transfer error ", errText);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
 export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BuyAirtime";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
+        console.log("airtime response: ", data);
         if (data.code === 200) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+          dispatch(setSuccess(data));
+          const msg = `NGN${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
         } else if (data.code === 400) {
           dispatch(setError(data));
+          dispatch(setNotify({ text: data?.body, color: "red" }));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
@@ -372,22 +378,24 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BuyBundle";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
+        console.log("bundle response: ", data);
         if (data.code === 200) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+          dispatch(setSuccess(data));
+          const msg = `NGN${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
         } else if (data.code === 400) {
           dispatch(setError(data));
+          dispatch(setNotify({ text: data?.body, color: "red" }));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
@@ -490,7 +498,7 @@ export const VerifyBankAccount = (data: IVerifyBankAcct): AppThunk => {
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
+        console.log("validate bank acct data: ", data);
         if (data.code === 200) {
           dispatch(setVerifiedAcct(data.body.data));
           // dispatch(setBanks(data.body));
@@ -506,26 +514,67 @@ export const VerifyBankAccount = (data: IVerifyBankAcct): AppThunk => {
   };
 };
 
-export const BiyaTransfer = (data: IBiyaTransferPayload): AppThunk => {
+export const VerifyBiyaAccount = (payload: any): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
-      const path = BASE_PATH + "/LoginPatientAccount";
-      const response = await axios.post(path, data);
+      const path = BASE_PATH_FL + `/BiyaValidateAccount?Search=${payload}`;
+      const response = await axios.post(path, payload);
+      // console.log(data);
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
-        if (data.status === true) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
-        } else if (data.status === false) {
+        // console.log("validate biya acct data: ", data);
+        if (data.code === 200) {
+          dispatch(setVerifiedAcct(data.body.data));
+          const msg = "Account is valid";
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
+        } else if (data.code === 400) {
+          dispatch(setError(data));
+          var msg = data?.message;
+          if (data?.message === "User not found") {
+            msg = `User with account/phone number ${payload} does not exit`;
+          }
+          dispatch(setNotify({ text: msg, color: "red" }));
+          dispatch(setIsNotify(true));
+        }
+      }
+    } catch (error: any) {
+      // dispatch(clearErrors());
+      console.log(error?.response?.data);
+      dispatch(setError(error?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const BiyaTransfer = (payload: IBiyaTransferPayload): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
+    try {
+      const path = BASE_PATH_FL + "/BiyaTransfer";
+      const response = await axios.post(path, payload);
+      if (response) {
+        const data = response.data;
+
+        // console.log("biya transfer data: ", data);
+        if (data.code === 200) {
+          // dispatch(fetchUserWallet(payload.Email));
+          dispatch(setSuccess(data));
+          const msg = `NGN${data?.body?.Amount} has been sent to ${data?.body?.Receiver}`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
+        } else if (data.code === 400) {
           dispatch(setError(data.message));
+          dispatch(setNotify({ text: data.body, color: "red" }));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
@@ -564,17 +613,20 @@ export const TollPayment = (data: ITollPayload): AppThunk => {
   };
 };
 
-export const FundWallet = (data: ICreatePaymentLink): AppThunk => {
+export const FundWallet = (payload: ICreatePaymentLink): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/FundWallet";
-      const response = await axios.post(path, data);
+      const response = await axios.post(path, payload);
       if (response) {
         const data = response.data;
         // console.log("data: ", data);
         if (data.code === 200) {
+          // dispatch(fetchUserWallet(payload.customer));
           window.location.href = data.body.link;
         }
       }
@@ -649,59 +701,6 @@ export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
   };
 };
 
-export const getAppointmentHistoryById = (
-  userId: number,
-  pageNo: number
-): AppThunk => {
-  return async (dispatch, getState) => {
-    dispatch(setLoading(true));
-    try {
-      const path =
-        BASE_PATH +
-        `/GetAppointmentHistoryById?userId=${userId}&pageNo=${pageNo}`;
-      // console.log("user state: ", getState().patient);
-      const response = await axiosWithAuth(
-        getState().patient.token as string
-      ).get(path);
-      if (response) {
-        const data = response?.data;
-        if (data?.status === true) {
-          // if (data?.data) dispatch(setAppointmentHistory(data?.data));
-        }
-      }
-    } catch (error: any) {
-      // dispatch(setError(error?.message));
-      dispatch(setError(error?.response?.data?.message));
-    }
-    dispatch(setLoading(false));
-  };
-};
-
-export const getDocAptDatesById = (userId: number): AppThunk => {
-  return async (dispatch, getState) => {
-    dispatch(setLoading(true));
-    try {
-      const path = BASE_PATH + `/GetSessionByUserID`;
-      // console.log("user state: ", getState().patient);
-      const response = await axiosWithAuth(
-        getState().patient.token as string
-      ).post(path, { UserId: userId });
-
-      if (response) {
-        const data = response?.data;
-        // console.log("aptDates: ", data);
-        if (data.status === true) {
-          //
-        }
-      }
-    } catch (error: any) {
-      // dispatch(setError(error?.message));
-      dispatch(setError(error?.response?.data?.message));
-    }
-    dispatch(setLoading(false));
-  };
-};
-
 export const signup = (data: ISignUp): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -751,15 +750,41 @@ export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
   };
 };
 
-function formatDate(inputDate: string) {
-  const dateObject = new Date(inputDate);
+// function formatDate(inputDate: string) {
+//   const dateObject = new Date(inputDate);
 
-  const year = dateObject.getFullYear();
-  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
-  const day = String(dateObject.getDate()).padStart(2, "0");
+//   const year = dateObject.getFullYear();
+//   const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+//   const day = String(dateObject.getDate()).padStart(2, "0");
 
-  return `${year}-${month}-${day}`;
-}
+//   return `${year}-${month}-${day}`;
+// }
+
+export const getAccessToken = (data: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/GenInterswitchAccessToken";
+      const response = await axios.post(path, data);
+      if (response) {
+        const data = response.data;
+        // console.log("data: ", response.data);
+
+        if (data.code === 200) {
+          dispatch(setProfile(data.body));
+          dispatch(clearErrors());
+          const resp: any = { code: data.code, message: data.message };
+          dispatch(setSuccess(resp));
+        }
+      }
+    } catch (error: any) {
+      // console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
 
 export const {
   setUserId,
@@ -775,6 +800,7 @@ export const {
   setAirtimeCategory,
   setBundleCategory,
   setVerifiedAcct,
-  setSelectedDocAptDate,
+  setIsNotify,
+  setNotify,
 } = userSlice.actions;
 export default userSlice.reducer;

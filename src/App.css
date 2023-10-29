@@ -1537,6 +1537,7 @@ body {
   border-radius: 5px;
   border: 2px solid #dfe6ec;
   background: #f8fbfd;
+  overflow-y: auto;
 }
 .Home .card-forms .card-forms-title {
   display: flex;
@@ -1656,6 +1657,38 @@ body {
   margin-left: 10vw;
 }
 .Home .card-forms form .card-forms-bottom button:hover {
+  cursor: pointer;
+}
+
+.notification {
+  position: absolute;
+  top: 25px;
+  right: 30px;
+  z-index: 6;
+  min-height: 60px;
+  max-width: 450px;
+  border-radius: 6px;
+  background: rgb(154, 152, 152);
+  box-shadow: 0px 0px 98.3081741333px 0px rgba(0, 0, 0, 0.05), 0px 0px 50.1572303772px 0px rgba(0, 0, 0, 0.05);
+  display: flex;
+  align-items: center;
+}
+.notification .notify-bar {
+  width: 10px;
+  height: 60px;
+  border-radius: 6px 0px 0px 6px;
+}
+.notification .notify-text {
+  padding: 5px 10px 5px 0px;
+  height: 100%;
+  width: 90%;
+  padding-left: 15px;
+  color: white;
+}
+.notification svg {
+  margin-left: auto;
+  margin-right: 14px;
+  font-size: 25px;
   cursor: pointer;
 }
 
@@ -3031,6 +3064,7 @@ body {
     z-index: 4;
     border: 2px solid #dfe6ec;
     background: #f8fbfd;
+    overflow-y: auto;
   }
   .Home .card-forms .card-forms-title {
     display: flex;
@@ -3111,6 +3145,7 @@ body {
     margin-top: 70px;
     padding-left: 15px;
     height: fit-content;
+    margin-bottom: 50px;
   }
   .Home .card-forms form .text-1 {
     color: rgba(0, 0, 0, 0.5);
@@ -3124,11 +3159,11 @@ body {
   }
   .Home .card-forms form .field-holder {
     width: fit-content;
-    margin-bottom: 15px;
+    margin: 15px auto;
   }
   .Home .card-forms form .field-holder .title {
     width: fit-content;
-    height: 18px;
+    height: 24px;
     flex-shrink: 0;
     color: rgba(0, 0, 0, 0.9);
     font-family: var(--font-family-a);

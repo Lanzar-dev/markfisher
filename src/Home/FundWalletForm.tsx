@@ -37,7 +37,7 @@ export const FundWalletForm = ({ fnShowCardForm }: IFundWalletFormProps) => {
 
   // Submit handler
   const handleSubmit = (values: ICreatePaymentLink) => {
-    console.log(values);
+    // console.log(values);
     dispatch(FundWallet(values));
     // if (isAuth === true) navigate(routes.homepage);
     navigate(routes.homepage);

@@ -7,9 +7,9 @@ export interface IUserState {
   currentUser?: IProfile | null;
   isLoading: boolean;
   isAuth?: boolean;
+  isNotify: boolean;
   userId?: string;
   token?: string;
-  appointment?: any;
   banks?: IBanksPayload[] | null;
   airtimeCategory?: IAirtimeCategory[] | null;
   tollCategory?: IAirtimeCategory[] | null;
@@ -17,20 +17,7 @@ export interface IUserState {
   bundleCategory?: IAirtimeCategory[] | null;
   cableCategory?: IAirtimeCategory[] | null;
   verifiedAcct?: IVerifiedAcct | null;
-  selectedDoctor?: any | null;
-  isBookedApt: boolean;
-  doctorAptDatetime?: GetDoctorAptDates[];
-  selectedDocAptDate?: EachAptDate[] | null;
-}
-
-export interface GetDoctorAptDates {
-  getAppointments: EachAptDate[];
-}
-
-export interface EachAptDate {
-  appointmentDate: string;
-  appointmentTime: number;
-  appointmentLength: number;
+  notify?: INotify | null;
 }
 
 export interface IAirtimeCategory {
@@ -159,6 +146,7 @@ export interface IElectricityPayload {
   BillerName: string;
   IsPrepaid: boolean;
 }
+
 export interface ICablePayload {
   DecoderNumber: string;
   SubscriptionName: string;
@@ -174,6 +162,7 @@ export interface IBanksPayload {
   code: string;
   name: string;
 }
+
 export interface IAirtimePayload {
   MobileNumber: string;
   NetworkName: string;
@@ -182,6 +171,7 @@ export interface IAirtimePayload {
   BillerCode: string;
   ItemCode: string;
 }
+
 export interface IBundlePayload {
   MobileNumber: string;
   NetworkName: string;
@@ -191,6 +181,7 @@ export interface IBundlePayload {
   BillerCode: string;
   ItemCode: string;
 }
+
 export interface IPSBTransferPayload {
   AccountNumber: string;
   BankName: string;
@@ -198,20 +189,26 @@ export interface IPSBTransferPayload {
   Narration: string;
   Amount: string;
 }
+
 export interface IBiyaTransferPayload {
   AccountNumber: string;
   Beneficiary: string;
   Narration: string;
   Amount: string;
+  Currency: string;
+  Email: string;
 }
+
 export interface ITollPayload {
   CustomerId: string;
   Amount: string;
   TollName: string;
 }
+
 export interface IForgotPass {
   Email: string;
 }
+
 export interface ISignUp {
   Email: string;
   PhoneNumber: string;
@@ -253,4 +250,9 @@ interface ICustomizations {
   title?: string;
   logo?: string;
   description?: string;
+}
+
+export interface INotify {
+  color: string;
+  text: string;
 }

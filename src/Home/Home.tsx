@@ -28,18 +28,23 @@ import { QRCodeCanvas } from "qrcode.react";
 import html2canvas from "html2canvas";
 import { saveAs } from "file-saver";
 import copy from "clipboard-copy";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { MediaQueryMatchers, useMediaQuery } from "react-responsive";
 import SmallTable from "./SmallTable";
 import { ElectricityForm } from "./ElectricityForm";
 import { CableTvForm } from "./CableTvForm";
-import { useAppDispatch } from "../Store/store";
-import { setLogout } from "../Features/User/userSlice";
+import { useAppDispatch, useAppSelector } from "../Store/store";
+import {
+  fetchUserWallet,
+  getAccessToken,
+  setLogout,
+} from "../Features/User/userSlice";
 import { FundWalletForm } from "./FundWalletForm";
 
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { currentUser, isNotify } = useAppSelector((state) => state.user);
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
@@ -48,12 +53,26 @@ export const Home = () => {
   const [zindex, setZindex] = useState<number>(4);
   const isMobile = useMediaQuery({ maxWidth: 600 } as MediaQueryMatchers);
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    const searchStatus = searchParams.get("status");
+    // const searchTrxId = searchParams.get("transaction_id");
+    // const searchTrxRef = searchParams.get("tx_ref");
+    if (searchStatus === "successful" || isNotify) {
+      setSearchParams({ status: "", transaction_id: "", tx_ref: "" });
+      dispatch(fetchUserWallet(currentUser?.Email));
+    }
+    if (navIndex === 3 && isNotify) {
+      // setShowCardForm(false);
+    }
+  }, [dispatch, isNotify, currentUser?.Email, searchParams]);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);
     setShowCardForm(!showCardForm);
   };
-
+  // console.log(errors);
   useEffect(() => {
     if (navIndex === 5 || navIndex === 4) {
       if (navIndex === 5) setCardFormIndex(6);
@@ -97,7 +116,7 @@ export const Home = () => {
     if (navIndex === 5 || navIndex === 4) setNavIndex(1);
     setShowCardForm(isBool);
   };
-
+  // console.log(errTexts?.body);
   return (
     <div className="Home">
       {showCardForm && (
@@ -127,7 +146,7 @@ export const Home = () => {
               {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
             </div>
             <div className="title">
-              {cardFormIndex === 1 && "Biyawa to Biyawa"}
+              {cardFormIndex === 1 && "Biya to Biya"}
               {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
               {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
               {cardFormIndex === 2 && navIndex === 7 && "Electricity postpaid"}
@@ -136,15 +155,19 @@ export const Home = () => {
               {cardFormIndex === 6 && "Buy a bundle"}
               {cardFormIndex === 7 && "Tolls"}
               {cardFormIndex === 8 && "Fund wallet"}
+              {cardFormIndex === 2 && navIndex === 6 && "Bank Withdrawal"}
+              {cardFormIndex === 3 && navIndex === 6 && "PSB Withdrawal"}
             </div>
           </div>
           {cardFormIndex === 1 && (
             <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
           )}
-          {cardFormIndex === 2 && navIndex === 3 && (
+          {((cardFormIndex === 2 && navIndex === 3) ||
+            (cardFormIndex === 2 && navIndex === 6)) && (
             <BankTransferForm fnShowCardForm={funcSetShowCard} />
           )}
-          {cardFormIndex === 3 && navIndex === 3 && (
+          {((cardFormIndex === 3 && navIndex === 3) ||
+            (cardFormIndex === 3 && navIndex === 6)) && (
             <PSBTransferForm fnShowCardForm={funcSetShowCard} />
           )}
           {cardFormIndex === 2 && navIndex === 7 && (
@@ -180,7 +203,10 @@ export const Home = () => {
             <img
               src={biyaLogo}
               alt="biyaLogo1"
-              onClick={() => setNavIndex(1)}
+              onClick={() => {
+                setNavIndex(1);
+                dispatch(getAccessToken(""));
+              }}
             />
             <div className="side-bar">
               {navComponent("Home", 1)}
@@ -268,7 +294,11 @@ export const Home = () => {
                       </div>
                       <div className="amount">
                         <span>Current balance</span> <br />{" "}
-                        {showBalance ? "NGN267,679.00" : "************"}
+                        {showBalance
+                          ? `NGN${parseFloat(
+                              currentUser?.WalletBalance
+                            ).toFixed(2)}`
+                          : "************"}
                       </div>
                     </div>
                     <div className="card">
@@ -294,7 +324,7 @@ export const Home = () => {
                 <div className="transfer">
                   <div className="card">
                     <div className="biyaCircle">B</div>
-                    <div className="biyaTrx">Biyawa to Biyawa wallet</div>
+                    <div className="biyaTrx">Biya to Biya wallet</div>
                     <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr1"
@@ -512,7 +542,10 @@ export const Home = () => {
                     <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
+                      onClick={() => {
+                        decideFormStage(2);
+                        // setNavIndex(6);
+                      }}
                     />
                   </div>
                 </li>
@@ -527,7 +560,7 @@ export const Home = () => {
                     <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
+                      onClick={() => decideFormStage(3)}
                     />
                   </div>
                 </li>
@@ -550,7 +583,7 @@ export const Home = () => {
                     <div className="list-icon">
                       <img src={biyaToBiya} alt="bankTrx" />
                     </div>
-                    <div className="text">Biyawa to Biyawa wallet</div>
+                    <div className="text">Biya to Biya wallet</div>
                     <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
@@ -732,7 +765,13 @@ export const Home = () => {
                   <div className="name">
                     <div className="left">Hey Amina!</div>
                     <div className="right">
-                      <div className="add">
+                      <div
+                        className="add"
+                        onClick={() => {
+                          setCardFormIndex(8);
+                          funcSetShowCard(!showCardForm);
+                        }}
+                      >
                         <img src={walletIcon} alt="WalletLogo1" /> Add money
                         <img src={rightArrow} alt="rightArrow" />
                       </div>
@@ -746,7 +785,9 @@ export const Home = () => {
                   <div className="amount">
                     <div>
                       <span>Current balance</span> <br />{" "}
-                      {showBalance ? "NGN267,679.00" : "************"}
+                      {showBalance
+                        ? `NGN${currentUser?.WalletBalance}`
+                        : "************"}
                     </div>
                     {showBalance ? (
                       <BsEyeFill onClick={() => setShowBalance(!showBalance)} />
