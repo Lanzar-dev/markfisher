@@ -35,16 +35,22 @@ import { ElectricityForm } from "./ElectricityForm";
 import { CableTvForm } from "./CableTvForm";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import {
+  fetchBiyaPayment,
+  fetchFlwPayment,
+  fetchTransactions,
   fetchUserWallet,
   getAccessToken,
   setLogout,
 } from "../Features/User/userSlice";
 import { FundWalletForm } from "./FundWalletForm";
+import { clearErrors } from "../Features/Error/errorSlice";
+import { FiLogOut } from "react-icons/fi";
 
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { currentUser, isNotify } = useAppSelector((state) => state.user);
+  const { errors } = useAppSelector((state) => state.error);
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
@@ -54,19 +60,44 @@ export const Home = () => {
   const isMobile = useMediaQuery({ maxWidth: 600 } as MediaQueryMatchers);
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
   const [searchParams, setSearchParams] = useSearchParams();
+  const errtext = errors[0]?.message;
+
+  //Always get user wallet balance on first rendering or reload
+  useEffect(() => {
+    dispatch(fetchUserWallet(currentUser?.Email));
+  }, [dispatch, currentUser?.Email]);
 
   useEffect(() => {
     const searchStatus = searchParams.get("status");
-    // const searchTrxId = searchParams.get("transaction_id");
-    // const searchTrxRef = searchParams.get("tx_ref");
-    if (searchStatus === "successful" || isNotify) {
-      setSearchParams({ status: "", transaction_id: "", tx_ref: "" });
+    const searchTrxId = searchParams.get("transaction_id");
+    const searchTrxRef = searchParams.get("tx_ref");
+    if (searchStatus === "successful") {
+      dispatch(fetchBiyaPayment(searchTrxRef));
+      dispatch(fetchFlwPayment(searchTrxId));
+      // setSearchParams({ status: "", transaction_id: "", tx_ref: "" });
       dispatch(fetchUserWallet(currentUser?.Email));
     }
-    if (navIndex === 3 && isNotify) {
-      // setShowCardForm(false);
+    // console.log(errtext?.message);
+    if (
+      errtext?.message === "Success transfer" ||
+      errtext?.message === "Queued transfer" ||
+      errtext?.message === "Bundle Purchased" ||
+      errtext?.message === "Airtime Purchased" ||
+      errtext?.message === "Cable Purchased"
+    ) {
+      setShowCardForm(false);
+      dispatch(fetchUserWallet(currentUser?.Email));
+      dispatch(clearErrors());
+      if (isMobile) {
+        setNavIndex(1);
+      }
     }
-  }, [dispatch, isNotify, currentUser?.Email, searchParams]);
+  }, [dispatch, isNotify, searchParams, errtext, currentUser, isMobile]);
+
+  // Separate useEffect for resetting searchParams
+  useEffect(() => {
+    setSearchParams({ status: "", transaction_id: "", tx_ref: "" });
+  }, [setSearchParams]);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);
@@ -116,7 +147,15 @@ export const Home = () => {
     if (navIndex === 5 || navIndex === 4) setNavIndex(1);
     setShowCardForm(isBool);
   };
-  // console.log(errTexts?.body);
+
+  //fetch transactions
+  useEffect(() => {
+    if (!isNotify) {
+      dispatch(fetchTransactions(currentUser?.Email));
+    }
+  }, [dispatch, isNotify, currentUser]); //dispatch, currentUser, transactions
+
+  // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
   return (
     <div className="Home">
       {showCardForm && (
@@ -127,74 +166,87 @@ export const Home = () => {
             height: isMobile ? "93vh" : "100vh",
           }}
         >
-          <div className="card-forms-title">
-            <div className="biyaCircle">
-              {cardFormIndex === 1 && "B"}
-              {(cardFormIndex === 2 || cardFormIndex === 8) && (
-                <img src={bankTrx} alt="bankTrx" />
-              )}
-              {cardFormIndex === 4 && (
-                <MySVGs index={cardFormIndex} fill={"rgba(4, 157, 254, 1)"} />
-              )}
-              {cardFormIndex === 3 && <img src={TrxIcon} alt="TrxIcon" />}
-              {cardFormIndex === 6 && (
-                <MySVGs
-                  index={cardFormIndex - 1}
-                  fill={"rgba(4, 157, 254, 1)"}
-                />
-              )}
-              {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
+          <div
+            className="entire-form"
+            style={{
+              width: isMobile ? "100vw" : "35vw",
+              height: isMobile ? "93vh" : "100vh",
+            }}
+          >
+            <div className="card-forms-title">
+              <div className="biyaCircle">
+                {(cardFormIndex === 1 || cardFormIndex === 5) && "B"}
+                {(cardFormIndex === 2 || cardFormIndex === 8) && (
+                  <img src={bankTrx} alt="bankTrx" />
+                )}
+                {cardFormIndex === 4 && (
+                  <MySVGs index={cardFormIndex} fill={"rgba(4, 157, 254, 1)"} />
+                )}
+                {cardFormIndex === 3 && <img src={TrxIcon} alt="TrxIcon" />}
+                {cardFormIndex === 6 && (
+                  <MySVGs
+                    index={cardFormIndex - 1}
+                    fill={"rgba(4, 157, 254, 1)"}
+                  />
+                )}
+                {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
+              </div>
+              <div className="title">
+                {cardFormIndex === 1 && "Biya to Biya"}
+                {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
+                {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
+                {cardFormIndex === 2 &&
+                  navIndex === 7 &&
+                  "Electricity postpaid"}
+                {cardFormIndex === 3 && navIndex === 7 && "Electricity prepaid"}
+                {cardFormIndex === 4 && "Airtime"}
+                {cardFormIndex === 5 && "Cable Tv"}
+                {cardFormIndex === 6 && "Buy a bundle"}
+                {cardFormIndex === 7 && "Tolls"}
+                {cardFormIndex === 8 && "Fund wallet"}
+                {cardFormIndex === 2 && navIndex === 6 && "Bank Withdrawal"}
+                {cardFormIndex === 3 && navIndex === 6 && "PSB Withdrawal"}
+              </div>
             </div>
-            <div className="title">
-              {cardFormIndex === 1 && "Biya to Biya"}
-              {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
-              {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
-              {cardFormIndex === 2 && navIndex === 7 && "Electricity postpaid"}
-              {cardFormIndex === 3 && navIndex === 7 && "Electricity prepaid"}
-              {cardFormIndex === 4 && "Airtime"}
-              {cardFormIndex === 6 && "Buy a bundle"}
-              {cardFormIndex === 7 && "Tolls"}
-              {cardFormIndex === 8 && "Fund wallet"}
-              {cardFormIndex === 2 && navIndex === 6 && "Bank Withdrawal"}
-              {cardFormIndex === 3 && navIndex === 6 && "PSB Withdrawal"}
-            </div>
+            {cardFormIndex === 1 && (
+              <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {((cardFormIndex === 2 && navIndex === 3) ||
+              (cardFormIndex === 2 && navIndex === 6)) && (
+              <BankTransferForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {((cardFormIndex === 3 && navIndex === 3) ||
+              (cardFormIndex === 3 && navIndex === 6)) && (
+              <PSBTransferForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {cardFormIndex === 2 && navIndex === 7 && (
+              <ElectricityForm
+                fnShowCardForm={funcSetShowCard}
+                isPostpaid={true}
+              />
+            )}
+            {cardFormIndex === 3 && navIndex === 7 && (
+              <ElectricityForm
+                fnShowCardForm={funcSetShowCard}
+                isPostpaid={false}
+              />
+            )}
+            {cardFormIndex === 4 && (
+              <AirtimeForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {cardFormIndex === 5 && (
+              <CableTvForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {cardFormIndex === 6 && (
+              <BundleForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {cardFormIndex === 7 && (
+              <TollForm fnShowCardForm={funcSetShowCard} />
+            )}
+            {cardFormIndex === 8 && (
+              <FundWalletForm fnShowCardForm={funcSetShowCard} />
+            )}
           </div>
-          {cardFormIndex === 1 && (
-            <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
-          )}
-          {((cardFormIndex === 2 && navIndex === 3) ||
-            (cardFormIndex === 2 && navIndex === 6)) && (
-            <BankTransferForm fnShowCardForm={funcSetShowCard} />
-          )}
-          {((cardFormIndex === 3 && navIndex === 3) ||
-            (cardFormIndex === 3 && navIndex === 6)) && (
-            <PSBTransferForm fnShowCardForm={funcSetShowCard} />
-          )}
-          {cardFormIndex === 2 && navIndex === 7 && (
-            <ElectricityForm
-              fnShowCardForm={funcSetShowCard}
-              isPostpaid={true}
-            />
-          )}
-          {cardFormIndex === 3 && (
-            <ElectricityForm
-              fnShowCardForm={funcSetShowCard}
-              isPostpaid={false}
-            />
-          )}
-          {cardFormIndex === 4 && (
-            <AirtimeForm fnShowCardForm={funcSetShowCard} />
-          )}
-          {cardFormIndex === 5 && (
-            <CableTvForm fnShowCardForm={funcSetShowCard} />
-          )}
-          {cardFormIndex === 6 && (
-            <BundleForm fnShowCardForm={funcSetShowCard} />
-          )}
-          {cardFormIndex === 7 && <TollForm fnShowCardForm={funcSetShowCard} />}
-          {cardFormIndex === 8 && (
-            <FundWalletForm fnShowCardForm={funcSetShowCard} />
-          )}
         </div>
       )}
       {!isMobile && (
@@ -295,9 +347,9 @@ export const Home = () => {
                       <div className="amount">
                         <span>Current balance</span> <br />{" "}
                         {showBalance
-                          ? `NGN${parseFloat(
-                              currentUser?.WalletBalance
-                            ).toFixed(2)}`
+                          ? `₦${parseFloat(currentUser?.WalletBalance).toFixed(
+                              2
+                            )}`
                           : "************"}
                       </div>
                     </div>
@@ -621,7 +673,10 @@ export const Home = () => {
                     <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
+                      onClick={() => {
+                        decideFormStage(3);
+                        setZindex(3);
+                      }}
                     />
                   </div>
                 </li>
@@ -757,6 +812,35 @@ export const Home = () => {
               </ul>
             </div>
           )}
+          {navIndex === 8 && (
+            <div className="withdraw" style={{ zIndex: zindex }}>
+              <div className="qr-title">My QR</div>
+              <div className="Qr-holder">
+                <div>My QR number</div>
+                <div>2372957524034720</div>
+                <div className="Qr" ref={qrCodeRef}>
+                  <QRCodeCanvas value="Olaiyapo Raphael Adetunji" size={200} />
+                </div>
+                <div>Scan this code to receive payments</div>
+                <div className="Num-holder">
+                  {/* <div className="save-share"> */}
+                  <div className="save">
+                    <div className="biyaCircle">
+                      <img src={save} alt="save" onClick={handleSaveClick} />
+                    </div>
+                    <div className="title">Save to gallery</div>
+                  </div>
+                  <div className="save">
+                    <div className="biyaCircle">
+                      <img src={share} alt="share" />
+                    </div>
+                    <div className="title">Share QR code</div>
+                  </div>
+                  {/* </div> */}
+                </div>
+              </div>
+            </div>
+          )}
           {navIndex === 1 && (
             <>
               <div className="top"></div>
@@ -775,7 +859,12 @@ export const Home = () => {
                         <img src={walletIcon} alt="WalletLogo1" /> Add money
                         <img src={rightArrow} alt="rightArrow" />
                       </div>
-                      <div className="add">
+                      <div
+                        className="add"
+                        onClick={() => {
+                          setNavIndex(6);
+                        }}
+                      >
                         <img src={walletIcon} alt="WalletLogo1" /> Withdraw
                         money
                         <img src={rightArrow} alt="rightArrow" />
@@ -786,7 +875,9 @@ export const Home = () => {
                     <div>
                       <span>Current balance</span> <br />{" "}
                       {showBalance
-                        ? `NGN${currentUser?.WalletBalance}`
+                        ? `₦${parseFloat(currentUser?.WalletBalance).toFixed(
+                            2
+                          )}`
                         : "************"}
                     </div>
                     {showBalance ? (
@@ -804,7 +895,13 @@ export const Home = () => {
                 <h3>Quick Actions</h3>
                 <div className="icons">
                   <div className="xs-grid">
-                    <div className="card">
+                    <div
+                      className="card"
+                      onClick={() => {
+                        setCardFormIndex(8);
+                        funcSetShowCard(!showCardForm);
+                      }}
+                    >
                       <div className="biyaCircle">
                         <img src={walletIcon} alt="bankTrxIcon" />
                       </div>
@@ -871,7 +968,12 @@ export const Home = () => {
                       </div>
                       <div className="biyaTrx">Pay Merchant</div>
                     </div>
-                    <div className="card">
+                    <div
+                      className="card"
+                      onClick={() => {
+                        setNavIndex(8);
+                      }}
+                    >
                       <div className="biyaCircle">
                         {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
                         <MySVGs index={8} fill="rgba(4, 157, 254, 1)" />
@@ -925,12 +1027,20 @@ export const Home = () => {
               />
               Transfer
             </div>
-            <div className="bNav" onClick={() => setNavIndex(11)}>
+            {/* <div className="bNav" onClick={() => setNavIndex(11)}>
               <MySVGs
                 fill={navIndex === 11 ? "rgba(4, 157, 254, 1)" : "#263238"}
                 index={11}
               />
               More
+            </div> */}
+            <div className="bNav" onClick={LogOut}>
+              {/* <MySVGs
+                fill={navIndex === 11 ? "rgba(4, 157, 254, 1)" : "#263238"}
+                index={11}
+              /> */}
+              <FiLogOut style={{ fontSize: "20px" }} />
+              LogOut
             </div>
           </div>
         </div>

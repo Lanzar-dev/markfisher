@@ -38,7 +38,7 @@ export const BiyaTransferForm = ({
     Narration: "",
     Amount: "",
     Currency: "NGN",
-    Email: currentUser.Email,
+    Email: currentUser?.Email,
   };
 
   // console.log("init: ", storedValues);
@@ -63,14 +63,16 @@ export const BiyaTransferForm = ({
   }, [dispatch]);
 
   const setField = useCallback(() => {
-    formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
+    if (!formik.values.Beneficiary) {
+      formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
+    }
   }, [formik, verifiedAcct]);
 
   useEffect(() => {
     if (verifiedAcct) {
       setField();
     }
-  }, [verifiedAcct]);
+  }, [setField, verifiedAcct]);
 
   const checkAcctNum = (accNum: any) => {
     // let accNum = formik.values.AccountNumber;

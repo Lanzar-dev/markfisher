@@ -7,13 +7,15 @@ import { Home } from "./Home/Home";
 import { ForgotPassword } from "./Auths/ForgotPassword";
 import { useAppSelector } from "./Store/store";
 import { Notification } from "./Components/Notification";
+import { Loader } from "./Components/Loader";
 
 function App() {
-  const { isNotify } = useAppSelector((state) => state.user);
+  const { isNotify, isLoading } = useAppSelector((state) => state.user);
 
   return (
     <BrowserRouter>
       {isNotify && <Notification />}
+      {isLoading && <Loader />}
       <Routes>
         <Route path={routes.login} index element={<Login />} />
         <Route path={routes.signup} index element={<SignUp />} />

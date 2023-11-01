@@ -18,6 +18,7 @@ export interface IUserState {
   cableCategory?: IAirtimeCategory[] | null;
   verifiedAcct?: IVerifiedAcct | null;
   notify?: INotify | null;
+  transactions?: [] | null;
 }
 
 export interface IAirtimeCategory {
@@ -253,6 +254,6 @@ interface ICustomizations {
 }
 
 export interface INotify {
-  color: string;
+  color?: string;
   text: string;
 }

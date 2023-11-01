@@ -770,6 +770,8 @@ body {
 }
 .Home .right-div .right-content .home .recent-transaction .table-container {
   margin-top: 25px;
+  height: 370px;
+  position: relative;
 }
 .Home .right-div .right-content .home .recent-transaction .table-container table {
   width: 100%;
@@ -832,6 +834,9 @@ body {
   width: 15%;
 }
 .Home .right-div .right-content .home .recent-transaction .table-container .pagination {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
   color: #2d699d;
   padding: 10px 20px;
   text-align: right;
@@ -1692,6 +1697,37 @@ body {
   cursor: pointer;
 }
 
+.loader-holder {
+  margin: 40vh auto;
+  width: fit-content;
+  height: fit-content;
+  position: absolute;
+  left: 47%;
+  z-index: 10;
+}
+.loader-holder .loader-container {
+  position: relative;
+  width: 80px;
+  height: 80px;
+}
+.loader-holder .loader-container .loader {
+  position: absolute;
+  width: 80px;
+  height: 80px;
+  border: 8px solid #3498db; /* Loader color */
+  border-top: 8px solid transparent;
+  border-radius: 50%;
+  animation: spin 0.5s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 @media only screen and (max-width: 600px) {
   .Auth-Login {
     display: flex;
@@ -3062,13 +3098,14 @@ body {
     height: 100vh;
     right: 0px;
     z-index: 4;
-    border: 2px solid #dfe6ec;
     background: #f8fbfd;
     overflow-y: auto;
+    padding-bottom: 150px;
   }
   .Home .card-forms .card-forms-title {
     display: flex;
     align-items: center;
+    padding-top: 60px;
   }
   .Home .card-forms .card-forms-title .biyaCircle {
     width: 60.579px;
@@ -3087,7 +3124,6 @@ body {
     line-height: normal;
     margin-left: 15px;
     margin-right: 20px;
-    margin-top: 60px;
     cursor: pointer;
   }
   .Home .card-forms .card-forms-title .biyaCircle img {
@@ -3102,44 +3138,6 @@ body {
     font-style: normal;
     font-weight: 600;
     line-height: normal;
-    margin-top: 60px;
-  }
-  .Home .card-forms .card-forms-bottom {
-    margin-top: 50px;
-    text-align: center;
-  }
-  .Home .card-forms .card-forms-bottom button {
-    color: #000;
-    text-align: center;
-    font-family: Roboto;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    width: 127px;
-    height: 35px;
-    flex-shrink: 0;
-    background-color: white;
-    border-radius: 94px;
-    border: 0px solid;
-  }
-  .Home .card-forms .card-forms-bottom button:nth-child(1) {
-    margin-left: 15px;
-    font-weight: bolder;
-  }
-  .Home .card-forms .card-forms-bottom button:nth-child(2) {
-    background: #049dfe;
-    color: #fff;
-    text-align: center;
-    font-family: Roboto;
-    font-size: 14px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: normal;
-    margin-left: 10vw;
-  }
-  .Home .card-forms .card-forms-bottom button:hover {
-    cursor: pointer;
   }
   .Home .card-forms form {
     margin-top: 70px;
@@ -3185,6 +3183,44 @@ body {
   }
   .Home .card-forms form .field-holder .field input:focus {
     outline: none;
+  }
+  .Home .card-forms form .card-forms-bottom {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    text-align: center;
+  }
+  .Home .card-forms form .card-forms-bottom button {
+    color: #000;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    width: 127px;
+    height: 35px;
+    flex-shrink: 0;
+    background-color: white;
+    border-radius: 94px;
+    border: 0px solid;
+  }
+  .Home .card-forms form .card-forms-bottom button:nth-child(1) {
+    margin-left: 15px;
+    font-weight: bolder;
+  }
+  .Home .card-forms form .card-forms-bottom button:nth-child(2) {
+    background: #049dfe;
+    color: #fff;
+    text-align: center;
+    font-family: Roboto;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    margin-left: 10vw;
+  }
+  .Home .card-forms form .card-forms-bottom button:hover {
+    cursor: pointer;
   }
   .Home .xs-screen {
     position: relative;
@@ -3441,7 +3477,11 @@ body {
   }
   .Home .xs-screen .small-table .table-container {
     overflow-x: auto;
+    overflow-y: auto;
     width: 100vw;
+    height: fit-content;
+    min-height: 370px;
+    position: relative;
     margin-top: 25px;
     padding-bottom: 11vh;
   }
@@ -3488,7 +3528,8 @@ body {
   }
   .Home .xs-screen .small-table .table-container table tbody tr .table-cell:nth-child(3) {
     color: #5aaf76;
-    text-align: left;
+    text-align: right;
+    padding-right: 20px;
     font-family: var(--font-family-a);
     font-size: 14px;
     font-style: normal;
@@ -3497,6 +3538,9 @@ body {
     width: 40% !important;
   }
   .Home .xs-screen .small-table .table-container .pagination {
+    position: absolute;
+    bottom: 60px;
+    right: 0px;
     width: 100vw;
     color: #2d699d;
     padding: 10px 20px;
@@ -3551,6 +3595,8 @@ body {
     width: 100vw;
     height: 93vh;
     background: #f4f7fa;
+    overflow-y: auto;
+    padding-bottom: 150px;
   }
   .Home .xs-screen .withdraw .mobile-title {
     color: rgba(0, 0, 0, 0.8);
@@ -3569,6 +3615,68 @@ body {
   .Home .xs-screen .withdraw .mobile-title img {
     margin-left: 25px;
     margin-right: 50px;
+  }
+  .Home .xs-screen .withdraw .qr-title {
+    color: rgba(0, 0, 0, 0.8);
+    font-family: var(--font-family-a);
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    height: fit-content;
+    margin-bottom: 30px;
+    padding: 20px 5px;
+    text-align: center;
+    border-bottom: 1px solid gray;
+  }
+  .Home .xs-screen .withdraw .Qr-holder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .Home .xs-screen .withdraw .Qr-holder div:nth-child(1) {
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-family: var(--font-family-a);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+  }
+  .Home .xs-screen .withdraw .Qr-holder div:nth-child(2) {
+    color: #049dfe;
+    text-align: center;
+    font-family: var(--font-family-a);
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: normal;
+    margin-bottom: 10px;
+  }
+  .Home .xs-screen .withdraw .Qr-holder div:nth-child(4) {
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-family: var(--font-family-a);
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+  }
+  .Home .xs-screen .withdraw .Qr-holder .Num-holder {
+    display: flex;
+    margin-top: 60px;
+  }
+  .Home .xs-screen .withdraw .Qr-holder .Num-holder .save {
+    margin: 0px 10px;
+  }
+  .Home .xs-screen .withdraw .Qr-holder .Num-holder .save .title {
+    color: rgba(0, 0, 0, 0.5);
+    text-align: center;
+    font-family: var(--font-family-a);
+    font-size: 10px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
   }
   .Home .xs-screen .withdraw ul {
     width: 100vw;

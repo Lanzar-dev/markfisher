@@ -1,7 +1,7 @@
 import { GrFormClose } from "react-icons/gr";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import { setIsNotify, setNotify } from "../Features/User/userSlice";
-import { clearErrors } from "../Features/Error/errorSlice";
+// import { clearErrors } from "../Features/Error/errorSlice";
 import { useEffect } from "react";
 
 export const Notification = () => {
@@ -12,10 +12,10 @@ export const Notification = () => {
   useEffect(() => {
     if (isNotify) {
       const timeoutId = setTimeout(() => {
-        dispatch(clearErrors());
+        // dispatch(clearErrors());
         dispatch(setNotify(null));
         dispatch(setIsNotify(false));
-      }, 20000);
+      }, 5000);
 
       // Clear the timeout when the component unmounts to prevent memory leaks
       return () => {
@@ -34,7 +34,7 @@ export const Notification = () => {
       <GrFormClose
         onClick={() => {
           dispatch(setIsNotify(false));
-          dispatch(clearErrors());
+          // dispatch(clearErrors());
         }}
       />
     </div>

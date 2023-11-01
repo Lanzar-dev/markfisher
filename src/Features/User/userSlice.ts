@@ -69,6 +69,10 @@ const userSlice = createSlice({
       state.banks = payload;
     },
 
+    setTransactions: (state, { payload }: PayloadAction<any | null>) => {
+      state.transactions = payload;
+    },
+
     setTollCategory: (
       state,
       { payload }: PayloadAction<IAirtimeCategory[]>
@@ -175,6 +179,33 @@ export const forget_password = (data: IForgotPass): AppThunk => {
   };
 };
 
+export const signup = (data: ISignUp): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + "/SignUp";
+
+      const response = await axios.post(path, data);
+      // console.log(response);
+      if (response) {
+        const data = response.data;
+        // console.log("signup response: ", data);
+        if (data.code === 200) {
+          dispatch(setProfile(data.body));
+          dispatch(clearErrors());
+          const resp: any = { code: data.code, message: data.message };
+          dispatch(setSuccess(resp));
+        }
+      }
+    } catch (error: any) {
+      // console.log(" error: ", error);
+      dispatch(setError(error?.response?.data?.message));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
 export const login = (data: ISignin): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -196,15 +227,12 @@ export const login = (data: ISignin): AppThunk => {
           dispatch(setNotify({ text: "Login success", color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
+          var msg: INotify = { text: data.message, color: "red" };
           if (data.message === "User not found") {
-            dispatch(
-              setNotify({
-                text: "User not found, please register",
-                color: "red",
-              })
-            );
-            dispatch(setIsNotify(true));
+            msg.text = "User not found, please register";
           }
+          dispatch(setNotify(msg));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
@@ -231,6 +259,91 @@ export const fetchUserWallet = (data: any): AppThunk => {
           // dispatch(clearErrors());
           const resp: any = { code: data.code, message: data.message };
           dispatch(setSuccess(resp));
+        }
+      }
+    } catch (error: any) {
+      console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const fetchTransactions = (data: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH + `/FetchTransactions?Email=${data}`;
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+        console.log("fetch transaction data: ", response.data);
+
+        if (data.code === 200) {
+          dispatch(setTransactions(data?.body));
+          // dispatch(setProfile(data.body));
+          // // dispatch(clearErrors());
+          // const resp: any = { code: data.code, message: data.message };
+          // dispatch(setSuccess(resp));
+        }
+      }
+    } catch (error: any) {
+      console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const fetchFlwPayment = (data: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
+    try {
+      const path = BASE_PATH_FL + `/FetchFlwPayment?TrxId=${data}`;
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+        // console.log("FetchFlwPayment data: ", data);
+
+        if (data.code === 200) {
+          if (data?.body?.Status === "successful") {
+            const resp: any = { code: data.code, message: data.message };
+            dispatch(setSuccess(resp));
+            dispatch(
+              setNotify({ text: "Your wallet has been funded", color: "green" })
+            );
+            dispatch(setIsNotify(true));
+          }
+        }
+      }
+    } catch (error: any) {
+      console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const fetchBiyaPayment = (data: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path = BASE_PATH_FL + `/FetchBiyaPayment?TrxRef=${data}`;
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+        // console.log("FetchBiyaPayment data: ", data);
+
+        if (data.code === 200) {
+          // dispatch(setProfile(data.body));
+          // dispatch(clearErrors());
+          // const resp: any = { code: data.code, message: data.message };
+          // dispatch(setSuccess(resp));
         }
       }
     } catch (error: any) {
@@ -321,14 +434,14 @@ export const BankTransfer = (data: ITransferPayload): AppThunk => {
       if (response) {
         const data = response.data;
 
-        console.log("bank transfer data: ", data);
+        // console.log("bank transfer data: ", data);
         if (data.code === 200) {
           dispatch(setSuccess(data));
-          const msg = `NGN${data?.body?.Amount} has been sent to ${data?.body?.Receiver}`;
+          const msg = `₦${data?.body?.Amount} has been sent to ${data?.body?.Receiver}`;
           dispatch(setNotify({ text: msg, color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
-          const msg = `Could not verify account number`;
+          const msg = data?.body;
           dispatch(setNotify({ text: msg, color: "red" }));
           dispatch(setIsNotify(true));
         }
@@ -354,10 +467,10 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
       if (response) {
         const data = response.data;
 
-        console.log("airtime response: ", data);
+        // console.log("airtime response: ", data);
         if (data.code === 200) {
           dispatch(setSuccess(data));
-          const msg = `NGN${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
+          const msg = `₦${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
           dispatch(setNotify({ text: msg, color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
@@ -367,8 +480,15 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      // console.log(error);
-      dispatch(setError(error?.response?.data));
+      const errText = error?.response?.data;
+      // console.log(errText);
+      if (errText?.message === "Failed") {
+        dispatch(
+          setNotify({ text: "Network error. Please try again", color: "red" })
+        );
+        dispatch(setIsNotify(true));
+      }
+      dispatch(setError(errText));
     }
     dispatch(setLoading(false));
   };
@@ -386,10 +506,10 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
       if (response) {
         const data = response.data;
 
-        console.log("bundle response: ", data);
+        // console.log("bundle response: ", data);
         if (data.code === 200) {
           dispatch(setSuccess(data));
-          const msg = `NGN${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
+          const msg = `₦${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
           dispatch(setNotify({ text: msg, color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
@@ -399,7 +519,15 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.response?.data));
+      const errText = error?.response?.data;
+      // console.log(errText);
+      if (errText?.message === "Failed") {
+        dispatch(
+          setNotify({ text: "Network error. Please try again", color: "red" })
+        );
+        dispatch(setIsNotify(true));
+      }
+      dispatch(setError(errText));
     }
     dispatch(setLoading(false));
   };
@@ -409,26 +537,40 @@ export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BuyElectricity";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
+        console.log("buy electricity data: ", data);
         if (data.code === 200) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+          dispatch(setSuccess(data));
+          const msg = `₦${data?.body?.amount} ${data?.body?.type} electricity purchased for meter: ${data?.body?.customer}`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
         } else if (data.code === 400) {
           dispatch(setError(data));
+          var msg = data?.body;
+          if (data?.message === "Validation failed") {
+            msg = `Meter number could not be verified!`;
+          }
+          dispatch(setNotify({ text: msg, color: "red" }));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.response?.data));
+      const errText = error?.response?.data;
+      // console.log(errText);
+      if (errText?.message === "Failed") {
+        dispatch(
+          setNotify({ text: "Network error. Please try again", color: "red" })
+        );
+        dispatch(setIsNotify(true));
+      }
+      dispatch(setError(errText));
     }
     dispatch(setLoading(false));
   };
@@ -438,26 +580,40 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/CableSubscription";
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
 
-        // console.log("data: ", data);
+        console.log("buy cableTv data: ", data);
         if (data.code === 200) {
-          const payload: IAuth = {
-            userId: data.data.tokenModel.id,
-            token: data.data.tokenModel.accessToken,
-          };
-          dispatch(setAuth(payload));
-          dispatch(setProfile(data.data.patientDetailsResponse));
+          dispatch(setSuccess(data));
+          const msg = `₦${data?.body?.amount} ${data?.body?.type} electricity purchased for meter: ${data?.body?.customer}`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
         } else if (data.code === 400) {
           dispatch(setError(data));
+          var msg = data?.body;
+          if (data?.message === "Validation failed") {
+            msg = `Meter number could not be verified!`;
+          }
+          dispatch(setNotify({ text: msg, color: "red" }));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
-      dispatch(setError(error?.response?.message));
+      const errText = error?.response?.data;
+      // console.log(errText);
+      if (errText?.message === "Failed") {
+        dispatch(
+          setNotify({ text: "Network error. Please try again", color: "red" })
+        );
+        dispatch(setIsNotify(true));
+      }
+      dispatch(setError(errText));
     }
     dispatch(setLoading(false));
   };
@@ -568,7 +724,7 @@ export const BiyaTransfer = (payload: IBiyaTransferPayload): AppThunk => {
         if (data.code === 200) {
           // dispatch(fetchUserWallet(payload.Email));
           dispatch(setSuccess(data));
-          const msg = `NGN${data?.body?.Amount} has been sent to ${data?.body?.Receiver}`;
+          const msg = `₦${data?.body?.Amount} has been sent to ${data?.body?.Receiver}`;
           dispatch(setNotify({ text: msg, color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
@@ -701,33 +857,6 @@ export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
   };
 };
 
-export const signup = (data: ISignUp): AppThunk => {
-  return async (dispatch) => {
-    dispatch(setLoading(true));
-    dispatch(clearErrors());
-    try {
-      const path = BASE_PATH + "/SignUp";
-
-      const response = await axios.post(path, data);
-      // console.log(response);
-      if (response) {
-        const data = response.data;
-        // console.log("signup response: ", data);
-        if (data.code === 200) {
-          dispatch(setProfile(data.body));
-          dispatch(clearErrors());
-          const resp: any = { code: data.code, message: data.message };
-          dispatch(setSuccess(resp));
-        }
-      }
-    } catch (error: any) {
-      // console.log(" error: ", error);
-      dispatch(setError(error?.response?.data?.message));
-    }
-    dispatch(setLoading(false));
-  };
-};
-
 export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
@@ -802,5 +931,6 @@ export const {
   setVerifiedAcct,
   setIsNotify,
   setNotify,
+  setTransactions,
 } = userSlice.actions;
 export default userSlice.reducer;

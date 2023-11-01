@@ -25,9 +25,9 @@ export const FundWalletForm = ({ fnShowCardForm }: IFundWalletFormProps) => {
   // Initial form values
   const initialValues = {
     customer: {
-      email: currentUser.Email,
-      phonenumber: currentUser.PhoneNumber,
-      name: currentUser.Email,
+      email: currentUser?.Email,
+      phonenumber: currentUser?.PhoneNumber,
+      name: currentUser?.Email,
     },
     amount: "",
     currency: "NGN",
