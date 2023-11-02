@@ -40,6 +40,7 @@ import {
   fetchTransactions,
   fetchUserWallet,
   getAccessToken,
+  getBillStatus,
   setLogout,
 } from "../Features/User/userSlice";
 import { FundWalletForm } from "./FundWalletForm";
@@ -87,6 +88,7 @@ export const Home = () => {
     ) {
       setShowCardForm(false);
       dispatch(fetchUserWallet(currentUser?.Email));
+      dispatch(fetchTransactions(currentUser?.Email));
       dispatch(clearErrors());
       if (isMobile) {
         setNavIndex(1);
@@ -150,12 +152,17 @@ export const Home = () => {
 
   //fetch transactions
   useEffect(() => {
-    if (!isNotify) {
-      dispatch(fetchTransactions(currentUser?.Email));
-    }
-  }, [dispatch, isNotify, currentUser]); //dispatch, currentUser, transactions
+    // if (!isNotify) {
+    dispatch(fetchTransactions(currentUser?.Email));
+    // }
+  }, [dispatch, currentUser]); //dispatch, currentUser, transactions
+
+  useEffect(() => {
+    dispatch(getBillStatus("BPUSSD1698919547876981", "Airtime"));
+  }, []);
 
   // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
+  var name: string = currentUser?.Email.slice(0, 5);
   return (
     <div className="Home">
       {showCardForm && (
@@ -287,7 +294,7 @@ export const Home = () => {
                     background: `url(${userPic}), lightgray 50% / cover no-repeat`,
                   }}
                 ></div>
-                Welcome, Deji{" "}
+                Welcome, {name.toUpperCase()}
                 <img
                   src={dnArrow}
                   alt={"dnArrow"}

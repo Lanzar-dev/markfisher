@@ -3,7 +3,7 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
-import { forget_password } from "../Features/User/userSlice";
+import { forget_password, setUserId } from "../Features/User/userSlice";
 import { IForgotPass } from "../Features/User/type";
 import { useEffect } from "react";
 import { clearErrors } from "../Features/Error/errorSlice";
@@ -78,7 +78,10 @@ export const ForgotPassword = () => {
                     type="text"
                     id="Email"
                     name="Email"
-                    onChange={formik.handleChange}
+                    onChange={(e) => {
+                      formik.handleChange(e);
+                      dispatch(setUserId(e.currentTarget.value));
+                    }}
                     onBlur={formik.handleBlur}
                     value={formik.values.Email}
                     // placeholder="Enter Email"

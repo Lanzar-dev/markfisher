@@ -5,7 +5,7 @@ import trxUserBg from "../Images/TrxUser.svg";
 import airtime from "../Images/Airtime.svg";
 import bundle from "../Images/Bundle.svg";
 import cable from "../Images/BiyaToBiya.svg";
-// import trxUser from "../Images/trxxUser.png";
+import trxUser from "../Images/trxxUser.png";
 // import sporty from "../Images/Sporty.svg";
 // import sportyIcon from "../Images/sportyIcon.png";
 // import spotify from "../Images/Spotify.svg";
@@ -123,6 +123,8 @@ export const SmallTable = () => {
                               ? bundle
                               : trx?.Type === "Cable"
                               ? cable
+                              : trx?.Type === "BiyaTransfer"
+                              ? trxUser
                               : spotifyIcon
                           }
                           alt="trxUser"
@@ -139,7 +141,7 @@ export const SmallTable = () => {
                     <td
                       className={`table-cell`}
                       style={{
-                        color: trx?.Type !== "FundWallet" ? "red" : "green",
+                        color: trx?.Type === "BiyaTransfer" ? "green" : "red",
                       }}
                     >{`₦${trx?.Amount}`}</td>
                   </tr>

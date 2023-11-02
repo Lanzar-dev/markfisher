@@ -14,7 +14,7 @@ type IAirtimeFormProps = {
 export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { airtimeCategory, currentUser } = useAppSelector(
+  const { airtimeCategory, currentUser, isLoading } = useAppSelector(
     (state) => state.user
   );
   // Define the validation schema using Yup
@@ -148,7 +148,9 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        <button type="submit" disabled={isLoading}>
+          Next
+        </button>
       </div>
     </form>
   );

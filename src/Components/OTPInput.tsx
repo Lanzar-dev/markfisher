@@ -6,7 +6,7 @@ import React, {
   useEffect,
 } from "react";
 import { useAppDispatch, useAppSelector } from "../Store/store";
-import { clearErrors } from "../Features/Error/errorSlice";
+// import { clearErrors } from "../Features/Error/errorSlice";
 
 type ILoginProps = {
   getOTP: (otp: string) => void;
@@ -82,7 +82,7 @@ function OTPInput({ getOTP }: ILoginProps) {
           setShowResend(false);
           setOTP(["", "", "", "", "", ""]);
         } else if (errText === "Verified email") {
-          dispatch(clearErrors());
+          // dispatch(clearErrors());
           //   window.location.reload();
         }
       }
@@ -138,12 +138,13 @@ function OTPInput({ getOTP }: ILoginProps) {
         ))}
       </div>
       <div className="btn-group">
-        {!showResend && (
+        {!showResend ? (
           <button type="submit" onClick={OtpStr}>
             Verify Email
           </button>
+        ) : (
+          showResend && <button type="submit">Resend Code</button>
         )}
-        {showResend && <button type="submit">Resend Code</button>}
       </div>
     </div>
   );

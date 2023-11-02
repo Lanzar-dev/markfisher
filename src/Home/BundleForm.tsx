@@ -72,9 +72,11 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
   };
 
   const ChangeNetworkBundles = (e: any) => {
-    const selectedCat: IAirtimeCategory[] = bundleCategory?.filter(
-      (obj: IAirtimeCategory) => obj.biller_name.includes(e)
-    );
+    const selectedCat: IAirtimeCategory[] = bundleCategory
+      ? bundleCategory?.filter((obj: IAirtimeCategory) =>
+          obj.biller_name.includes(e)
+        )
+      : [];
     setNetworkBundles(selectedCat);
     formik.setFieldValue("BundleName", selectedCat[0]?.biller_name.toString());
     formik.setFieldValue("Amount", selectedCat[0]?.amount.toString());

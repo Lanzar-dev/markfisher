@@ -85,7 +85,7 @@ export const ElectricityForm = ({
 
       setOffice(selectedCat);
     }
-  }, [formik, electricityCategory, isPostpaid]);
+  }, [electricityCategory, isPostpaid]); //formik
 
   const SetOtherFormFields = (e: any) => {
     const selectedCat: IAirtimeCategory[] = electricityCategory?.filter(

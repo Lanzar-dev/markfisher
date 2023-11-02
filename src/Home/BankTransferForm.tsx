@@ -100,7 +100,7 @@ export const BankTransferForm = ({
 
   const setField = useCallback(() => {
     formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
-  }, [formik, verifiedAcct]);
+  }, [verifiedAcct]); //formik
 
   useEffect(() => {
     if (verifiedAcct) {

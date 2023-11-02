@@ -2,7 +2,7 @@ import { useState } from "react";
 import rArrow from "../Images/TabRArrow.svg";
 import lArrow from "../Images/TabLArrow.svg";
 import trxUserBg from "../Images/TrxUser.svg";
-// import trxUser from "../Images/trxxUser.png";
+import trxUser from "../Images/trxxUser.png";
 import airtime from "../Images/Airtime.svg";
 import bundle from "../Images/Bundle.svg";
 import cable from "../Images/BiyaToBiya.svg";
@@ -19,8 +19,10 @@ export const Table = () => {
   const [currentPage, setCurrentPage] = useState(1);
 
   // Always display 5 rows per page
+  var trLength = transactions?.length;
+  trLength = trLength ? trLength : 0;
   const rowsPerPage = 5;
-  const totalPages = Math.ceil(transactions?.length / rowsPerPage);
+  const totalPages = Math.ceil(trLength / rowsPerPage);
 
   const handlePageChange = (page: number) => {
     if (page >= 1 && page <= totalPages) {
@@ -29,11 +31,9 @@ export const Table = () => {
   };
 
   // Calculate the indexes for the current page
-  const indexOfFirstItem = (currentPage - 1) * rowsPerPage;
-  const indexOfLastItem = Math.min(
-    currentPage * rowsPerPage,
-    transactions?.length
-  );
+  var indexOfFirstItem = (currentPage - 1) * rowsPerPage;
+  var indexOfLastItem = Math.min(currentPage * rowsPerPage, trLength);
+  indexOfLastItem = indexOfLastItem ? indexOfLastItem : 0;
 
   function formatDate(inputDate: string) {
     const dateObject = new Date(inputDate);
@@ -121,6 +121,8 @@ export const Table = () => {
                               ? bundle
                               : trx?.Type === "Cable"
                               ? cable
+                              : trx?.Type === "BiyaTransfer"
+                              ? trxUser
                               : spotifyIcon
                           }
                           alt="trxUser"
@@ -165,9 +167,9 @@ export const Table = () => {
           alt="tabLArrow"
           onClick={() => handlePageChange(currentPage - 1)}
         />
-        <span>{`${indexOfFirstItem + 1} - ${indexOfLastItem} of ${
-          transactions?.length
-        }`}</span>
+        <span>{`${
+          indexOfFirstItem + 1
+        } - ${indexOfLastItem} of ${trLength}`}</span>
         <img
           src={rArrow}
           alt="tabRArrow"

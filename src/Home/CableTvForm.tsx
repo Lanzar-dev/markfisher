@@ -66,7 +66,7 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
     if (cableCategory) {
       formik.setFieldValue("Amount", cableCategory[0].amount.toString());
     }
-  }, [formik, cableCategory]);
+  }, [cableCategory]); //formik
 
   const ChangeAmount = (e: any) => {
     const selectedCat: IAirtimeCategory[] = cableCategory?.filter(

@@ -12,7 +12,7 @@ import {
 import { ISignin, IVerifyEmail } from "../Features/User/type";
 import { useEffect, useState } from "react";
 import OTPInput from "../Components/OTPInput";
-// import { clearErrors } from "../Features/Error/errorSlice";
+import { clearErrors } from "../Features/Error/errorSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
@@ -22,6 +22,7 @@ export const Login = () => {
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
+  const errTexts = errors[0]?.message;
   const errText: string = errors[0]?.message?.message;
   // console.log(isAuth);
   // Define the validation schema using Yup
@@ -41,7 +42,6 @@ export const Login = () => {
     Email: "",
     Password: "",
   };
-  // console.log(initialValues);
 
   const getOtp = (otp: string) => {
     // alert(otp);
@@ -59,10 +59,10 @@ export const Login = () => {
     if (!showVerifyEmail) {
       dispatch(login(values));
     } else {
-      if (errors?.length > 0 && errors[0]?.message?.code !== 400) {
-        // console.log(verify);
+      if (errors?.length > 0 && errTexts?.message !== "Expired OTP") {
+        console.log("verifying: ", verify);
         dispatch(verifyEmail(verify));
-      } else {
+      } else if (errTexts?.message === "Expired OTP") {
         dispatch(resendVerifyEmail(formik.values.Email));
       }
     }
@@ -90,9 +90,10 @@ export const Login = () => {
         formik.setFieldValue("Email", "");
         formik.setFieldValue("Password", "");
         setShowVerifyEmail(false);
+        dispatch(clearErrors());
       }
     }
-  }, [dispatch /*, formik, userId, errors, errText*/]);
+  }, [dispatch /*, formik, errors, */, , userId, errText]);
 
   useEffect(() => {
     if (errors?.length > 0 && errText === "login success") {
@@ -100,6 +101,8 @@ export const Login = () => {
       // dispatch(clearErrors());
     }
   }, [navigate, dispatch, errors, errText]);
+
+  // console.log("verified: ", errText);
 
   return (
     <div className="Auth-Login">

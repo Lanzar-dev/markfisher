@@ -290,14 +290,14 @@ export const fetchUserWallet = (data: any): AppThunk => {
 
 export const fetchTransactions = (data: any): AppThunk => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
       const path = BASE_PATH + `/FetchTransactions?Email=${data}`;
       const response = await axios.get(path);
       if (response) {
         const data = response.data;
-        console.log("fetch transaction data: ", response.data);
+        // console.log("fetch transaction data: ", response.data);
 
         if (data.code === 200) {
           dispatch(setTransactions(data?.body));
@@ -311,7 +311,7 @@ export const fetchTransactions = (data: any): AppThunk => {
       console.log(error?.response?.data);
       dispatch(setError(error?.response?.data));
     }
-    dispatch(setLoading(false));
+    // dispatch(setLoading(false));
   };
 };
 
@@ -382,7 +382,7 @@ export const verifyEmail = (data: IVerifyEmail): AppThunk => {
       const response = await axios.put(path, data);
       if (response) {
         const data = response.data;
-        // console.log("data: ", response.data);
+        console.log("verify data: ", response.data);
         if (data.code === 200) {
           dispatch(setSuccess(data));
         }
@@ -892,6 +892,34 @@ export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
       }
     } catch (error: any) {
       // console.log(error?.response?.data);
+      dispatch(setError(error?.response?.data));
+    }
+    dispatch(setLoading(false));
+  };
+};
+
+export const getBillStatus = (ref: any, billType: any): AppThunk => {
+  return async (dispatch) => {
+    dispatch(setLoading(true));
+    dispatch(clearErrors());
+    try {
+      const path =
+        BASE_PATH_FL + `/GetBillStatus?Reference=${ref}&&BillType=${billType}`;
+      const response = await axios.get(path);
+      if (response) {
+        const data = response.data;
+        console.log("get bill status data: ", response.data);
+
+        if (data.code === 200) {
+          // dispatch(setTransactions(data?.body));
+          // dispatch(setProfile(data.body));
+          // // dispatch(clearErrors());
+          // const resp: any = { code: data.code, message: data.message };
+          // dispatch(setSuccess(resp));
+        }
+      }
+    } catch (error: any) {
+      console.log("Get bill error: ", error?.response?.data);
       dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
