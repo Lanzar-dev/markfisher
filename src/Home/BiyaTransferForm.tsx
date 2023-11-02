@@ -21,7 +21,9 @@ export const BiyaTransferForm = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   // const { errors } = useAppSelector((state) => state.error);
-  const { verifiedAcct, currentUser } = useAppSelector((state) => state.user);
+  const { verifiedAcct, currentUser, isLoading } = useAppSelector(
+    (state) => state.user
+  );
   // const errText: string = errors[0]?.message?.message;
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -186,7 +188,7 @@ export const BiyaTransferForm = ({
           Back
         </button>
         {verifiedAcct && (
-          <button type="submit" disabled={!formik.isValid}>
+          <button type="submit" disabled={isLoading}>
             Next
           </button>
         )}

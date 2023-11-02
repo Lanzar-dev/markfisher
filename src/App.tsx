@@ -8,6 +8,7 @@ import { ForgotPassword } from "./Auths/ForgotPassword";
 import { useAppSelector } from "./Store/store";
 import { Notification } from "./Components/Notification";
 import { Loader } from "./Components/Loader";
+import { ResetPassword } from "./Auths/ResetPassword";
 
 function App() {
   const { isNotify, isLoading } = useAppSelector((state) => state.user);
@@ -21,6 +22,7 @@ function App() {
         <Route path={routes.signup} index element={<SignUp />} />
         <Route path={routes.homepage} index element={<Home />} />
         <Route path={routes.f_password} index element={<ForgotPassword />} />
+        <Route path={routes.r_password} index element={<ResetPassword />} />
       </Routes>
     </BrowserRouter>
   );

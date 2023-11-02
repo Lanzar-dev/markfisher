@@ -112,8 +112,10 @@ export interface IForgetPassword {
 }
 
 export interface IResetPassword {
-  password: string;
-  confirmPassword: string;
+  OTP: number;
+  Email: string;
+  NewPassword: string;
+  ConfirmPassword: string;
 }
 
 export interface ISignin {

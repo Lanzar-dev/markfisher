@@ -127,24 +127,29 @@ const userSlice = createSlice({
   },
 });
 
-export const reset_password = (data: IResetPassword): AppThunk => {
+export const reset_password = (payload: IResetPassword): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
+    dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
-      const path = "/ResetPassword";
+      const path = BASE_PATH + "/ResetPassword";
       // console.log("checking ResetPassword path: ", path, " data: ", data);
-      const response = await axios.put(path, data);
+      const response = await axios.put(path, payload);
+      const { data } = response;
       if (response) {
-        const { data } = response;
-        if (data && !data.token) {
-          if (data.error.length > 0)
-            data.error.forEach((element: string) => {
-              dispatch(setError(element));
-            });
-          else if (data.message) dispatch(setError(data.message));
-        } else if (data && data.token) {
-          dispatch(setProfile(data.profile));
-          dispatch(setToken(data.token));
+        // console.log("reset password response: ", data);
+        if (data.code === 200) {
+          dispatch(setSuccess(data));
+          var msg: INotify = { text: data.message, color: "green" };
+          dispatch(setNotify(msg));
+          dispatch(setIsNotify(true));
+        } else if (data.code === 400) {
+          msg = { text: data.message, color: "red" };
+          dispatch(setNotify(msg));
+          dispatch(setIsNotify(true));
+          dispatch(setError(data));
         }
       }
     } catch (error: any) {
@@ -158,21 +163,28 @@ export const forget_password = (data: IForgotPass): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
-      const path = BASE_PATH + "/ForgotPassword";
+      const path = BASE_PATH + `/ForgotPassword?Email=${data.Email}`;
       // console.log("checking forget password path: ", path, " data: ", data);
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
-        // console.log("response-B: ", data);
-        if (data.status === true) {
-          if (data.message === "Success") {
-            dispatch(setSuccess(data.data));
-          }
+        // console.log("ForgotPassword: ", data);
+        if (data.code === 200) {
+          dispatch(setSuccess(data));
+          var msg: INotify = { text: data.message, color: "green" };
+          dispatch(setNotify(msg));
+          dispatch(setIsNotify(true));
+        } else if (data.code === 400) {
+          msg = { text: data.message, color: "red" };
+          dispatch(setNotify(msg));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
-      // console.log("response-B: ", error);
+      console.log("response-B: ", error);
       dispatch(setError(error?.message));
     }
     dispatch(setLoading(false));
@@ -183,6 +195,8 @@ export const signup = (data: ISignUp): AppThunk => {
   return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
+    dispatch(setIsNotify(false));
+    dispatch(setNotify(null));
     try {
       const path = BASE_PATH + "/SignUp";
 
@@ -196,6 +210,10 @@ export const signup = (data: ISignUp): AppThunk => {
           dispatch(clearErrors());
           const resp: any = { code: data.code, message: data.message };
           dispatch(setSuccess(resp));
+        } else if (data?.code === 400) {
+          var msg: INotify = { text: data.message, color: "red" };
+          dispatch(setNotify(msg));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
@@ -227,6 +245,7 @@ export const login = (data: ISignin): AppThunk => {
           dispatch(setNotify({ text: "Login success", color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
+          dispatch(setError(data));
           var msg: INotify = { text: data.message, color: "red" };
           if (data.message === "User not found") {
             msg.text = "User not found, please register";

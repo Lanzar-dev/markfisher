@@ -14,7 +14,7 @@ type ITollFormProps = {
 export const TollForm = ({ fnShowCardForm }: ITollFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { tollCategory } = useAppSelector((state) => state.user);
+  const { tollCategory, isLoading } = useAppSelector((state) => state.user);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     CustomerId: Yup.string().required("AccountNumber is required"),
@@ -127,7 +127,9 @@ export const TollForm = ({ fnShowCardForm }: ITollFormProps) => {
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        <button type="submit" disabled={isLoading}>
+          Next
+        </button>
       </div>
     </form>
   );

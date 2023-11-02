@@ -306,7 +306,7 @@ body {
   margin: 25px auto;
 }
 .Auth-Signup .right-div .form-holder form .field-holder .title {
-  width: 120px;
+  width: 160px;
   height: 18px;
   flex-shrink: 0;
   color: #002855;
@@ -1892,7 +1892,7 @@ body {
     margin: 25px auto;
   }
   .Auth-Signup .right-div .form-holder form .field-holder .title {
-    width: 120px;
+    width: 160px;
     height: 18px;
     flex-shrink: 0;
     color: #002855;

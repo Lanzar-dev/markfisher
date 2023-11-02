@@ -19,7 +19,7 @@ export const ElectricityForm = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const [office, setOffice] = useState<IAirtimeCategory[] | null>();
-  const { electricityCategory, currentUser } = useAppSelector(
+  const { electricityCategory, currentUser, isLoading } = useAppSelector(
     (state) => state.user
   );
   // Define the validation schema using Yup
@@ -85,7 +85,7 @@ export const ElectricityForm = ({
 
       setOffice(selectedCat);
     }
-  }, [electricityCategory, isPostpaid]);
+  }, [formik, electricityCategory, isPostpaid]);
 
   const SetOtherFormFields = (e: any) => {
     const selectedCat: IAirtimeCategory[] = electricityCategory?.filter(
@@ -174,7 +174,9 @@ export const ElectricityForm = ({
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        <button type="submit" disabled={isLoading}>
+          Next
+        </button>
       </div>
     </form>
   );

@@ -3,23 +3,25 @@ import * as Yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useAppDispatch, useAppSelector } from "../Store/store";
 import * as routes from "../Data/Routes";
-import { setUserId, signup } from "../Features/User/userSlice";
-import { ISignUp } from "../Features/User/type";
+import { reset_password } from "../Features/User/userSlice";
+import { IResetPassword } from "../Features/User/type";
 import { useEffect, useState } from "react";
+import { clearErrors } from "../Features/Error/errorSlice";
 
-export const SignUp = () => {
+export const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
+  const { userId, isLoading } = useAppSelector((state) => state.user);
   const { errors } = useAppSelector((state) => state.error);
-  const { isLoading } = useAppSelector((state) => state.user);
+  const errText: any = errors[0]?.message;
   const [showPass, setShowPass] = useState<boolean>(false);
-  const errText: string = errors[0]?.message?.message;
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
-    Email: Yup.string().required("Email is required"),
-    PhoneNumber: Yup.string().required("Phone number is required"),
-    Password: Yup.string()
+    OTP: Yup.number()
+      //   .max(6, "Must not be greater than 6 numbers")
+      .required("OTP is required"),
+    NewPassword: Yup.string()
       .min(6, "Must not be less than 6 characters")
       .required("Required")
       .matches(/^(?=.*[a-z])/, "Must contain at least one lowercase character")
@@ -30,36 +32,45 @@ export const SignUp = () => {
 
   // Initial form values
   const initialValues = {
-    Email: "",
-    PhoneNumber: "",
-    Password: "",
+    OTP: 0,
+    Email: userId,
+    NewPassword: "",
+    ConfirmPassword: "",
   };
 
-  // console.log("init: ", storedValues);
-
   // Submit handler
-  const handleSubmit = (values: ISignUp) => {
-    dispatch(signup(values));
+  const handleSubmit = (values: IResetPassword) => {
+    // console.log("reset data: ", values);
+    dispatch(reset_password(values));
+    // if (isAuth === true) navigate(routes.homepage);
+    // navigate(routes.homepage);
   };
 
   // Formik form handling
-  const formik = useFormik<ISignUp>({
+  const formik = useFormik<IResetPassword>({
     initialValues,
     validationSchema,
     onSubmit: handleSubmit,
   });
 
+  //   console.log("init: ", errText);
+
   useEffect(() => {
-    // console.log(currentUser);
-    if (errText === "created successfully") navigate(routes.login);
-  }, [navigate, errText]);
+    if (errText?.message?.includes("Expired OTP")) {
+      navigate(routes.f_password);
+      dispatch(clearErrors());
+    } else if (errText?.message?.includes("Updated succesfully")) {
+      navigate(routes.login);
+      dispatch(clearErrors());
+    }
+  }, [dispatch, navigate, errText?.message]);
 
   return (
     <div className="Auth-Signup">
       <div className="left-div">
         <div className="text">
-          <div className="message-1">Welcome!</div>
-          <div className="message-2">Create an account to get started</div>
+          <div className="message-1">Hello!</div>
+          <div className="message-2">Enter your OTP & New password</div>
         </div>
       </div>
       <div className="right-div">
@@ -68,81 +79,73 @@ export const SignUp = () => {
           <div className="form-holder">
             <form onSubmit={formik.handleSubmit}>
               <div className="field-holder">
-                <div className="title">Email address</div>
-                <div className="description">Enter your email address</div>
+                <div className="title">OTP</div>
+                <div className="description">Enter your OTP</div>
                 <div className="field">
                   {Email()}
                   <input
-                    type="text"
-                    id="Email"
-                    name="Email"
-                    onChange={(e) => {
-                      formik.handleChange(e);
-                      dispatch(setUserId(e.currentTarget.value));
-                    }}
-                    onBlur={formik.handleBlur}
-                    value={formik.values.Email}
-                    // placeholder="Enter Email"
-                  />
-                </div>
-                {formik.touched.Email && formik.errors.Email && (
-                  <div className="error">{formik.errors.Email}</div>
-                )}
-              </div>
-
-              <div className="field-holder">
-                <div className="title">Phone number</div>
-                <div className="description">Enter your mobile number</div>
-                <div className="field">
-                  {Email()}
-                  <input
-                    type="text"
-                    id="PhoneNumber"
-                    name="PhoneNumber"
+                    type="number"
+                    id="OTP"
+                    name="OTP"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.PhoneNumber}
+                    value={formik.values.OTP}
                     // placeholder="Enter Email"
                   />
                 </div>
-                {formik.touched.PhoneNumber && formik.errors.PhoneNumber && (
-                  <div className="error">{formik.errors.PhoneNumber}</div>
+                {formik.touched.OTP && formik.errors.OTP && (
+                  <div className="error">{formik.errors.OTP}</div>
                 )}
               </div>
 
               <div className="field-holder">
-                <div className="title">Password</div>
-                <div className="description">Enter your account password</div>
+                <div className="title">New password</div>
+                <div className="description">Enter new password</div>
                 <div className="field">
                   {Pass()}
                   <input
                     type={showPass ? "text" : "password"}
-                    id="Password"
-                    name="Password"
+                    id="NewPassword"
+                    name="NewPassword"
                     onChange={formik.handleChange}
                     onBlur={formik.handleBlur}
-                    value={formik.values.Password}
+                    value={formik.values.NewPassword}
                     // placeholder="Enter password"
                   />
                 </div>
-                {formik.touched.Password && formik.errors.Password && (
-                  <div className="error">{formik.errors.Password}</div>
+                {formik.touched.NewPassword && formik.errors.NewPassword && (
+                  <div className="error">{formik.errors.NewPassword}</div>
                 )}
               </div>
 
-              <div className="forgot-password">
-                Forgot password?{" "}
-                <a href="#a" onClick={() => navigate(routes.f_password)}>
-                  Reset here
-                </a>
+              <div className="field-holder">
+                <div className="title">Confirm password</div>
+                <div className="description">Re-enter same password</div>
+                <div className="field">
+                  {Pass()}
+                  <input
+                    type={showPass ? "text" : "password"}
+                    id="ConfirmPassword"
+                    name="ConfirmPassword"
+                    onChange={formik.handleChange}
+                    onBlur={formik.handleBlur}
+                    value={formik.values.ConfirmPassword}
+                    // placeholder="Enter password"
+                  />
+                </div>
+                {formik.touched.ConfirmPassword &&
+                  formik.errors.ConfirmPassword && (
+                    <div className="error">{formik.errors.ConfirmPassword}</div>
+                  )}
               </div>
+
               <div className="forgot-password">
-                Have an account?
-                <a href="#b" onClick={() => navigate(routes.login)}>
-                  Log in
+                Don't have an account?
+                <a href="#b" onClick={() => navigate(routes.signup)}>
+                  Register now
                 </a>
                 <button type="submit" disabled={isLoading}>
-                  Submit
+                  Continue
                 </button>
               </div>
             </form>

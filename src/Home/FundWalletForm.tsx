@@ -14,7 +14,7 @@ export const FundWalletForm = ({ fnShowCardForm }: IFundWalletFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  const { currentUser } = useAppSelector((state) => state.user);
+  const { currentUser, isLoading } = useAppSelector((state) => state.user);
 
   const errText: string = errors[0]?.message?.message;
   // Define the validation schema using Yup
@@ -111,7 +111,7 @@ export const FundWalletForm = ({ fnShowCardForm }: IFundWalletFormProps) => {
           Back
         </button>
 
-        <button type="submit" disabled={!formik.isValid}>
+        <button type="submit" disabled={isLoading}>
           Next
         </button>
       </div>

@@ -25,7 +25,7 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
   const errText: string = errors[0]?.message?.message;
-  const { verifiedAcct, banks, currentUser } = useAppSelector(
+  const { verifiedAcct, banks, currentUser, isLoading } = useAppSelector(
     (state) => state.user
   );
   // Define the validation schema using Yup
@@ -94,7 +94,7 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
     if (verifiedAcct) {
       formik.setFieldValue("Beneficiary", verifiedAcct?.account_name);
     }
-  }, [verifiedAcct]);
+  }, [formik, verifiedAcct]);
 
   filteredBanks?.sort((a: any, b: any) => {
     let nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -256,7 +256,7 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
           Back
         </button>
         {verifiedAcct && (
-          <button type="submit" disabled={!formik.isValid}>
+          <button type="submit" disabled={isLoading}>
             Next
           </button>
         )}

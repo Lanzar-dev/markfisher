@@ -14,7 +14,9 @@ type IElectricityFormProps = {
 export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { cableCategory, currentUser } = useAppSelector((state) => state.user);
+  const { cableCategory, currentUser, isLoading } = useAppSelector(
+    (state) => state.user
+  );
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
     DecoderNumber: Yup.string().required("Decoder number is required"),
@@ -64,7 +66,7 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
     if (cableCategory) {
       formik.setFieldValue("Amount", cableCategory[0].amount.toString());
     }
-  }, [cableCategory]);
+  }, [formik, cableCategory]);
 
   const ChangeAmount = (e: any) => {
     const selectedCat: IAirtimeCategory[] = cableCategory?.filter(
@@ -155,7 +157,9 @@ export const CableTvForm = ({ fnShowCardForm }: IElectricityFormProps) => {
         >
           Back
         </button>
-        <button type="submit">Next</button>
+        <button type="submit" disabled={isLoading}>
+          Next
+        </button>
       </div>
     </form>
   );

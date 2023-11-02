@@ -12,13 +12,13 @@ import {
 import { ISignin, IVerifyEmail } from "../Features/User/type";
 import { useEffect, useState } from "react";
 import OTPInput from "../Components/OTPInput";
-import { clearErrors } from "../Features/Error/errorSlice";
+// import { clearErrors } from "../Features/Error/errorSlice";
 
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  const { userId } = useAppSelector((state) => state.user);
+  const { userId, isLoading } = useAppSelector((state) => state.user);
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
@@ -92,7 +92,7 @@ export const Login = () => {
         setShowVerifyEmail(false);
       }
     }
-  }, [dispatch, errors, errText]);
+  }, [dispatch /*, formik, userId, errors, errText*/]);
 
   useEffect(() => {
     if (errors?.length > 0 && errText === "login success") {
@@ -172,7 +172,9 @@ export const Login = () => {
                     <a href="#b" onClick={() => navigate(routes.signup)}>
                       Register now
                     </a>
-                    <button type="submit">Continue</button>
+                    <button type="submit" disabled={isLoading}>
+                      Continue
+                    </button>
                   </div>
                 </>
               ) : (

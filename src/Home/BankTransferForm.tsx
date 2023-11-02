@@ -26,7 +26,7 @@ export const BankTransferForm = ({
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  const { verifiedAcct, banks, currentUser } = useAppSelector(
+  const { verifiedAcct, banks, currentUser, isLoading } = useAppSelector(
     (state) => state.user
   );
   const [check, setCheck] = useState<boolean>(false);
@@ -106,7 +106,7 @@ export const BankTransferForm = ({
     if (verifiedAcct) {
       setField();
     }
-  }, [verifiedAcct]);
+  }, [setField, verifiedAcct]);
 
   filteredBanks?.sort((a: any, b: any) => {
     let nameA = a.name.toUpperCase(); // ignore upper and lowercase
@@ -277,7 +277,7 @@ export const BankTransferForm = ({
           Back
         </button>
         {verifiedAcct && (
-          <button type="submit" disabled={!formik.isValid}>
+          <button type="submit" disabled={isLoading}>
             Next
           </button>
         )}
