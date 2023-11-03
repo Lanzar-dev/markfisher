@@ -17,6 +17,7 @@ import {
   IElectricityPayload,
   IForgotPass,
   INotify,
+  IPendingBill,
   IProfile,
   IResetPassword,
   ISignin,
@@ -37,12 +38,27 @@ const initialState: IUserState = {
   isLoading: false,
   userId: "",
   isNotify: false,
+  pendingBill: [],
 };
 
 const userSlice = createSlice({
   name: "user",
   initialState,
   reducers: {
+    setPendingBill: (state, { payload }: PayloadAction<IPendingBill>) => {
+      state.pendingBill = [...state.pendingBill, payload];
+    },
+    setRemovePendingBill: (state, { payload }: PayloadAction<IPendingBill>) => {
+      // Find the index of the item to remove
+      const indexToRemove = state.pendingBill.findIndex(
+        (item) => item.Reference === payload.Reference
+      );
+
+      if (indexToRemove !== -1) {
+        // If the item exists in the array, remove it
+        state.pendingBill.splice(indexToRemove, 1);
+      }
+    },
     setLoading: (state, { payload }: PayloadAction<boolean>) => {
       state.isLoading = payload;
     },
@@ -488,6 +504,13 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
 
         // console.log("airtime response: ", data);
         if (data.code === 200) {
+          if (data?.body?.status === "pending") {
+            const pending: IPendingBill = {
+              Type: "Airtime",
+              Reference: data?.body?.reference,
+            };
+            dispatch(setPendingBill(pending));
+          }
           dispatch(setSuccess(data));
           const msg = `₦${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
           dispatch(setNotify({ text: msg, color: "green" }));
@@ -527,6 +550,13 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
 
         // console.log("bundle response: ", data);
         if (data.code === 200) {
+          if (data?.body?.status === "pending") {
+            const pending: IPendingBill = {
+              Type: "Bundle",
+              Reference: data?.body?.reference,
+            };
+            dispatch(setPendingBill(pending));
+          }
           dispatch(setSuccess(data));
           const msg = `₦${data?.body?.amount} ${data?.body?.network} airtime purchased for ${data?.body?.phone_number}`;
           dispatch(setNotify({ text: msg, color: "green" }));
@@ -566,6 +596,13 @@ export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
 
         console.log("buy electricity data: ", data);
         if (data.code === 200) {
+          if (data?.body?.status === "pending") {
+            const pending: IPendingBill = {
+              Type: "Electric",
+              Reference: data?.body?.reference,
+            };
+            dispatch(setPendingBill(pending));
+          }
           dispatch(setSuccess(data));
           const msg = `₦${data?.body?.amount} ${data?.body?.type} electricity purchased for meter: ${data?.body?.customer}`;
           dispatch(setNotify({ text: msg, color: "green" }));
@@ -609,6 +646,13 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
 
         console.log("buy cableTv data: ", data);
         if (data.code === 200) {
+          if (data?.body?.status === "pending") {
+            const pending: IPendingBill = {
+              Type: "Cable",
+              Reference: data?.body?.reference,
+            };
+            dispatch(setPendingBill(pending));
+          }
           dispatch(setSuccess(data));
           const msg = `₦${data?.body?.amount} ${data?.body?.type} electricity purchased for meter: ${data?.body?.customer}`;
           dispatch(setNotify({ text: msg, color: "green" }));
@@ -900,7 +944,7 @@ export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
 
 export const getBillStatus = (ref: any, billType: any): AppThunk => {
   return async (dispatch) => {
-    dispatch(setLoading(true));
+    // dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
       const path =
@@ -908,13 +952,15 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
       const response = await axios.get(path);
       if (response) {
         const data = response.data;
-        console.log("get bill status data: ", response.data);
 
         if (data.code === 200) {
-          // dispatch(setTransactions(data?.body));
-          // dispatch(setProfile(data.body));
-          // // dispatch(clearErrors());
-          // const resp: any = { code: data.code, message: data.message };
+          // console.log("get bill status data: ", response.data);
+          const body = data?.body;
+          if (body?.status === "success") {
+            const remove = { Type: body?.type, Reference: body?.data?.tx_ref };
+            // console.log("removed: ", remove);
+            dispatch(setRemovePendingBill(remove));
+          }
           // dispatch(setSuccess(resp));
         }
       }
@@ -922,7 +968,7 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
       console.log("Get bill error: ", error?.response?.data);
       dispatch(setError(error?.response?.data));
     }
-    dispatch(setLoading(false));
+    // dispatch(setLoading(false));
   };
 };
 
@@ -979,5 +1025,7 @@ export const {
   setIsNotify,
   setNotify,
   setTransactions,
+  setPendingBill,
+  setRemovePendingBill,
 } = userSlice.actions;
 export default userSlice.reducer;

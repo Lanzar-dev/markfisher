@@ -46,11 +46,14 @@ import {
 import { FundWalletForm } from "./FundWalletForm";
 import { clearErrors } from "../Features/Error/errorSlice";
 import { FiLogOut } from "react-icons/fi";
+import * as routes from "../Data/Routes";
 
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { currentUser, isNotify } = useAppSelector((state) => state.user);
+  const { currentUser, isNotify, pendingBill } = useAppSelector(
+    (state) => state.user
+  );
   const { errors } = useAppSelector((state) => state.error);
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
@@ -62,6 +65,12 @@ export const Home = () => {
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
   const [searchParams, setSearchParams] = useSearchParams();
   const errtext = errors[0]?.message;
+
+  useEffect(() => {
+    if (!currentUser) {
+      navigate(routes.login);
+    }
+  }, [navigate, currentUser]);
 
   //Always get user wallet balance on first rendering or reload
   useEffect(() => {
@@ -82,9 +91,9 @@ export const Home = () => {
     if (
       errtext?.message === "Success transfer" ||
       errtext?.message === "Queued transfer" ||
-      errtext?.message === "Bundle Purchased" ||
-      errtext?.message === "Airtime Purchased" ||
-      errtext?.message === "Cable Purchased"
+      errtext?.message === "Bundle purchased" ||
+      errtext?.message === "Airtime purchased" ||
+      errtext?.message === "Cable purchased"
     ) {
       setShowCardForm(false);
       dispatch(fetchUserWallet(currentUser?.Email));
@@ -157,12 +166,25 @@ export const Home = () => {
     // }
   }, [dispatch, currentUser]); //dispatch, currentUser, transactions
 
+  //Check if there are pending bill and call getBillStatus endpoint
   useEffect(() => {
-    dispatch(getBillStatus("BPUSSD1698919547876981", "Airtime"));
-  }, []);
+    const intervalId = setInterval(() => {
+      if (pendingBill?.length > 0) {
+        dispatch(
+          getBillStatus(pendingBill[0]?.Reference, pendingBill[0]?.Type)
+        );
+      }
+    }, 10000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [dispatch, pendingBill]);
 
   // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
+
   var name: string = currentUser?.Email.slice(0, 5);
+  var acctNum: string = currentUser?.AccountNumber;
   return (
     <div className="Home">
       {showCardForm && (
@@ -537,13 +559,11 @@ export const Home = () => {
                         </div>
                         <div className="num-holder">
                           <div className="number">
-                            2372957524034720
+                            {acctNum}
                             <img
                               src={copyIcon}
                               alt="copy"
-                              onClick={() =>
-                                handleCopyClick("2372957524034720")
-                              }
+                              onClick={() => handleCopyClick(acctNum)}
                             />
                           </div>
                           <div className="save-share">
@@ -824,7 +844,7 @@ export const Home = () => {
               <div className="qr-title">My QR</div>
               <div className="Qr-holder">
                 <div>My QR number</div>
-                <div>2372957524034720</div>
+                <div>{currentUser?.AccountNumber}</div>
                 <div className="Qr" ref={qrCodeRef}>
                   <QRCodeCanvas value="Olaiyapo Raphael Adetunji" size={200} />
                 </div>

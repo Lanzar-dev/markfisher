@@ -18,12 +18,20 @@ export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  const { userId, isLoading } = useAppSelector((state) => state.user);
+  const { userId, isLoading, currentUser } = useAppSelector(
+    (state) => state.user
+  );
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
   const errTexts = errors[0]?.message;
   const errText: string = errors[0]?.message?.message;
+
+  useEffect(() => {
+    if (currentUser) {
+      navigate(routes.homepage);
+    }
+  }, [navigate, currentUser]);
   // console.log(isAuth);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -93,7 +101,7 @@ export const Login = () => {
         dispatch(clearErrors());
       }
     }
-  }, [dispatch /*, formik, errors, */, , userId, errText]);
+  }, [dispatch /*, formik, errors, */, userId, errText]);
 
   useEffect(() => {
     if (errors?.length > 0 && errText === "login success") {

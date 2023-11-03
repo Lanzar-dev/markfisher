@@ -69,7 +69,7 @@ body {
   display: flex;
   overflow-y: auto;
   height: 100vh;
-  background-color: #f4f7fa;
+  background-color: white;
 }
 .Auth-Login .left-div {
   display: flex;
@@ -533,7 +533,7 @@ body {
 }
 
 .Home {
-  background: #f4f7fa;
+  background: white;
   height: 100vh;
   display: flex;
 }
@@ -613,7 +613,7 @@ body {
   width: 84vw;
   height: 92vh;
   border-radius: 20px 0px 0px 0px;
-  background: #fff;
+  background: #f4f7fa;
 }
 .Home .right-div .right-content .home .card-holder {
   display: flex;
@@ -1015,7 +1015,7 @@ body {
   height: 246.941px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #e6f5ff;
+  background: #64acdd;
 }
 .Home .right-div .right-content .paybill .card:nth-child(1),
 .Home .right-div .right-content .paybill .card:nth-child(5) {
@@ -1026,7 +1026,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -1050,7 +1050,7 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
@@ -1074,7 +1074,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   color: #049dfe;
   font-family: var(--font-family-a);
@@ -1099,7 +1099,7 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
@@ -1127,7 +1127,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   color: #049dfe;
   font-family: var(--font-family-a);
@@ -1162,7 +1162,7 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
@@ -1176,6 +1176,7 @@ body {
   position: absolute;
   right: 10px;
   bottom: 25px;
+  color: white;
 }
 .Home .right-div .right-content .paybill .card:nth-child(3) img:hover,
 .Home .right-div .right-content .paybill .card:nth-child(4) img:hover,

@@ -19,8 +19,12 @@ export interface IUserState {
   verifiedAcct?: IVerifiedAcct | null;
   notify?: INotify | null;
   transactions?: [] | null;
+  pendingBill: IPendingBill[];
 }
-
+export interface IPendingBill {
+  Type: string;
+  Reference: string;
+}
 export interface IAirtimeCategory {
   id: number;
   biller_code: string;
