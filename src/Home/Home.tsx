@@ -39,7 +39,6 @@ import {
   fetchFlwPayment,
   fetchTransactions,
   fetchUserWallet,
-  getAccessToken,
   getBillStatus,
   setLogout,
 } from "../Features/User/userSlice";
@@ -159,13 +158,6 @@ export const Home = () => {
     setShowCardForm(isBool);
   };
 
-  //fetch transactions
-  useEffect(() => {
-    // if (!isNotify) {
-    dispatch(fetchTransactions(currentUser?.Email));
-    // }
-  }, [dispatch, currentUser]); //dispatch, currentUser, transactions
-
   //Check if there are pending bill and call getBillStatus endpoint
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -183,7 +175,8 @@ export const Home = () => {
 
   // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
 
-  var name: string = currentUser?.Email.slice(0, 5);
+  var name: string = currentUser?.Email?.slice(0, 5);
+  name = name?.at(0)?.toUpperCase() + name?.slice(1, 5);
   var acctNum: string = currentUser?.AccountNumber;
   return (
     <div className="Home">
@@ -286,7 +279,6 @@ export const Home = () => {
               alt="biyaLogo1"
               onClick={() => {
                 setNavIndex(1);
-                dispatch(getAccessToken(""));
               }}
             />
             <div className="side-bar">
@@ -316,7 +308,7 @@ export const Home = () => {
                     background: `url(${userPic}), lightgray 50% / cover no-repeat`,
                   }}
                 ></div>
-                Welcome, {name.toUpperCase()}
+                Welcome, {name}
                 <img
                   src={dnArrow}
                   alt={"dnArrow"}
@@ -339,7 +331,7 @@ export const Home = () => {
                     <div className="card">
                       <div className="name">
                         <div className="left">
-                          Hey Amina!
+                          Hey {name}!
                           {showBalance ? (
                             <BsEyeFill
                               onClick={() => setShowBalance(!showBalance)}
@@ -406,33 +398,36 @@ export const Home = () => {
                   <div className="card">
                     <div className="biyaCircle">B</div>
                     <div className="biyaTrx">Biya to Biya wallet</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr1"
                       onClick={() => decideFormStage(1)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <img src={bankTrx} alt="bankTrx" />
                     </div>
                     <div className="biyaTrx">Other accounts and banks</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
                       onClick={() => decideFormStage(2)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
                     <div className="biyaTrx">Other payment service bank</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(3)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                 </div>
               )}
@@ -445,11 +440,12 @@ export const Home = () => {
                       <img src={bankTrx} alt="bankTrx" />
                     </div>
                     <div className="biyaTrx">Withdraw via bank</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
                       onClick={() => decideFormStage(2)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
@@ -458,11 +454,12 @@ export const Home = () => {
                     <div className="biyaTrx">
                       Withdraw via payment service bank
                     </div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(3)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                 </div>
               )}
@@ -471,75 +468,82 @@ export const Home = () => {
                   <div className="card">
                     <div className="biyaCircle">B</div>
                     <div className="biyaTrx">Solar</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr1"
                       onClick={() => decideFormStage(1)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
                     <div className="biyaTrx">Electricity postpaid</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
                       onClick={() => decideFormStage(2)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
                     <div className="biyaTrx">Electricity prepaid</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(3)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <MySVGs index={4} fill={"rgba(4, 157, 254, 1)"} />
                     </div>
                     <div className="biyaTrx">Airtime recharge</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(4)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">B</div>
                     <div className="biyaTrx">Cable TV</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(5)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <MySVGs index={5} fill={"rgba(4, 157, 254, 1)"} />
                     </div>
                     <div className="biyaTrx">Internet subscription</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(6)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                   <div className="card">
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
                     <div className="biyaTrx">Tolls</div>
-                    <img
+                    {/* <img
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr3"
                       onClick={() => decideFormStage(7)}
-                    />
+                    /> */}
+                    <MySVGs index={12} fill="white" />
                   </div>
                 </div>
               )}
@@ -874,7 +878,7 @@ export const Home = () => {
               <div className="user">
                 <div className="card">
                   <div className="name">
-                    <div className="left">Hey Amina!</div>
+                    <div className="left">Hey {name}!</div>
                     <div className="right">
                       <div
                         className="add"

@@ -861,7 +861,7 @@ body {
   height: 246.941px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #e6f5ff;
+  background: #64acdd;
 }
 .Home .right-div .right-content .transfer .card:nth-child(1) {
   position: relative;
@@ -870,7 +870,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   display: flex;
   align-items: center;
@@ -893,14 +893,15 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-.Home .right-div .right-content .transfer .card:nth-child(1) img {
+.Home .right-div .right-content .transfer .card:nth-child(1) img,
+.Home .right-div .right-content .transfer .card:nth-child(1) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -915,7 +916,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   color: #049dfe;
   font-family: var(--font-family-a);
@@ -940,14 +941,15 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-.Home .right-div .right-content .transfer .card:nth-child(2) img {
+.Home .right-div .right-content .transfer .card:nth-child(2) img,
+.Home .right-div .right-content .transfer .card:nth-child(2) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -962,7 +964,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   color: #049dfe;
   font-family: var(--font-family-a);
@@ -987,14 +989,15 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
   font-weight: 600;
   line-height: normal;
 }
-.Home .right-div .right-content .transfer .card:nth-child(3) img {
+.Home .right-div .right-content .transfer .card:nth-child(3) img,
+.Home .right-div .right-content .transfer .card:nth-child(3) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -1058,7 +1061,9 @@ body {
   line-height: normal;
 }
 .Home .right-div .right-content .paybill .card:nth-child(1) img,
-.Home .right-div .right-content .paybill .card:nth-child(5) img {
+.Home .right-div .right-content .paybill .card:nth-child(1) svg,
+.Home .right-div .right-content .paybill .card:nth-child(5) img,
+.Home .right-div .right-content .paybill .card:nth-child(5) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -1106,7 +1111,8 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-.Home .right-div .right-content .paybill .card:nth-child(2) img {
+.Home .right-div .right-content .paybill .card:nth-child(2) img,
+.Home .right-div .right-content .paybill .card:nth-child(2) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -1170,9 +1176,13 @@ body {
   line-height: normal;
 }
 .Home .right-div .right-content .paybill .card:nth-child(3) img,
+.Home .right-div .right-content .paybill .card:nth-child(3) svg,
 .Home .right-div .right-content .paybill .card:nth-child(4) img,
+.Home .right-div .right-content .paybill .card:nth-child(4) svg,
 .Home .right-div .right-content .paybill .card:nth-child(6) img,
-.Home .right-div .right-content .paybill .card:nth-child(7) img {
+.Home .right-div .right-content .paybill .card:nth-child(6) svg,
+.Home .right-div .right-content .paybill .card:nth-child(7) img,
+.Home .right-div .right-content .paybill .card:nth-child(7) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -1194,7 +1204,7 @@ body {
   height: 246.941px;
   flex-shrink: 0;
   border-radius: 10px;
-  background: #e6f5ff;
+  background: #64acdd;
 }
 .Home .right-div .right-content .withdraw .card:nth-child(1),
 .Home .right-div .right-content .withdraw .card:nth-child(2) {
@@ -1205,7 +1215,7 @@ body {
   width: 70.579px;
   height: 70.579px;
   flex-shrink: 0;
-  background-color: rgba(4, 157, 254, 0.1);
+  background-color: #e6f5ff;
   border-radius: 50%;
   color: #049dfe;
   font-family: var(--font-family-a);
@@ -1232,7 +1242,7 @@ body {
   position: absolute;
   bottom: 15px;
   left: 20px;
-  color: #000;
+  color: white;
   font-family: var(--font-family-a);
   font-size: 15px;
   font-style: normal;
@@ -1240,7 +1250,9 @@ body {
   line-height: normal;
 }
 .Home .right-div .right-content .withdraw .card:nth-child(1) img,
-.Home .right-div .right-content .withdraw .card:nth-child(2) img {
+.Home .right-div .right-content .withdraw .card:nth-child(1) svg,
+.Home .right-div .right-content .withdraw .card:nth-child(2) img,
+.Home .right-div .right-content .withdraw .card:nth-child(2) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -1288,7 +1300,8 @@ body {
   font-weight: 600;
   line-height: normal;
 }
-.Home .right-div .right-content .withdraw .card:nth-child(3) img {
+.Home .right-div .right-content .withdraw .card:nth-child(3) img,
+.Home .right-div .right-content .withdraw .card:nth-child(3) svg {
   position: absolute;
   right: 10px;
   bottom: 25px;
@@ -2421,7 +2434,7 @@ body {
     height: 246.941px;
     flex-shrink: 0;
     border-radius: 10px;
-    background: #e6f5ff;
+    background: #64acdd;
   }
   .Home .right-div .right-content .transfer .card:nth-child(1) {
     position: relative;
@@ -2430,7 +2443,7 @@ body {
     width: 70.579px;
     height: 70.579px;
     flex-shrink: 0;
-    background-color: rgba(4, 157, 254, 0.1);
+    background-color: #e6f5ff;
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -2453,14 +2466,15 @@ body {
     position: absolute;
     bottom: 15px;
     left: 20px;
-    color: #000;
+    color: white;
     font-family: var(--font-family-a);
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
   }
-  .Home .right-div .right-content .transfer .card:nth-child(1) img {
+  .Home .right-div .right-content .transfer .card:nth-child(1) img,
+  .Home .right-div .right-content .transfer .card:nth-child(1) svg {
     position: absolute;
     right: 10px;
     bottom: 25px;
@@ -2475,7 +2489,7 @@ body {
     width: 70.579px;
     height: 70.579px;
     flex-shrink: 0;
-    background-color: rgba(4, 157, 254, 0.1);
+    background-color: #e6f5ff;
     border-radius: 50%;
     color: #049dfe;
     font-family: var(--font-family-a);
@@ -2500,14 +2514,15 @@ body {
     position: absolute;
     bottom: 15px;
     left: 20px;
-    color: #000;
+    color: white;
     font-family: var(--font-family-a);
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
   }
-  .Home .right-div .right-content .transfer .card:nth-child(2) img {
+  .Home .right-div .right-content .transfer .card:nth-child(2) img,
+  .Home .right-div .right-content .transfer .card:nth-child(2) svg {
     position: absolute;
     right: 10px;
     bottom: 25px;
@@ -2522,7 +2537,7 @@ body {
     width: 70.579px;
     height: 70.579px;
     flex-shrink: 0;
-    background-color: rgba(4, 157, 254, 0.1);
+    background-color: #e6f5ff;
     border-radius: 50%;
     color: #049dfe;
     font-family: var(--font-family-a);
@@ -2547,14 +2562,15 @@ body {
     position: absolute;
     bottom: 15px;
     left: 20px;
-    color: #000;
+    color: white;
     font-family: var(--font-family-a);
     font-size: 15px;
     font-style: normal;
     font-weight: 600;
     line-height: normal;
   }
-  .Home .right-div .right-content .transfer .card:nth-child(3) img {
+  .Home .right-div .right-content .transfer .card:nth-child(3) img,
+  .Home .right-div .right-content .transfer .card:nth-child(3) svg {
     position: absolute;
     right: 10px;
     bottom: 25px;
@@ -2764,7 +2780,7 @@ body {
     width: 70.579px;
     height: 70.579px;
     flex-shrink: 0;
-    background-color: rgba(4, 157, 254, 0.1);
+    background-color: #e6f5ff;
     border-radius: 50%;
     color: #049dfe;
     font-family: var(--font-family-a);
@@ -2791,7 +2807,7 @@ body {
     position: absolute;
     bottom: 15px;
     left: 20px;
-    color: #000;
+    color: white;
     font-family: var(--font-family-a);
     font-size: 15px;
     font-style: normal;
@@ -2799,7 +2815,9 @@ body {
     line-height: normal;
   }
   .Home .right-div .right-content .withdraw .card:nth-child(1) img,
-  .Home .right-div .right-content .withdraw .card:nth-child(2) img {
+  .Home .right-div .right-content .withdraw .card:nth-child(1) svg,
+  .Home .right-div .right-content .withdraw .card:nth-child(2) img,
+  .Home .right-div .right-content .withdraw .card:nth-child(2) svg {
     position: absolute;
     right: 10px;
     bottom: 25px;
@@ -2847,7 +2865,8 @@ body {
     font-weight: 600;
     line-height: normal;
   }
-  .Home .right-div .right-content .withdraw .card:nth-child(3) img {
+  .Home .right-div .right-content .withdraw .card:nth-child(3) img,
+  .Home .right-div .right-content .withdraw .card:nth-child(3) svg {
     position: absolute;
     right: 10px;
     bottom: 25px;

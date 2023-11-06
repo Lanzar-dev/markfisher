@@ -10,6 +10,7 @@ export interface IUserState {
   isNotify: boolean;
   userId?: string;
   token?: string;
+  rtoken?: string;
   banks?: IBanksPayload[] | null;
   airtimeCategory?: IAirtimeCategory[] | null;
   tollCategory?: IAirtimeCategory[] | null;

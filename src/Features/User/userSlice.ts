@@ -1,7 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 import { AppThunk } from "../../Store/store";
-import { axios, axiosWithAuth } from "../utils";
+import { axios, aXios } from "../utils";
+import axiosWithAuth from "../utils";
 import { clearErrors, setError, setSuccess } from "../Error/errorSlice";
 import {
   IAirtimeCategory,
@@ -33,6 +34,7 @@ import {
 
 const BASE_PATH = "Auth";
 const BASE_PATH_FL = "FL";
+// const axiosWithAuths = axiosWithAuth(store.);
 
 const initialState: IUserState = {
   isLoading: false,
@@ -77,7 +79,7 @@ const userSlice = createSlice({
       state.airtimeCategory = null;
     },
 
-    setProfile: (state, { payload }: PayloadAction<IProfile>) => {
+    setProfile: (state, { payload }: PayloadAction<IProfile | null>) => {
       state.currentUser = payload;
     },
 
@@ -130,7 +132,12 @@ const userSlice = createSlice({
       state.isAuth = true;
     },
 
-    setToken: (state, { payload }: PayloadAction<string>) => {},
+    setToken: (state, { payload }: PayloadAction<string>) => {
+      state.token = payload;
+    },
+    setRToken: (state, { payload }: PayloadAction<string>) => {
+      state.rtoken = payload;
+    },
     setUserId: (state, { payload }: PayloadAction<string>) => {
       state.userId = payload;
     },
@@ -222,10 +229,12 @@ export const signup = (data: ISignUp): AppThunk => {
         const data = response.data;
         // console.log("signup response: ", data);
         if (data.code === 200) {
-          dispatch(setProfile(data.body));
-          dispatch(clearErrors());
+          // dispatch(setProfile(data.body));
           const resp: any = { code: data.code, message: data.message };
           dispatch(setSuccess(resp));
+          const msg = `Account is created, please check your email and enter the OTP you recieved below`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
         } else if (data?.code === 400) {
           var msg: INotify = { text: data.message, color: "red" };
           dispatch(setNotify(msg));
@@ -251,9 +260,11 @@ export const login = (data: ISignin): AppThunk => {
       const response = await axios.post(path, data);
       if (response) {
         const data = response.data;
-        // console.log("data: ", response.data);
+        // console.log("login data: ", data);
 
         if (data.code === 200) {
+          dispatch(setToken(data?.extrainfo?.accesstoken));
+          dispatch(setRToken(data?.extrainfo?.refreshtoken));
           dispatch(setProfile(data.body));
           // dispatch(clearErrors());
           const resp: any = { code: data.code, message: data.message };
@@ -284,7 +295,7 @@ export const fetchUserWallet = (data: any): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH + `/FetchUserWallet?Email=${data}`;
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
         // console.log("data: ", response.data);
@@ -310,7 +321,7 @@ export const fetchTransactions = (data: any): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH + `/FetchTransactions?Email=${data}`;
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
         // console.log("fetch transaction data: ", response.data);
@@ -339,7 +350,7 @@ export const fetchFlwPayment = (data: any): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + `/FetchFlwPayment?TrxId=${data}`;
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
         // console.log("FetchFlwPayment data: ", data);
@@ -369,7 +380,7 @@ export const fetchBiyaPayment = (data: any): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH_FL + `/FetchBiyaPayment?TrxRef=${data}`;
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
         // console.log("FetchBiyaPayment data: ", data);
@@ -398,9 +409,12 @@ export const verifyEmail = (data: IVerifyEmail): AppThunk => {
       const response = await axios.put(path, data);
       if (response) {
         const data = response.data;
-        console.log("verify data: ", response.data);
+        // console.log("verify data: ", response.data);
         if (data.code === 200) {
           dispatch(setSuccess(data));
+          const msg = `Email is verified, please login`;
+          dispatch(setNotify({ text: msg, color: "green" }));
+          dispatch(setIsNotify(true));
         }
       }
     } catch (error: any) {
@@ -439,7 +453,7 @@ export const GetTransferFee = (data: any): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH_FL + `/GetTransferFee?Amount=${data}`;
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
 
@@ -465,7 +479,7 @@ export const BankTransfer = (data: ITransferPayload): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BankTransfer";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
 
@@ -498,11 +512,11 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BuyAirtime";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
 
-        // console.log("airtime response: ", data);
+        console.log("airtime response: ", data);
         if (data.code === 200) {
           if (data?.body?.status === "pending") {
             const pending: IPendingBill = {
@@ -523,8 +537,8 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
       }
     } catch (error: any) {
       const errText = error?.response?.data;
-      // console.log(errText);
-      if (errText?.message === "Failed") {
+      // console.log("airtime error: ", errText);
+      if (errText?.message === "Failed" || errText === undefined) {
         dispatch(
           setNotify({ text: "Network error. Please try again", color: "red" })
         );
@@ -544,7 +558,7 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BuyBundle";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
 
@@ -569,8 +583,8 @@ export const BuyBundle = (data: IBundlePayload): AppThunk => {
       }
     } catch (error: any) {
       const errText = error?.response?.data;
-      // console.log(errText);
-      if (errText?.message === "Failed") {
+      console.log("bundle error: ", errText);
+      if (errText?.message === "Failed" || errText === undefined) {
         dispatch(
           setNotify({ text: "Network error. Please try again", color: "red" })
         );
@@ -590,7 +604,7 @@ export const BuyElectricity = (data: IElectricityPayload): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BuyElectricity";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
 
@@ -640,7 +654,7 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/CableSubscription";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
 
@@ -688,7 +702,7 @@ export const GetBanks = (): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH_FL + "/GetBanks";
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
 
@@ -712,7 +726,7 @@ export const VerifyBankAccount = (data: IVerifyBankAcct): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH_FL + "/VerifyBankAccount";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       // console.log(data);
       if (response) {
         const data = response.data;
@@ -741,7 +755,7 @@ export const VerifyBiyaAccount = (payload: any): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + `/BiyaValidateAccount?Search=${payload}`;
-      const response = await axios.post(path, payload);
+      const response = await axiosWithAuth.post(path, payload);
       // console.log(data);
       if (response) {
         const data = response.data;
@@ -779,7 +793,7 @@ export const BiyaTransfer = (payload: IBiyaTransferPayload): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/BiyaTransfer";
-      const response = await axios.post(path, payload);
+      const response = await axiosWithAuth.post(path, payload);
       if (response) {
         const data = response.data;
 
@@ -809,7 +823,7 @@ export const TollPayment = (data: ITollPayload): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH + "/LoginPatientAccount";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
 
@@ -840,7 +854,7 @@ export const FundWallet = (payload: ICreatePaymentLink): AppThunk => {
     dispatch(setNotify(null));
     try {
       const path = BASE_PATH_FL + "/FundWallet";
-      const response = await axios.post(path, payload);
+      const response = await axiosWithAuth.post(path, payload);
       if (response) {
         const data = response.data;
         // console.log("data: ", data);
@@ -858,14 +872,12 @@ export const FundWallet = (payload: ICreatePaymentLink): AppThunk => {
 };
 
 export const updateUserEmail = (data: any): AppThunk => {
-  return async (dispatch, getState) => {
+  return async (dispatch) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
       const path = BASE_PATH + "/UpdatePatientEmail";
-      const response = await axiosWithAuth(
-        getState().patient.token as string
-      ).post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
         // console.log("data: ", response);
@@ -889,7 +901,7 @@ export const getBillsCategories = (payload: IBillsCategory): AppThunk => {
     try {
       const path = BASE_PATH_FL + "/GetBillCategories";
 
-      const response = await axios.post(path, payload);
+      const response = await axiosWithAuth.post(path, payload);
       // console.log(response);
       if (response) {
         const data = response.data;
@@ -926,7 +938,7 @@ export const validateCustomerDetails = (data: IValidateCustomer): AppThunk => {
     dispatch(clearErrors());
     try {
       const path = BASE_PATH_FL + "/ValidateCustomerDetails";
-      const response = await axios.post(path, data);
+      const response = await axiosWithAuth.post(path, data);
       if (response) {
         const data = response.data;
         // console.log("data: ", response.data);
@@ -949,7 +961,7 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
     try {
       const path =
         BASE_PATH_FL + `/GetBillStatus?Reference=${ref}&&BillType=${billType}`;
-      const response = await axios.get(path);
+      const response = await axiosWithAuth.get(path);
       if (response) {
         const data = response.data;
 
@@ -982,33 +994,43 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
 //   return `${year}-${month}-${day}`;
 // }
 
-export const getAccessToken = (data: any): AppThunk => {
-  return async (dispatch) => {
+export const getNewAccessToken = (): AppThunk => {
+  return async (dispatch, getState) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     try {
-      const path = BASE_PATH + "/GenInterswitchAccessToken";
-      const response = await axios.post(path, data);
+      const refreshtoken = getState().user.rtoken as string;
+      const email = getState().user.currentUser.Email as string;
+      const userId = getState().user.currentUser.Id as string;
+
+      const path = `Auth/GetNewAccessToken?Email=${email}&&UserId=${userId}`;
+      const response = await aXios(refreshtoken).get(path);
       if (response) {
         const data = response.data;
-        // console.log("data: ", response.data);
 
         if (data.code === 200) {
-          dispatch(setProfile(data.body));
-          dispatch(clearErrors());
-          const resp: any = { code: data.code, message: data.message };
-          dispatch(setSuccess(resp));
+          console.log("Gotten new Accesstoken: ", response.data);
+          dispatch(setToken(data?.body?.AccessToken));
+          // const resp: any = { code: data.code, message: data.message };
+          // dispatch(setSuccess(resp));
         }
       }
     } catch (error: any) {
-      // console.log(error?.response?.data);
+      const errText = error;
+      console.log("NewAccess error: ", errText);
+      dispatch(setLogout());
+      dispatch(setProfile(null));
       dispatch(setError(error?.response?.data));
+      const msg = `Token has expired, please login again to continue`;
+      dispatch(setNotify({ text: msg, color: "orange" }));
+      dispatch(setIsNotify(true));
     }
     dispatch(setLoading(false));
   };
 };
 
 export const {
+  setRToken,
   setUserId,
   setLoading,
   setAuth,

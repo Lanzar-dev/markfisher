@@ -23,11 +23,13 @@ export const Login = () => {
   );
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
+  const [showResend, setShowResend] = useState<boolean>(false);
   const [otp, setOTP] = useState<string>("");
   const errTexts = errors[0]?.message;
   const errText: string = errors[0]?.message?.message;
 
   useEffect(() => {
+    //dispatch(clearErrors());
     if (currentUser) {
       navigate(routes.homepage);
     }
@@ -60,17 +62,15 @@ export const Login = () => {
     Email: userId,
     EmailOTP: otp,
   };
-  // console.log("verify: ", verify);
+
   // Submit handler
   const handleSubmit = (values: ISignin) => {
-    // console.log("verify: ", verify);
     if (!showVerifyEmail) {
       dispatch(login(values));
-    } else {
-      if (errors?.length > 0 && errTexts?.message !== "Expired OTP") {
-        console.log("verifying: ", verify);
+    } else if (showVerifyEmail) {
+      if (!showResend) {
         dispatch(verifyEmail(verify));
-      } else if (errTexts?.message === "Expired OTP") {
+      } else if (showResend) {
         dispatch(resendVerifyEmail(formik.values.Email));
       }
     }
@@ -86,6 +86,24 @@ export const Login = () => {
   });
 
   useEffect(() => {
+    if (!showVerifyEmail) {
+      dispatch(clearErrors());
+    }
+  }, [dispatch, showVerifyEmail]);
+
+  useEffect(() => {
+    if (errors?.length > 0) {
+      if (errTexts?.message !== "Expired OTP") {
+        setShowResend(false);
+        // dispatch(clearErrors());
+      } else if (errTexts?.message === "Expired OTP") {
+        setShowResend(true);
+        // dispatch(clearErrors());
+      }
+    }
+  }, [dispatch, errors?.length, errTexts?.message]);
+
+  useEffect(() => {
     if (errors?.length > 0) {
       if (
         errText === "Unverified email" ||
@@ -94,6 +112,7 @@ export const Login = () => {
         setShowVerifyEmail(true);
         formik.setFieldValue("Email", userId);
         formik.setFieldValue("Password", "Abcde1&&&");
+        // dispatch(clearErrors());
       } else if (errText === "Verified email") {
         formik.setFieldValue("Email", "");
         formik.setFieldValue("Password", "");
@@ -190,7 +209,7 @@ export const Login = () => {
                 </>
               ) : (
                 <>
-                  <OTPInput getOTP={getOtp} />
+                  <OTPInput getOTP={getOtp} showResend={showResend} />
                 </>
               )}
             </form>

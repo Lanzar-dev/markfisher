@@ -9,15 +9,16 @@ import { useAppDispatch, useAppSelector } from "../Store/store";
 // import { clearErrors } from "../Features/Error/errorSlice";
 
 type ILoginProps = {
+  showResend: boolean;
   getOTP: (otp: string) => void;
 };
 
-function OTPInput({ getOTP }: ILoginProps) {
+function OTPInput({ getOTP, showResend }: ILoginProps) {
   const dispatch = useAppDispatch();
   const [otp, setOTP] = useState(["", "", "", "", "", ""]);
+  const [text, setText] = useState<string>("");
   const inputRefs = useRef<Array<HTMLInputElement | null>>([]);
   const { errors } = useAppSelector((state) => state.error);
-  const [showResend, setShowResend] = useState<boolean>(false);
   const errText: string = errors[0]?.message?.message;
 
   // Event handler to update OTP value for each input box
@@ -75,16 +76,17 @@ function OTPInput({ getOTP }: ILoginProps) {
   useEffect(() => {
     if (errors?.length > 0) {
       if (errText === "Expired OTP") {
-        setShowResend(true);
-      } else if (errors[0]?.message?.code === 200) {
-        // console.log("errMessage: ", errText);
-        if (errText?.includes("Code to verify")) {
-          setShowResend(false);
-          setOTP(["", "", "", "", "", ""]);
-        } else if (errText === "Verified email") {
-          // dispatch(clearErrors());
-          //   window.location.reload();
-        }
+        setText(`${errText}, Please click the button to receive new OTP`);
+      } else if (errText?.includes("created successfully")) {
+        setText(
+          `${errText}, Please enter the OTP you received in your email in below boxes`
+        );
+      } else if (errText?.includes("Unverified email")) {
+        setText(`${errText}, Please enter the OTP you receive`);
+      } else if (errText?.includes("Code to verify")) {
+        setText(`${errText}`);
+      } else if (errText?.includes("Verified email")) {
+        setText(errText);
       }
     }
   }, [dispatch, errors, errText]);
@@ -97,20 +99,15 @@ function OTPInput({ getOTP }: ILoginProps) {
         style={{
           color:
             errText?.includes("Code to verify") ||
-            errText?.includes("created successfully")
+            errText?.includes("created successfully") ||
+            errText?.includes("Verified email")
               ? "green"
               : "red",
           margin: "0px auto 8px auto",
           width: "80%",
         }}
       >
-        {errText}
-        {errText?.includes("created successfully") &&
-          ", Please enter the OTP you received in your email in below boxes"}
-        {errText?.includes("Expired OTP") &&
-          ", Please click the button to receive new OTP"}
-        {errText?.includes("Unverified email") &&
-          ", Please enter the OTP you receive"}
+        {text}
       </div>
       {/* )} */}
       <div>

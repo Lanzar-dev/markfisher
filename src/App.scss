@@ -919,7 +919,7 @@ body {
           height: 246.941px;
           flex-shrink: 0;
           border-radius: 10px;
-          background: #e6f5ff;
+          background: #64acdd; //#e6f5ff;
         }
         .card:nth-child(1) {
           position: relative;
@@ -927,7 +927,7 @@ body {
             width: 70.579px;
             height: 70.579px;
             flex-shrink: 0;
-            background-color: rgba(4, 157, 254, 0.1);
+            background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -950,14 +950,15 @@ body {
             position: absolute;
             bottom: 15px;
             left: 20px;
-            color: #000;
+            color: white; // #000;
             font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -972,7 +973,7 @@ body {
             width: 70.579px;
             height: 70.579px;
             flex-shrink: 0;
-            background-color: rgba(4, 157, 254, 0.1);
+            background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
             border-radius: 50%;
             // display: flex;
             // align-items: center;
@@ -1000,14 +1001,15 @@ body {
             position: absolute;
             bottom: 15px;
             left: 20px;
-            color: #000;
+            color: white; // #000;
             font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -1022,7 +1024,7 @@ body {
             width: 70.579px;
             height: 70.579px;
             flex-shrink: 0;
-            background-color: rgba(4, 157, 254, 0.1);
+            background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
             border-radius: 50%;
             // display: flex;
             // align-items: center;
@@ -1050,14 +1052,15 @@ body {
             position: absolute;
             bottom: 15px;
             left: 20px;
-            color: #000;
+            color: white; // #000;
             font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -1121,7 +1124,8 @@ body {
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -1171,7 +1175,8 @@ body {
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -1225,7 +1230,8 @@ body {
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -1246,7 +1252,7 @@ body {
           height: 246.941px;
           flex-shrink: 0;
           border-radius: 10px;
-          background: #e6f5ff;
+          background: #64acdd; //#e6f5ff;
         }
         // .card:nth-child(1) {
         //   position: relative;
@@ -1300,7 +1306,7 @@ body {
             width: 70.579px;
             height: 70.579px;
             flex-shrink: 0;
-            background-color: rgba(4, 157, 254, 0.1);
+            background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
             border-radius: 50%;
             // display: flex;
             // align-items: center;
@@ -1328,14 +1334,15 @@ body {
             position: absolute;
             bottom: 15px;
             left: 20px;
-            color: #000;
+            color: white; // #000;
             font-family: var(--font-family-a);
             font-size: 15px;
             font-style: normal;
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -1385,7 +1392,8 @@ body {
             font-weight: 600;
             line-height: normal;
           }
-          img {
+          img,
+          svg {
             position: absolute;
             right: 10px;
             bottom: 25px;
@@ -2590,7 +2598,7 @@ body {
             height: 246.941px;
             flex-shrink: 0;
             border-radius: 10px;
-            background: #e6f5ff;
+            background: #64acdd; //#e6f5ff;
           }
           .card:nth-child(1) {
             position: relative;
@@ -2598,7 +2606,7 @@ body {
               width: 70.579px;
               height: 70.579px;
               flex-shrink: 0;
-              background-color: rgba(4, 157, 254, 0.1);
+              background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
               border-radius: 50%;
               display: flex;
               align-items: center;
@@ -2621,14 +2629,15 @@ body {
               position: absolute;
               bottom: 15px;
               left: 20px;
-              color: #000;
+              color: white; //#000;
               font-family: var(--font-family-a);
               font-size: 15px;
               font-style: normal;
               font-weight: 600;
               line-height: normal;
             }
-            img {
+            img,
+            svg {
               position: absolute;
               right: 10px;
               bottom: 25px;
@@ -2643,7 +2652,7 @@ body {
               width: 70.579px;
               height: 70.579px;
               flex-shrink: 0;
-              background-color: rgba(4, 157, 254, 0.1);
+              background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
               border-radius: 50%;
               // display: flex;
               // align-items: center;
@@ -2671,14 +2680,15 @@ body {
               position: absolute;
               bottom: 15px;
               left: 20px;
-              color: #000;
+              color: white; // #000;
               font-family: var(--font-family-a);
               font-size: 15px;
               font-style: normal;
               font-weight: 600;
               line-height: normal;
             }
-            img {
+            img,
+            svg {
               position: absolute;
               right: 10px;
               bottom: 25px;
@@ -2693,7 +2703,7 @@ body {
               width: 70.579px;
               height: 70.579px;
               flex-shrink: 0;
-              background-color: rgba(4, 157, 254, 0.1);
+              background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
               border-radius: 50%;
               // display: flex;
               // align-items: center;
@@ -2721,14 +2731,15 @@ body {
               position: absolute;
               bottom: 15px;
               left: 20px;
-              color: #000;
+              color: white; // #000;
               font-family: var(--font-family-a);
               font-size: 15px;
               font-style: normal;
               font-weight: 600;
               line-height: normal;
             }
-            img {
+            img,
+            svg {
               position: absolute;
               right: 10px;
               bottom: 25px;
@@ -2969,7 +2980,7 @@ body {
               width: 70.579px;
               height: 70.579px;
               flex-shrink: 0;
-              background-color: rgba(4, 157, 254, 0.1);
+              background-color: #e6f5ff; // rgba(4, 157, 254, 0.1);
               border-radius: 50%;
               // display: flex;
               // align-items: center;
@@ -2997,14 +3008,15 @@ body {
               position: absolute;
               bottom: 15px;
               left: 20px;
-              color: #000;
+              color: white; // #000;
               font-family: var(--font-family-a);
               font-size: 15px;
               font-style: normal;
               font-weight: 600;
               line-height: normal;
             }
-            img {
+            img,
+            svg {
               position: absolute;
               right: 10px;
               bottom: 25px;
@@ -3054,7 +3066,8 @@ body {
               font-weight: 600;
               line-height: normal;
             }
-            img {
+            img,
+            svg {
               position: absolute;
               right: 10px;
               bottom: 25px;

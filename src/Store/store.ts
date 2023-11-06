@@ -15,6 +15,7 @@ import autoMergeLevel1 from "reduxjs-toolkit-persist/lib/stateReconciler/autoMer
 
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import rootReducer from "./root-reducer";
+// import { interceptor } from "./interceptor";
 
 const middleware = [logger];
 
