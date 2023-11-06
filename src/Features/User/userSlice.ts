@@ -668,14 +668,14 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
             dispatch(setPendingBill(pending));
           }
           dispatch(setSuccess(data));
-          const msg = `₦${data?.body?.amount} ${data?.body?.type} electricity purchased for meter: ${data?.body?.customer}`;
+          const msg = `₦${data?.body?.amount} ${data?.body?.type} subscription purchased for decoder: ${data?.body?.customer}`;
           dispatch(setNotify({ text: msg, color: "green" }));
           dispatch(setIsNotify(true));
         } else if (data.code === 400) {
           dispatch(setError(data));
           var msg = data?.body;
           if (data?.message === "Validation failed") {
-            msg = `Meter number could not be verified!`;
+            msg = `Decoder number could not be verified!`;
           }
           dispatch(setNotify({ text: msg, color: "red" }));
           dispatch(setIsNotify(true));
@@ -683,8 +683,8 @@ export const DstvPayment = (data: ICablePayload): AppThunk => {
       }
     } catch (error: any) {
       const errText = error?.response?.data;
-      // console.log(errText);
-      if (errText?.message === "Failed") {
+      console.log("Cable error: ", errText);
+      if (errText?.message === "Failed" || errText === undefined) {
         dispatch(
           setNotify({ text: "Network error. Please try again", color: "red" })
         );

@@ -395,7 +395,7 @@ export const Home = () => {
               {navIndex === 2 && <div className="scanpay"></div>}
               {navIndex === 3 && (
                 <div className="transfer">
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(1)}>
                     <div className="biyaCircle">B</div>
                     <div className="biyaTrx">Biya to Biya wallet</div>
                     {/* <img
@@ -405,7 +405,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(2)}>
                     <div className="biyaCircle">
                       <img src={bankTrx} alt="bankTrx" />
                     </div>
@@ -417,7 +417,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(3)}>
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
@@ -435,7 +435,7 @@ export const Home = () => {
               {navIndex === 5 && <></>}
               {navIndex === 6 && (
                 <div className="withdraw">
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(2)}>
                     <div className="biyaCircle">
                       <img src={bankTrx} alt="bankTrx" />
                     </div>
@@ -447,7 +447,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(3)}>
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
@@ -465,7 +465,7 @@ export const Home = () => {
               )}
               {navIndex === 7 && (
                 <div className="paybill">
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(1)}>
                     <div className="biyaCircle">B</div>
                     <div className="biyaTrx">Solar</div>
                     {/* <img
@@ -475,7 +475,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(2)}>
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
@@ -487,7 +487,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(3)}>
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
@@ -499,7 +499,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(4)}>
                     <div className="biyaCircle">
                       <MySVGs index={4} fill={"rgba(4, 157, 254, 1)"} />
                     </div>
@@ -511,7 +511,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(5)}>
                     <div className="biyaCircle">B</div>
                     <div className="biyaTrx">Cable TV</div>
                     {/* <img
@@ -521,7 +521,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(6)}>
                     <div className="biyaCircle">
                       <MySVGs index={5} fill={"rgba(4, 157, 254, 1)"} />
                     </div>
@@ -533,7 +533,7 @@ export const Home = () => {
                     /> */}
                     <MySVGs index={12} fill="white" />
                   </div>
-                  <div className="card">
+                  <div className="card" onClick={() => decideFormStage(7)}>
                     <div className="biyaCircle">
                       <img src={TrxIcon} alt="bankTrxIcon" />
                     </div>
