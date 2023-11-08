@@ -9,9 +9,9 @@ export const axios = Axios.create({ baseURL });
 export const aXios = (refreshtoken: string) =>
   Axios.create({
     baseURL: baseURL,
-    timeout: 1000,
+    timeout: 15000,
     headers: {
-      Authorization: "Bearer " + refreshtoken,
+      Authorization: `Bearer ${refreshtoken}`,
     },
   });
 
@@ -20,7 +20,7 @@ const axiosWithAuth = Axios.create();
 axiosWithAuth.interceptors.request.use((config) => {
   const token = store.getState().user.token as string;
   config.baseURL = baseURL;
-  config.timeout = 10000;
+  config.timeout = 15000;
   config.headers.Authorization = `Bearer ${token}`;
 
   return config;
@@ -38,8 +38,9 @@ axiosWithAuth.interceptors.response.use(
       // After getting a new token, retry the original request
       const config = error.config;
       const newToken = store.getState().user.token as string;
+      config.timeout = 15000;
       config.headers.Authorization = `Bearer ${newToken}`;
-      // console.log("config: ", config);
+      console.log("config: ", config);
 
       return Axios(config);
     }

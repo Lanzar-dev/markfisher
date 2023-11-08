@@ -74,6 +74,7 @@ export const Home = () => {
   //Always get user wallet balance on first rendering or reload
   useEffect(() => {
     dispatch(fetchUserWallet(currentUser?.Email));
+    dispatch(fetchTransactions(currentUser?.Email));
   }, [dispatch, currentUser?.Email]);
 
   useEffect(() => {
@@ -83,7 +84,6 @@ export const Home = () => {
     if (searchStatus === "successful") {
       dispatch(fetchBiyaPayment(searchTrxRef));
       dispatch(fetchFlwPayment(searchTrxId));
-      // setSearchParams({ status: "", transaction_id: "", tx_ref: "" });
       dispatch(fetchUserWallet(currentUser?.Email));
     }
     // console.log(errtext?.message);
@@ -106,7 +106,7 @@ export const Home = () => {
 
   // Separate useEffect for resetting searchParams
   useEffect(() => {
-    setSearchParams({ status: "", transaction_id: "", tx_ref: "" });
+    setSearchParams("");
   }, [setSearchParams]);
 
   const decideFormStage = (index: number) => {

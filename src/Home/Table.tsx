@@ -139,11 +139,15 @@ export const Table = () => {
                         color:
                           trx?.Status.toLowerCase() === "success"
                             ? "green"
+                            : trx?.Status.toLowerCase() === "pending"
+                            ? "orange"
                             : "red",
                       }}
                     >
                       {trx?.Status.toLowerCase() === "success"
                         ? "Succesful"
+                        : trx?.Status.toLowerCase() === "pending"
+                        ? "Pending"
                         : "Failed"}
                     </td>
                     <td

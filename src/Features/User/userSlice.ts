@@ -505,12 +505,13 @@ export const BankTransfer = (data: ITransferPayload): AppThunk => {
 };
 
 export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
-  return async (dispatch) => {
+  return async (dispatch, getState) => {
     dispatch(setLoading(true));
     dispatch(clearErrors());
     dispatch(setIsNotify(false));
     dispatch(setNotify(null));
     try {
+      console.log("check gotten here");
       const path = BASE_PATH_FL + "/BuyAirtime";
       const response = await axiosWithAuth.post(path, data);
       if (response) {
@@ -537,7 +538,7 @@ export const BuyAirtime = (data: IAirtimePayload): AppThunk => {
       }
     } catch (error: any) {
       const errText = error?.response?.data;
-      // console.log("airtime error: ", errText);
+      console.log("Airtime error: ", error);
       if (errText?.message === "Failed" || errText === undefined) {
         dispatch(
           setNotify({ text: "Network error. Please try again", color: "red" })
@@ -966,11 +967,11 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
         const data = response.data;
 
         if (data.code === 200) {
-          // console.log("get bill status data: ", response.data);
+          console.log("get bill status data: ", data);
           const body = data?.body;
           if (body?.status === "success") {
-            const remove = { Type: body?.type, Reference: body?.data?.tx_ref };
-            // console.log("removed: ", remove);
+            const remove = { Type: body?.type, Reference: body?.ref };
+            console.log("removed: ", remove);
             dispatch(setRemovePendingBill(remove));
           }
           // dispatch(setSuccess(resp));
