@@ -32,7 +32,7 @@ axiosWithAuth.interceptors.response.use(
   },
   async (error) => {
     if (error?.response && error.response.status === 403) {
-      console.log("Token has expired: ", error?.response?.status);
+      // console.log("Token has expired: ", error?.response?.status);
       await store.dispatch(getNewAccessToken());
 
       // After getting a new token, retry the original request
@@ -40,7 +40,7 @@ axiosWithAuth.interceptors.response.use(
       const newToken = store.getState().user.token as string;
       config.timeout = 15000;
       config.headers.Authorization = `Bearer ${newToken}`;
-      console.log("config: ", config);
+      // console.log("config: ", config);
 
       return Axios(config);
     }

@@ -24,13 +24,23 @@ export const Notification = () => {
     }
   }, [dispatch, isNotify]);
 
+  var text: string = notify?.text;
+  text = text.includes("<") ? "Error, please try again" : text;
+
   return (
     <div className="notification">
       <div
         className="notify-bar"
-        style={{ backgroundColor: notify?.color }}
+        style={{
+          backgroundColor:
+            notify?.color === "green"
+              ? "green"
+              : notify?.color === "red"
+              ? "red"
+              : "orange",
+        }}
       ></div>
-      <div className="notify-text">{notify?.text}</div>
+      <div className="notify-text">{text}</div>
       <GrFormClose
         onClick={() => {
           dispatch(setIsNotify(false));

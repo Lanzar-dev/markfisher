@@ -973,8 +973,11 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
             const remove = { Type: body?.type, Reference: body?.ref };
             console.log("removed: ", remove);
             dispatch(setRemovePendingBill(remove));
+            const msg = `Completed transaction`;
+            dispatch(setNotify({ text: msg, color: "green" }));
+            dispatch(setIsNotify(true));
+            dispatch(setSuccess(data));
           }
-          // dispatch(setSuccess(resp));
         }
       }
     } catch (error: any) {

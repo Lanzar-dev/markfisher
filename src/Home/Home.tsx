@@ -86,13 +86,14 @@ export const Home = () => {
       dispatch(fetchFlwPayment(searchTrxId));
       dispatch(fetchUserWallet(currentUser?.Email));
     }
-    // console.log(errtext?.message);
+    // console.log("checking ", errtext?.message);
     if (
       errtext?.message === "Success transfer" ||
       errtext?.message === "Queued transfer" ||
       errtext?.message === "Bundle purchased" ||
       errtext?.message === "Airtime purchased" ||
-      errtext?.message === "Cable purchased"
+      errtext?.message === "Cable purchased" ||
+      errtext?.body?.status === "success"
     ) {
       setShowCardForm(false);
       dispatch(fetchUserWallet(currentUser?.Email));
