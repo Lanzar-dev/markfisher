@@ -50,7 +50,7 @@ import * as routes from "../Data/Routes";
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { currentUser, isNotify, pendingBill } = useAppSelector(
+  const { currentUser, isNotify, pendingBill, isAuth } = useAppSelector(
     (state) => state.user
   );
   const { errors } = useAppSelector((state) => state.error);
@@ -66,10 +66,10 @@ export const Home = () => {
   const errtext = errors[0]?.message;
 
   useEffect(() => {
-    if (!currentUser) {
+    if (!isAuth) {
       navigate(routes.login);
     }
-  }, [navigate, currentUser]);
+  }, [navigate, isAuth]);
 
   //Always get user wallet balance on first rendering or reload
   useEffect(() => {
@@ -93,7 +93,8 @@ export const Home = () => {
       errtext?.message === "Bundle purchased" ||
       errtext?.message === "Airtime purchased" ||
       errtext?.message === "Cable purchased" ||
-      errtext?.body?.status === "success"
+      errtext?.body?.status === "success" ||
+      errtext?.body?.status === "failed"
     ) {
       setShowCardForm(false);
       dispatch(fetchUserWallet(currentUser?.Email));

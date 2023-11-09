@@ -11,15 +11,15 @@ export const SignUp = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { errors } = useAppSelector((state) => state.error);
-  const { isLoading, currentUser } = useAppSelector((state) => state.user);
+  const { isLoading, isAuth } = useAppSelector((state) => state.user);
   const [showPass, setShowPass] = useState<boolean>(false);
   const errText: string = errors[0]?.message?.message;
 
   useEffect(() => {
-    if (currentUser) {
+    if (isAuth) {
       navigate(routes.homepage);
     }
-  }, [navigate, currentUser]);
+  }, [navigate, isAuth]);
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({

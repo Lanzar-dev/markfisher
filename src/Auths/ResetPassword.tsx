@@ -11,18 +11,16 @@ import { clearErrors } from "../Features/Error/errorSlice";
 export const ResetPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { userId, currentUser, isLoading } = useAppSelector(
-    (state) => state.user
-  );
+  const { userId, isLoading, isAuth } = useAppSelector((state) => state.user);
   const { errors } = useAppSelector((state) => state.error);
   const errText: any = errors[0]?.message;
   const [showPass, setShowPass] = useState<boolean>(false);
 
   useEffect(() => {
-    if (currentUser) {
+    if (isAuth) {
       navigate(routes.homepage);
     }
-  }, [navigate, currentUser]);
+  }, [navigate, isAuth]);
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({

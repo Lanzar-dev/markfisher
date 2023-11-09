@@ -131,6 +131,10 @@ const userSlice = createSlice({
       state.token = payload.token;
       state.isAuth = true;
     },
+    setIsAuth: (state, { payload }: PayloadAction<boolean>) => {
+      state.isLoading = false;
+      state.isAuth = payload;
+    },
 
     setToken: (state, { payload }: PayloadAction<string>) => {
       state.token = payload;
@@ -271,6 +275,7 @@ export const login = (data: ISignin): AppThunk => {
           dispatch(setSuccess(resp));
           dispatch(setNotify({ text: "Login success", color: "green" }));
           dispatch(setIsNotify(true));
+          dispatch(setIsAuth(true));
         } else if (data.code === 400) {
           dispatch(setError(data));
           var msg: INotify = { text: data.message, color: "red" };
@@ -498,6 +503,11 @@ export const BankTransfer = (data: ITransferPayload): AppThunk => {
     } catch (error: any) {
       const errText = error?.response?.data;
       console.log("transfer error ", errText);
+      if (errText?.message?.message.includes("minimum")) {
+        const msg = errText?.message?.message;
+        dispatch(setNotify({ text: msg, color: "red" }));
+        dispatch(setIsNotify(true));
+      }
       dispatch(setError(error?.response?.data));
     }
     dispatch(setLoading(false));
@@ -971,10 +981,18 @@ export const getBillStatus = (ref: any, billType: any): AppThunk => {
           const body = data?.body;
           if (body?.status === "success") {
             const remove = { Type: body?.type, Reference: body?.ref };
-            console.log("removed: ", remove);
+            // console.log("removed: ", remove);
             dispatch(setRemovePendingBill(remove));
             const msg = `Completed transaction`;
             dispatch(setNotify({ text: msg, color: "green" }));
+            dispatch(setIsNotify(true));
+            dispatch(setSuccess(data));
+          } else if (body?.status === "failed") {
+            const remove = { Type: body?.type, Reference: body?.ref };
+            // console.log("removed: ", remove);
+            dispatch(setRemovePendingBill(remove));
+            const msg = `Failed transaction`;
+            dispatch(setNotify({ text: msg, color: "red" }));
             dispatch(setIsNotify(true));
             dispatch(setSuccess(data));
           }
@@ -1022,8 +1040,9 @@ export const getNewAccessToken = (): AppThunk => {
     } catch (error: any) {
       const errText = error;
       console.log("NewAccess error: ", errText);
-      dispatch(setLogout());
-      dispatch(setProfile(null));
+      // dispatch(setLogout());
+      // dispatch(setProfile(null));
+      dispatch(setIsAuth(false));
       dispatch(setError(error?.response?.data));
       const msg = `Token has expired, please login again to continue`;
       dispatch(setNotify({ text: msg, color: "orange" }));
@@ -1034,6 +1053,7 @@ export const getNewAccessToken = (): AppThunk => {
 };
 
 export const {
+  setIsAuth,
   setRToken,
   setUserId,
   setLoading,

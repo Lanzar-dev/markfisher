@@ -11,15 +11,15 @@ import { clearErrors } from "../Features/Error/errorSlice";
 export const ForgotPassword = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { isLoading, currentUser } = useAppSelector((state) => state.user);
+  const { isLoading, isAuth } = useAppSelector((state) => state.user);
   const { errors } = useAppSelector((state) => state.error);
   const errText: any = errors[0]?.message;
 
   useEffect(() => {
-    if (currentUser) {
+    if (isAuth) {
       navigate(routes.homepage);
     }
-  }, [navigate, currentUser]);
+  }, [navigate, isAuth]);
 
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
