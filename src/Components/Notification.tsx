@@ -25,7 +25,7 @@ export const Notification = () => {
   }, [dispatch, isNotify]);
 
   var text: string = notify?.text;
-  text = text.includes("<") ? "Error, please try again" : text;
+  text = text?.includes("<") ? "Error, please try again" : text;
 
   return (
     <div className="notification">
