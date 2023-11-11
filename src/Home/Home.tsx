@@ -62,7 +62,6 @@ export const Home = () => {
   const [cardFormIndex, setCardFormIndex] = useState<number>(0);
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
   const [zindex, setZindex] = useState<number>(4);
-  const [hasRunEffect, setHasRunEffect] = useState<string>("");
   const isMobile = useMediaQuery({ maxWidth: 600 } as MediaQueryMatchers);
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -112,16 +111,18 @@ export const Home = () => {
   // Separate useEffect for resetting searchParams
   useEffect(() => {
     transactions?.forEach((trx: any, index: number) => {
-      if (trx?.Status === "pending" && hasRunEffect !== trx?.Ref) {
+      const isFind = pendingBill?.findIndex(
+        (item: any) => item?.Reference === trx?.Ref
+      );
+      if (trx?.Status === "pending" && isFind === -1) {
         dispatch(
           setPendingBill({ Reference: trx?.Ref, Type: trx?.Type, Count: 0 })
         );
-        setHasRunEffect(trx?.Ref);
       }
     });
 
     setSearchParams("");
-  }, [dispatch, transactions, setSearchParams, hasRunEffect]);
+  }, [dispatch, transactions, setSearchParams, pendingBill]);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);
@@ -195,7 +196,7 @@ export const Home = () => {
           dispatch(setClearPendingBill());
         }
       }
-    }, 2000);
+    }, 5000);
 
     return () => {
       clearInterval(intervalId);
@@ -588,7 +589,7 @@ export const Home = () => {
                     <div className="card">
                       <div className="name">
                         <div className="left">
-                          Hey Amina! <br />
+                          Hey {name}! <br />
                           <span>Scan this code to receive payemnts</span>
                         </div>
                       </div>
