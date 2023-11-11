@@ -40,7 +40,10 @@ import {
   fetchTransactions,
   fetchUserWallet,
   getBillStatus,
+  getTransferStatus,
+  setClearPendingBill,
   setLogout,
+  setPendingBill,
 } from "../Features/User/userSlice";
 import { FundWalletForm } from "./FundWalletForm";
 import { clearErrors } from "../Features/Error/errorSlice";
@@ -50,9 +53,8 @@ import * as routes from "../Data/Routes";
 export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { currentUser, isNotify, pendingBill, isAuth } = useAppSelector(
-    (state) => state.user
-  );
+  const { currentUser, isNotify, pendingBill, isAuth, transactions } =
+    useAppSelector((state) => state.user);
   const { errors } = useAppSelector((state) => state.error);
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
@@ -60,6 +62,7 @@ export const Home = () => {
   const [cardFormIndex, setCardFormIndex] = useState<number>(0);
   const [showUserInfo, setShowUserInfo] = useState<boolean>(false);
   const [zindex, setZindex] = useState<number>(4);
+  const [hasRunEffect, setHasRunEffect] = useState<string>("");
   const isMobile = useMediaQuery({ maxWidth: 600 } as MediaQueryMatchers);
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
   const [searchParams, setSearchParams] = useSearchParams();
@@ -108,8 +111,17 @@ export const Home = () => {
 
   // Separate useEffect for resetting searchParams
   useEffect(() => {
+    transactions?.forEach((trx: any, index: number) => {
+      if (trx?.Status === "pending" && hasRunEffect !== trx?.Ref) {
+        dispatch(
+          setPendingBill({ Reference: trx?.Ref, Type: trx?.Type, Count: 0 })
+        );
+        setHasRunEffect(trx?.Ref);
+      }
+    });
+
     setSearchParams("");
-  }, [setSearchParams]);
+  }, [dispatch, transactions, setSearchParams, hasRunEffect]);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);
@@ -122,6 +134,8 @@ export const Home = () => {
       if (navIndex === 4) setCardFormIndex(4);
       // setShowCardForm((preValue) => !preValue);
       setShowCardForm(true);
+    } else if (navIndex === 8) {
+      setShowCardForm(false);
     }
   }, [navIndex]);
 
@@ -164,11 +178,24 @@ export const Home = () => {
   useEffect(() => {
     const intervalId = setInterval(() => {
       if (pendingBill?.length > 0) {
-        dispatch(
-          getBillStatus(pendingBill[0]?.Reference, pendingBill[0]?.Type)
-        );
+        // console.log("pend: ", pendingBill[0]);
+        if (
+          pendingBill[0]?.Type !== "Transfer" &&
+          pendingBill[0] !== null &&
+          pendingBill[0] !== undefined
+        ) {
+          dispatch(
+            getBillStatus(pendingBill[0]?.Reference, pendingBill[0]?.Type)
+          );
+        } else if (pendingBill[0]?.Type === "Transfer") {
+          dispatch(
+            getTransferStatus(pendingBill[0]?.Reference, pendingBill[0]?.Type)
+          );
+        } else if (pendingBill[0] === null || pendingBill[0] === undefined) {
+          dispatch(setClearPendingBill());
+        }
       }
-    }, 10000);
+    }, 2000);
 
     return () => {
       clearInterval(intervalId);
@@ -217,8 +244,12 @@ export const Home = () => {
               </div>
               <div className="title">
                 {cardFormIndex === 1 && "Biya to Biya"}
-                {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
-                {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
+                {((cardFormIndex === 2 && navIndex === 3) ||
+                  (cardFormIndex === 2 && navIndex === 1)) &&
+                  "Bank transfer"}
+                {((cardFormIndex === 3 && navIndex === 3) ||
+                  (cardFormIndex === 3 && navIndex === 1)) &&
+                  "PSB transfer"}
                 {cardFormIndex === 2 &&
                   navIndex === 7 &&
                   "Electricity postpaid"}
@@ -236,11 +267,13 @@ export const Home = () => {
               <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
             )}
             {((cardFormIndex === 2 && navIndex === 3) ||
-              (cardFormIndex === 2 && navIndex === 6)) && (
+              (cardFormIndex === 2 && navIndex === 6) ||
+              (cardFormIndex === 2 && navIndex === 1)) && (
               <BankTransferForm fnShowCardForm={funcSetShowCard} />
             )}
             {((cardFormIndex === 3 && navIndex === 3) ||
-              (cardFormIndex === 3 && navIndex === 6)) && (
+              (cardFormIndex === 3 && navIndex === 6) ||
+              (cardFormIndex === 3 && navIndex === 1)) && (
               <PSBTransferForm fnShowCardForm={funcSetShowCard} />
             )}
             {cardFormIndex === 2 && navIndex === 7 && (

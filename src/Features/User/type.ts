@@ -25,6 +25,7 @@ export interface IUserState {
 export interface IPendingBill {
   Type: string;
   Reference: string;
+  Count: number;
 }
 export interface IAirtimeCategory {
   id: number;
