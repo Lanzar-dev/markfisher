@@ -1,9 +1,3 @@
-:root {
-  --biya-color: #2d699d;
-  --biya-bg: #f4f7fa;
-  --font-family-a: "PoppinsMedium";
-}
-
 @font-face {
   font-family: "PoppinsRegular";
   src: url("./Fonts/Poppins-Regular.ttf") format("truetype");
@@ -38,6 +32,31 @@
   font-family: "Helvetica";
   src: url("./Fonts/helvetica_neu_bold.ttf") format("truetype");
 }
+
+@font-face {
+  font-family: "BiyaSerifItalic";
+  src: url("./Fonts/DMSerifDisplay-Italic.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "BiyaSerifRegular";
+  src: url("./Fonts/DMSerifDisplay-Regular.ttf") format("truetype");
+}
+
+:root {
+  --biya-color: #2d699d;
+  --biya-bg: #f4f7fa;
+  --font-family-a: "PoppinsMedium";
+}
+
+.font-serif-reg {
+  font-family: "BiyaSerifRegular";
+}
+
+// .biya-general {
+//   font-family: "PoppinsMedium";
+// }
+
 * {
   font-family: var(--font-family-a);
 }
@@ -66,509 +85,6 @@ body {
 ::-webkit-scrollbar-thumb {
   border-radius: 80px;
   background: #b0b0b0;
-}
-
-.Auth-Login {
-  display: flex;
-  overflow-y: auto;
-  height: 100vh;
-  background-color: white; //#f4f7fa;
-
-  .left-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50vw;
-    height: 100vh;
-    background-image: url("./Images//Frame.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    .text {
-      .message-1 {
-        width: fit-content;
-        color: #002855;
-        font-family: Roboto;
-        font-size: 96px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-      .message-2 {
-        width: fit-content;
-        color: #2e2e2e;
-        font-family: Roboto;
-        font-size: 36px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-    }
-  }
-
-  .right-div {
-    display: flex;
-    align-items: center;
-    // justify-content: center;
-    width: 50vw;
-    margin-bottom: 60px;
-
-    .img {
-      margin-top: 80px;
-      margin-left: 35px;
-      width: 323px;
-      height: 134px;
-      flex-shrink: 0;
-      background: url("./Images/biyaLogo.png"),
-        lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
-    }
-
-    .form-holder {
-      margin-top: 20px;
-      margin-left: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 504px;
-      height: 375px;
-      flex-shrink: 0;
-      border-radius: 15px;
-      background: #fff;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      .lg-form {
-        .field-holder {
-          width: fit-content;
-          margin: 25px auto;
-          .title {
-            width: 120px;
-            height: 18px;
-            flex-shrink: 0;
-            color: #002855;
-            font-family: Roboto;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-          }
-          .description {
-            width: 80%; //146px
-            height: 20px;
-            flex-shrink: 0;
-            color: #828282;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-          .field {
-            position: relative;
-            svg {
-              width: 24px;
-              height: 24px;
-              flex-shrink: 0;
-              position: absolute;
-              left: 25px;
-              top: 5px;
-            }
-            input {
-              width: 358px;
-              height: 36px;
-              flex-shrink: 0;
-              border-radius: 80px;
-              border: 1px solid #dfe6ec;
-              background: #f8fbfd;
-              padding-left: 50px;
-            }
-          }
-        }
-
-        .forgot-password {
-          margin: 5px auto;
-          width: 358px;
-          color: #828282;
-          font-family: Roboto;
-          font-size: 13px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          a {
-            color: #072c7c;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            text-decoration: none;
-            margin-left: 5px;
-            cursor: pointer;
-          }
-          button {
-            width: 129px;
-            height: 35px;
-            flex-shrink: 0;
-            border: 0px;
-            border-radius: 94px;
-            background: #4fadea;
-            cursor: pointer;
-            margin-left: 10px;
-            color: #fff;
-            text-align: center;
-            font-family: Roboto;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-        }
-
-        .otp-input {
-          text-align: center;
-          h3 {
-            text-align: center;
-          }
-          div {
-            input {
-              width: 35px;
-              height: 35px;
-              margin: 1px 7px;
-              text-align: center;
-            }
-          }
-          button {
-            width: 129px;
-            height: 35px;
-            flex-shrink: 0;
-            border: 0px;
-            border-radius: 94px;
-            background: #4fadea;
-            cursor: pointer;
-            margin-top: 25px;
-            color: #fff;
-            text-align: center;
-            font-family: Roboto;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-        }
-      }
-    }
-  }
-}
-
-.Auth-Signup {
-  display: flex;
-  overflow-y: auto;
-  height: 100vh;
-  background-color: #f4f7fa;
-
-  .left-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50vw;
-    height: 100vh;
-    background-image: url("./Images//Frame.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    .text {
-      .message-1 {
-        width: fit-content;
-        color: #002855;
-        font-family: Roboto;
-        font-size: 96px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-      .message-2 {
-        width: fit-content;
-        color: #2e2e2e;
-        font-family: Roboto;
-        font-size: 36px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-    }
-  }
-
-  .right-div {
-    display: flex;
-    align-items: center;
-    // justify-content: center;
-    width: 50vw;
-    margin-bottom: 60px;
-
-    .img {
-      margin-top: 80px;
-      margin-left: 35px;
-      width: 323px;
-      height: 134px;
-      flex-shrink: 0;
-      background: url("./Images/biyaLogo.png"),
-        lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
-    }
-
-    .form-holder {
-      margin-top: 20px;
-      margin-left: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 504px;
-      height: 504px;
-      flex-shrink: 0;
-      border-radius: 15px;
-      background: #fff;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      form {
-        .field-holder {
-          width: fit-content;
-          margin: 25px auto;
-          .title {
-            width: 160px;
-            height: 18px;
-            flex-shrink: 0;
-            color: #002855;
-            font-family: Roboto;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-          }
-          .description {
-            width: 80%; //146px
-            height: 20px;
-            flex-shrink: 0;
-            color: #828282;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-          .field {
-            position: relative;
-            svg {
-              width: 24px;
-              height: 24px;
-              flex-shrink: 0;
-              position: absolute;
-              left: 25px;
-              top: 5px;
-            }
-            input {
-              width: 358px;
-              height: 36px;
-              flex-shrink: 0;
-              border-radius: 80px;
-              border: 1px solid #dfe6ec;
-              background: #f8fbfd;
-              padding-left: 50px;
-            }
-          }
-        }
-
-        .forgot-password {
-          margin: 5px auto;
-          width: 358px;
-          color: #828282;
-          font-family: Roboto;
-          font-size: 13px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          a {
-            color: #072c7c;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            text-decoration: none;
-            margin-left: 5px;
-            cursor: pointer;
-          }
-          button {
-            width: 129px;
-            height: 35px;
-            flex-shrink: 0;
-            border: 0px;
-            border-radius: 94px;
-            background: #4fadea;
-            cursor: pointer;
-            margin-left: 10px;
-            color: #fff;
-            text-align: center;
-            font-family: Roboto;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-        }
-      }
-    }
-  }
-}
-
-.Auth-Forgot {
-  display: flex;
-  overflow-y: auto;
-  height: 100vh;
-  background-color: #f4f7fa;
-
-  .left-div {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    width: 50vw;
-    height: 100vh;
-    background-image: url("./Images//Frame.svg");
-    background-size: cover;
-    background-repeat: no-repeat;
-    .text {
-      .message-1 {
-        width: fit-content;
-        color: #002855;
-        font-family: Roboto;
-        font-size: 96px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: normal;
-      }
-      .message-2 {
-        width: fit-content;
-        color: #2e2e2e;
-        font-family: Roboto;
-        font-size: 36px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: normal;
-      }
-    }
-  }
-
-  .right-div {
-    display: flex;
-    align-items: center;
-    // justify-content: center;
-    width: 50vw;
-    margin-bottom: 60px;
-
-    .img {
-      margin-top: 80px;
-      margin-left: 35px;
-      width: 323px;
-      height: 134px;
-      flex-shrink: 0;
-      background: url("./Images/biyaLogo.png"),
-        lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
-    }
-
-    .form-holder {
-      margin-top: 20px;
-      margin-left: 35px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 504px;
-      height: 285px;
-      flex-shrink: 0;
-      border-radius: 15px;
-      background: #fff;
-      box-shadow: 0px 4px 4px 0px rgba(0, 0, 0, 0.25);
-      form {
-        .field-holder {
-          width: fit-content;
-          margin: 25px auto;
-          .title {
-            width: 120px;
-            height: 18px;
-            flex-shrink: 0;
-            color: #002855;
-            font-family: Roboto;
-            font-size: 18px;
-            font-style: normal;
-            font-weight: 500;
-            line-height: normal;
-          }
-          .description {
-            width: 80%; //146px
-            height: 20px;
-            flex-shrink: 0;
-            color: #828282;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-          .field {
-            position: relative;
-            svg {
-              width: 24px;
-              height: 24px;
-              flex-shrink: 0;
-              position: absolute;
-              left: 25px;
-              top: 5px;
-            }
-            input {
-              width: 358px;
-              height: 36px;
-              flex-shrink: 0;
-              border-radius: 80px;
-              border: 1px solid #dfe6ec;
-              background: #f8fbfd;
-              padding-left: 50px;
-            }
-          }
-        }
-
-        .forgot-password {
-          margin: 5px auto;
-          width: 358px;
-          color: #828282;
-          font-family: Roboto;
-          font-size: 13px;
-          font-style: normal;
-          font-weight: 400;
-          line-height: normal;
-          a {
-            color: #072c7c;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            text-decoration: none;
-            margin-left: 5px;
-            cursor: pointer;
-          }
-          button {
-            width: 129px;
-            height: 35px;
-            flex-shrink: 0;
-            border: 0px;
-            border-radius: 94px;
-            background: #4fadea;
-            cursor: pointer;
-            margin-left: 10px;
-            color: #fff;
-            text-align: center;
-            font-family: Roboto;
-            font-size: 14px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-          }
-        }
-      }
-    }
-  }
 }
 
 .Home {
@@ -703,7 +219,7 @@ body {
                   margin-top: 9px;
                   color: #049dfe;
                   text-align: center;
-                  font-family: Roboto;
+                  font-family: var(--font-family-a);
                   font-size: 14px;
                   font-style: normal;
                   font-weight: 400;
@@ -1450,7 +966,7 @@ body {
                   margin-top: 9px;
                   color: #049dfe;
                   text-align: center;
-                  font-family: Roboto;
+                  font-family: var(--font-family-a);
                   font-size: 14px;
                   font-style: normal;
                   font-weight: 400;
@@ -1757,7 +1273,7 @@ body {
         button {
           color: #000;
           text-align: center;
-          font-family: Roboto;
+          font-family: var(--font-family-a);
           font-size: 14px;
           font-style: normal;
           font-weight: 400;
@@ -1777,7 +1293,7 @@ body {
           background: #049dfe;
           color: #fff;
           text-align: center;
-          font-family: Roboto;
+          font-family: var(--font-family-a);
           font-size: 14px;
           font-style: normal;
           font-weight: 400;
@@ -1861,401 +1377,6 @@ body {
 }
 
 @media only screen and (max-width: 600px) {
-  .Auth-Login {
-    display: flex;
-    overflow-y: auto;
-    height: 100vh;
-    background-color: white;
-
-    .left-div {
-      display: none;
-    }
-
-    .right-div {
-      display: flex;
-      align-items: center;
-      // justify-content: center;
-      width: 100vw;
-      margin-bottom: 60px;
-
-      .img {
-        margin-top: 45vh;
-        margin-left: 0px;
-        width: 323px;
-        height: 134px;
-        flex-shrink: 0;
-        background: url("./Images/biyaLogo.png"),
-          lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
-      }
-
-      .form-holder {
-        margin-top: 30px;
-        margin-left: 2vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 96vw;
-        height: 375px;
-        flex-shrink: 0;
-        border-radius: 0px;
-        background: #fff;
-        box-shadow: none;
-        .lg-form {
-          .field-holder {
-            width: 90%;
-            margin: 25px auto;
-            .title {
-              width: 120px;
-              height: 18px;
-              flex-shrink: 0;
-              color: #002855;
-              font-family: Roboto;
-              font-size: 18px;
-              font-style: normal;
-              font-weight: 500;
-              line-height: normal;
-            }
-            .description {
-              width: 80%; //146px
-              height: 20px;
-              flex-shrink: 0;
-              color: #828282;
-              font-family: Roboto;
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-            .field {
-              position: relative;
-              svg {
-                width: 24px;
-                height: 24px;
-                flex-shrink: 0;
-                position: absolute;
-                left: 25px;
-                top: 5px;
-              }
-              input {
-                width: calc(90 / 100 * 96vw);
-                height: 40px;
-                flex-shrink: 0;
-                border-radius: 80px;
-                border: 1px solid #dfe6ec;
-                background: #f8fbfd;
-                padding-left: 50px;
-              }
-            }
-          }
-
-          .forgot-password {
-            margin: 10px auto;
-            width: 90%;
-            color: #828282;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            a {
-              color: #072c7c;
-              font-family: Roboto;
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-              text-decoration: none;
-              margin-left: 5px;
-              cursor: pointer;
-            }
-            button {
-              width: calc(90 / 100 * 96vw);
-              height: 40px;
-              flex-shrink: 0;
-              border: 0px;
-              border-radius: 94px;
-              background: #4fadea;
-              cursor: pointer;
-              margin-left: 0px;
-              margin-top: 15px;
-              margin-bottom: 70px;
-              color: #fff;
-              text-align: center;
-              font-family: Roboto;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .Auth-Signup {
-    display: flex;
-    overflow-y: auto;
-    height: 100vh;
-    background-color: white;
-
-    .left-div {
-      display: none;
-    }
-
-    .right-div {
-      display: flex;
-      align-items: center;
-      // justify-content: center;
-      width: 100vw;
-      margin-bottom: 60px;
-
-      .img {
-        margin-top: 45vh;
-        margin-left: 0px;
-        width: 323px;
-        height: 134px;
-        flex-shrink: 0;
-        background: url("./Images/biyaLogo.png"),
-          lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
-      }
-
-      .form-holder {
-        margin-top: 30px;
-        margin-left: 2vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 96vw;
-        height: 504px;
-        flex-shrink: 0;
-        border-radius: 15px;
-        background: #fff;
-        box-shadow: none;
-        form {
-          .field-holder {
-            width: 90%;
-            margin: 25px auto;
-            .title {
-              width: 160px;
-              height: 18px;
-              flex-shrink: 0;
-              color: #002855;
-              font-family: Roboto;
-              font-size: 18px;
-              font-style: normal;
-              font-weight: 500;
-              line-height: normal;
-            }
-            .description {
-              width: 80%; //146px
-              height: 20px;
-              flex-shrink: 0;
-              color: #828282;
-              font-family: Roboto;
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-            .field {
-              position: relative;
-              svg {
-                width: 24px;
-                height: 24px;
-                flex-shrink: 0;
-                position: absolute;
-                left: 25px;
-                top: 5px;
-              }
-              input {
-                width: calc(90 / 100 * 96vw);
-                height: 40px;
-                flex-shrink: 0;
-                border-radius: 80px;
-                border: 1px solid #dfe6ec;
-                background: #f8fbfd;
-                padding-left: 50px;
-              }
-            }
-          }
-
-          .forgot-password {
-            margin: 10px auto;
-            width: 90%;
-            color: #828282;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            a {
-              color: #072c7c;
-              font-family: Roboto;
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-              text-decoration: none;
-              margin-left: 5px;
-              cursor: pointer;
-            }
-            button {
-              width: calc(90 / 100 * 96vw);
-              height: 40px;
-              flex-shrink: 0;
-              border: 0px;
-              border-radius: 94px;
-              background: #4fadea;
-              cursor: pointer;
-              margin-left: 0px;
-              margin-top: 15px;
-              margin-bottom: 70px;
-              color: #fff;
-              text-align: center;
-              font-family: Roboto;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-          }
-        }
-      }
-    }
-  }
-
-  .Auth-Forgot {
-    display: flex;
-    overflow-y: auto;
-    height: 100vh;
-    background-color: white;
-
-    .left-div {
-      display: none;
-    }
-
-    .right-div {
-      display: flex;
-      align-items: center;
-      // justify-content: center;
-      width: 50vw;
-      margin-bottom: 60px;
-
-      .img {
-        margin-top: 45vh;
-        margin-left: 0px;
-        width: 323px;
-        height: 134px;
-        flex-shrink: 0;
-        background: url("./Images/biyaLogo.png"),
-          lightgray -101.056px -150.456px / 157.895% 378.947% no-repeat;
-      }
-
-      .form-holder {
-        margin-top: 20px;
-        margin-left: 2vw;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 96vw;
-        height: 285px;
-        flex-shrink: 0;
-        border-radius: 0px;
-        background: #fff;
-        box-shadow: none;
-        form {
-          .field-holder {
-            width: 90%;
-            margin: 25px auto;
-            .title {
-              width: 120px;
-              height: 18px;
-              flex-shrink: 0;
-              color: #002855;
-              font-family: Roboto;
-              font-size: 18px;
-              font-style: normal;
-              font-weight: 500;
-              line-height: normal;
-            }
-            .description {
-              width: 80%; //146px
-              height: 20px;
-              flex-shrink: 0;
-              color: #828282;
-              font-family: Roboto;
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-            .field {
-              position: relative;
-              svg {
-                width: 24px;
-                height: 24px;
-                flex-shrink: 0;
-                position: absolute;
-                left: 25px;
-                top: 5px;
-              }
-              input {
-                width: calc(90 / 100 * 96vw);
-                height: 36px;
-                flex-shrink: 0;
-                border-radius: 80px;
-                border: 1px solid #dfe6ec;
-                background: #f8fbfd;
-                padding-left: 50px;
-              }
-            }
-          }
-
-          .forgot-password {
-            margin: 5px auto;
-            width: 90%;
-            color: #828282;
-            font-family: Roboto;
-            font-size: 13px;
-            font-style: normal;
-            font-weight: 400;
-            line-height: normal;
-            a {
-              color: #072c7c;
-              font-family: Roboto;
-              font-size: 13px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-              text-decoration: none;
-              margin-left: 5px;
-              cursor: pointer;
-            }
-            button {
-              width: calc(90 / 100 * 96vw);
-              height: 35px;
-              flex-shrink: 0;
-              border: 0px;
-              border-radius: 94px;
-              background: #4fadea;
-              cursor: pointer;
-              margin-left: 0px;
-              margin-top: 15px;
-              color: #fff;
-              text-align: center;
-              font-family: Roboto;
-              font-size: 14px;
-              font-style: normal;
-              font-weight: 400;
-              line-height: normal;
-            }
-          }
-        }
-      }
-    }
-  }
-
   .Home {
     border: 0px solid;
     background: #f4f7fa;
@@ -2390,7 +1511,7 @@ body {
                     margin-top: 9px;
                     color: #049dfe;
                     text-align: center;
-                    font-family: Roboto;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -3124,7 +2245,7 @@ body {
                     margin-top: 9px;
                     color: #049dfe;
                     text-align: center;
-                    font-family: Roboto;
+                    font-family: var(--font-family-a);
                     font-size: 14px;
                     font-style: normal;
                     font-weight: 400;
@@ -3438,7 +2559,7 @@ body {
           button {
             color: #000;
             text-align: center;
-            font-family: Roboto;
+            font-family: var(--font-family-a);
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
@@ -3458,7 +2579,7 @@ body {
             background: #049dfe;
             color: #fff;
             text-align: center;
-            font-family: Roboto;
+            font-family: var(--font-family-a);
             font-size: 14px;
             font-style: normal;
             font-weight: 400;
@@ -3521,7 +2642,7 @@ body {
                 margin-top: 9px;
                 color: #049dfe;
                 text-align: center;
-                font-family: Roboto;
+                font-family: var(--font-family-a);
                 font-size: 14px;
                 font-style: normal;
                 font-weight: 400;

@@ -92,8 +92,8 @@ function OTPInput({ getOTP, showResend }: ILoginProps) {
   }, [dispatch, errors, errText]);
 
   return (
-    <div className="otp-input">
-      <h3>Enter OTP</h3>
+    <div className=" text-center">
+      <h3 className=" text-center">Enter OTP</h3>
       {/* {showResend && ( */}
       <div
         style={{
@@ -113,6 +113,7 @@ function OTPInput({ getOTP, showResend }: ILoginProps) {
       <div>
         {otp.map((digit, index) => (
           <input
+            className="w-[35px] h-[35px] my-[1px] mx-[7px] text-center"
             key={index}
             type="text"
             id={`otp-input-${index}`}
@@ -134,9 +135,13 @@ function OTPInput({ getOTP, showResend }: ILoginProps) {
           />
         ))}
       </div>
-      <div className="btn-group">
+      <div>
         {!showResend ? (
-          <button type="submit" onClick={OtpStr}>
+          <button
+            type="submit"
+            onClick={OtpStr}
+            className="w-[129px] h-[35px] flex-shrink-0 border-0 rounded-[94px] bg-biyaLightBlue cursor-pointer mt-6 text-white text-center font-sans text-sm not-italic font-[400] leading-normal"
+          >
             Verify Email
           </button>
         ) : (

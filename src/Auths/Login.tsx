@@ -17,8 +17,10 @@ import { clearErrors } from "../Features/Error/errorSlice";
 export const Login = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
-  const { errors } = useAppSelector((state) => state.error);
-  const { userId, isLoading, isAuth } = useAppSelector((state) => state.user);
+  const { errors } = useAppSelector((state: any) => state.error);
+  const { userId, isLoading, isAuth } = useAppSelector(
+    (state: any) => state.user
+  );
   const [showPass, setShowPass] = useState<boolean>(false);
   const [showVerifyEmail, setShowVerifyEmail] = useState<boolean>(false);
   const [showResend, setShowResend] = useState<boolean>(false);
@@ -130,26 +132,35 @@ export const Login = () => {
   // console.log("verified: ", errText);
 
   return (
-    <div className="Auth-Login">
-      <div className="left-div">
-        <div className="text">
-          <div className="message-1">Welcome!</div>
-          <div className="message-2">Log in to get started</div>
+    <div className="flex overflow-y-auto h-screen bg-white">
+      <div className="xs:hidden md:flex items-center justify-center md:w-[50vw] md:h-screen login-img bg-cover bg-no-repeat">
+        <div className="">
+          <div className="w-fit text-biyaBlue md:text-5xl lg:text-8xl font-[600] not-italic leading-normal font-serif-reg">
+            Welcome!
+          </div>
+          <div className=" w-fit text-biyaBlack md:text-3xl lg:text-4xl not-italic font-[400] leading-normal">
+            Log in to get started
+          </div>
         </div>
       </div>
-      <div className="right-div">
-        <div className="form">
-          <div className="img"></div>
-          <div className="form-holder">
-            <form onSubmit={formik.handleSubmit} className="lg-form">
+      <div className="flex items-center xs:w-screen md:w-[50vw] mb-14">
+        <div>
+          <div className=" xs:mt-[45vh] md:mt-20 xs:ml-0 md:ml-9 w-[323px] h-[134px] flex-shrink-0 login2-img"></div>
+          <div className="xs:mt-7 md:mt-5 xs:ml-[2vw] md:ml-9 flex items-center justify-center xs:w-[96vw] md:w-[504px] h-[375px] flex-shrink-0 xs:rounded-none md:rounded-2xl bg-white xs:shadow-none md:shadow-form-bx-sh">
+            <form onSubmit={formik.handleSubmit}>
               {!showVerifyEmail ? (
                 <>
-                  <div className="field-holder">
-                    <div className="title">Email address</div>
-                    <div className="description">Enter your email address</div>
-                    <div className="field">
+                  <div className="xs:w-[90%] md:w-fit mx-auto my-6">
+                    <div className="w-[160px] h-[18px] flex-shrink-0 text-biyaBlue text-lg not-italic font-[500] leading-normal">
+                      Email address
+                    </div>
+                    <div className="w-4/5 h-[20px] flex-shrink-0 text-biyaGray text-sm not-italic font-[400] leading-normal">
+                      Enter your email address
+                    </div>
+                    <div className="relative">
                       {Email()}
                       <input
+                        className="xs:w-[86.4vw] md:w-[358px] xs:h-[40px] md:h-[36px] flex-shrink-0 rounded-[80px] bg-inputBg border-2 border-inputBorder pl-[50px]"
                         type="text"
                         id="Email"
                         name="Email"
@@ -167,14 +178,17 @@ export const Login = () => {
                     )}
                   </div>
 
-                  <div className="field-holder">
-                    <div className="title">Password</div>
-                    <div className="description">
+                  <div className="w-fit mx-auto my-6">
+                    <div className="w-[120px] h-[18px] flex-shrink-0 text-biyaBlue text-lg not-italic font-[500] leading-normal">
+                      Password
+                    </div>
+                    <div className="w-4/5 h-[20px] flex-shrink-0 text-biyaGray text-sm not-italic font-[400] leading-normal">
                       Enter your account password
                     </div>
-                    <div className="field">
+                    <div className="relative">
                       {Pass()}
                       <input
+                        className="xs:w-[86.4vw] md:w-[358px] xs:h-[40px] md:h-[36px] flex-shrink-0 rounded-[80px] bg-inputBg border-2 border-inputBorder pl-[50px]"
                         type={showPass ? "text" : "password"}
                         id="Password"
                         name="Password"
@@ -189,18 +203,30 @@ export const Login = () => {
                     )}
                   </div>
 
-                  <div className="forgot-password">
+                  <div className="xs:my-[10px] md:my-1 mx-auto xs:w-[90%] md:w-[358px] text-biyaGray text-sm not-italic font-[400] leading-normal">
                     Forgot password?
-                    <a href="#a" onClick={() => navigate(routes.f_password)}>
+                    <a
+                      href="#a"
+                      onClick={() => navigate(routes.f_password)}
+                      className="text-biyaBlue text-sm not-italic font-[400] leading-normal ml-1 cursor-pointer no-underline"
+                    >
                       Reset here
                     </a>
                   </div>
-                  <div className="forgot-password">
+                  <div className="xs:my-[10px] md:my-1 mx-auto xs:w-[90%] md:w-[358px] text-biyaGray text-sm not-italic font-[400] leading-normal">
                     Don't have an account?
-                    <a href="#b" onClick={() => navigate(routes.signup)}>
+                    <a
+                      href="#b"
+                      onClick={() => navigate(routes.signup)}
+                      className="text-biyaBlue text-sm not-italic font-[400] leading-normal ml-1 cursor-pointer no-underline"
+                    >
                       Register now
                     </a>
-                    <button type="submit" disabled={isLoading}>
+                    <button
+                      type="submit"
+                      disabled={isLoading}
+                      className="xs:w-[86.4vw] md:w-[129px] xs:h-[40px] md:h-[35px] flex-shrink-0 border-0 rounded-[94px] text-sm cursor-pointer bg-biyaLightBlue text-white xs:ml-0 md:ml-2 mt-4 xs:mb-[70px] md:mb-0 text-center not-italic font-[400] leading-normal"
+                    >
                       Continue
                     </button>
                   </div>
@@ -225,6 +251,7 @@ export const Login = () => {
         height="24"
         viewBox="0 0 24 24"
         fill="none"
+        className="w-[24px] h-[24px] flex-shrink-0 absolute left-6 top-[5px]"
       >
         <path
           fillRule="evenodd"
@@ -246,6 +273,7 @@ export const Login = () => {
         fill="none"
         onClick={() => setShowPass(!showPass)}
         style={{ cursor: "pointer" }}
+        className="w-[24px] h-[24px] flex-shrink-0 absolute left-6 top-1"
       >
         <path
           fillRule="evenodd"

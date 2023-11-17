@@ -54,8 +54,8 @@ export const Home = () => {
   const navigate = useNavigate();
   const dispatch = useAppDispatch();
   const { currentUser, isNotify, pendingBill, isAuth, transactions } =
-    useAppSelector((state) => state.user);
-  const { errors } = useAppSelector((state) => state.error);
+    useAppSelector((state: any) => state.user);
+  const { errors } = useAppSelector((state: any) => state.error);
   const [showBalance, setShowBalance] = useState<boolean>(false);
   const [navIndex, setNavIndex] = useState<number>(1);
   const [showCardForm, setShowCardForm] = useState<boolean>(false);
