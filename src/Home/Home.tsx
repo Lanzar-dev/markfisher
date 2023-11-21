@@ -1,4 +1,4 @@
-import biyaLogo from "../Images/biyaLogo.png";
+import biyaLogo from "../Images/biyaLogo.jpg";
 import dnArrow from "../Images/DownArrow.svg";
 import userPic from "../Images/User.svg";
 import agent from "../Images/Agent.svg";
@@ -15,7 +15,7 @@ import { BsEyeFill, BsEyeSlashFill } from "react-icons/bs";
 import { useEffect, useRef, useState } from "react";
 import Table from "./Table";
 import { BankTransferForm } from "./BankTransferForm";
-import { BiyaTransferForm } from "./BiyaTransferForm";
+import { AyibTransferForm } from "./AyibTransferForm";
 import { PSBTransferForm } from "./PSBTransferForm";
 import { MySVGs } from "../SVGs/MySVGs";
 // import { TollForm } from "./TollForm";
@@ -249,7 +249,7 @@ export const Home = () => {
                   )}
               </div>
               <div className=" text-black text-xl not-italic font-[600] leading-normal">
-                {cardFormIndex === 1 && navIndex === 3 && "Biya to Biya"}
+                {cardFormIndex === 1 && navIndex === 3 && "Ayib to Ayib"}
                 {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
                 {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
                 {cardFormIndex === 6 &&
@@ -268,7 +268,7 @@ export const Home = () => {
               </div>
             </div>
             {cardFormIndex === 1 && navIndex === 3 && (
-              <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
+              <AyibTransferForm fnShowCardForm={funcSetShowCard} />
             )}
             {((cardFormIndex === 2 && navIndex === 3) ||
               (cardFormIndex === 4 && navIndex === 6)) && (
@@ -487,7 +487,7 @@ export const Home = () => {
                       B
                     </div>
                     <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
-                      Biya to Biya wallet
+                      Ayib to Ayib wallet
                     </div>
                     <MySVGs
                       index={12}

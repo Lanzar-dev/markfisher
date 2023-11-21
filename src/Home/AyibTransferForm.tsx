@@ -15,7 +15,7 @@ type IBiyaTransferFormProps = {
   fnShowCardForm: (index: boolean) => void;
 };
 
-export const BiyaTransferForm = ({
+export const AyibTransferForm = ({
   fnShowCardForm,
 }: IBiyaTransferFormProps) => {
   const navigate = useNavigate();
