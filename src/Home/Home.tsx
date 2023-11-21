@@ -203,7 +203,7 @@ export const Home = () => {
     };
   }, [dispatch, pendingBill]);
 
-  console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
+  // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
 
   var name: string = currentUser?.Email?.slice(0, 5);
   name = name?.at(0)?.toUpperCase() + name?.slice(1, 5);
@@ -1154,7 +1154,7 @@ export const Home = () => {
               </div>
             </>
           )}
-          <div className="bottom-box-shadow border fixed bottom-0 w-screen h-[9vh] flex-shrink-0 rounded-t-[20px] rounded-r-[20px] bg-white flex items-center z-[20]">
+          <div className="bottom-box-shadow border fixed bottom-0 w-screen h-[9vh] flex-shrink-0 rounded-tl-[20px] rounded-tr-[20px] bg-white flex items-center z-[20]">
             <div
               className="my-0 mx-auto w-fit h-fit max-h-[8vh] flex flex-col text-center text-xs not-italic font-[500] leading-normal"
               onClick={() => setNavIndex(1)}
