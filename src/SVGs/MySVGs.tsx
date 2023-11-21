@@ -1,9 +1,10 @@
 type MySVGsProps = {
   index: number;
   fill: string;
+  className?: any;
 };
 
-export const MySVGs = ({ index, fill }: MySVGsProps) => {
+export const MySVGs = ({ index, fill, className }: MySVGsProps) => {
   return (
     <>
       {index === 1 && (
@@ -13,6 +14,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Home Button">
             <path
@@ -33,6 +35,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -51,6 +54,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 24 24"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -69,6 +73,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -87,6 +92,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -105,6 +111,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -123,6 +130,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -141,6 +149,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -159,6 +168,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 30 30"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="Frame">
             <path
@@ -177,6 +187,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
           viewBox="0 0 40 40"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
         >
           <g id="More Button">
             <path
@@ -209,6 +220,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
       {index === 11 && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
           width="30"
           height="30"
           viewBox="0 0 30 30"
@@ -240,6 +252,7 @@ export const MySVGs = ({ index, fill }: MySVGsProps) => {
       {index === 12 && (
         <svg
           xmlns="http://www.w3.org/2000/svg"
+          className={className}
           width="40"
           height="40"
           viewBox="0 0 40 40"

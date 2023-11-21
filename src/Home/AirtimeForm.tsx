@@ -69,13 +69,21 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
   };
 
   return (
-    <form onSubmit={formik.handleSubmit}>
-      <div className="text-1">Pay to</div>
+    <form
+      onSubmit={formik.handleSubmit}
+      className="mt-[70px] pl-[15px] md:pl-[35px] h-fit mb-[50px] md:mb-0"
+    >
+      <div className=" text-lightBlack text-base not-italic font-[600] leading-normal w-fit my-5 mx-0">
+        Pay to
+      </div>
 
-      <div className="field-holder">
-        <div className="title">Mobile number</div>
-        <div className="field">
+      <div className=" w-fit mb-[15px] mt-[15px] md:mt-0 mx-auto md:mx-0">
+        <div className=" w-fit h-[24px] md:h-[22px] flex-shrink-0 text-black text-base not-italic font-extrabold leading-normal">
+          Mobile number
+        </div>
+        <div className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none">
           <input
+            className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none"
             type="text"
             id="MobileNumber"
             name="MobileNumber"
@@ -90,9 +98,11 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
         )}
       </div>
 
-      <div className="field-holder">
-        <div className="title">Choose a network</div>
-        <div className="field">
+      <div className="w-fit mb-[15px]  mt-[15px] md:mt-0 mx-auto md:mx-0">
+        <div className=" w-fit h-[22px] flex-shrink-0 text-black text-base not-italic font-extrabold leading-normal">
+          Choose a network
+        </div>
+        <div className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none">
           <select
             id="NetworkName"
             name="NetworkName"
@@ -102,7 +112,7 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
             }}
             onBlur={formik.handleBlur}
             value={formik.values.NetworkName}
-            className="field"
+            className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none"
           >
             <option value="" disabled>
               ...
@@ -122,10 +132,13 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
         )}
       </div>
 
-      <div className="field-holder">
-        <div className="title">Enter amount</div>
-        <div className="field">
+      <div className="w-fit mb-[15px] mt-[15px] md:mt-0 mx-auto md:mx-0">
+        <div className=" w-fit h-[22px] flex-shrink-0 text-black text-base not-italic font-extrabold leading-normal">
+          Enter amount
+        </div>
+        <div className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none">
           <input
+            className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none"
             type="text"
             id="Amount"
             name="Amount"
@@ -140,15 +153,20 @@ export const AirtimeForm = ({ fnShowCardForm }: IAirtimeFormProps) => {
         )}
       </div>
 
-      <div className="card-forms-bottom">
+      <div className="mt-[50px] mb-[50px] md:mb-0 ml-0 md:ml-[-35px] xs:max-md:text-center">
         <button
+          className=" ml-[15px] font-extrabold hover:cursor-pointer text-black text-center text-sm not-italic leading-normal w-[127px] h-[35px] flex-shrink-0 bg-white rounded-[94px] border-0"
           onClick={() => {
             fnShowCardForm(false);
           }}
         >
           Back
         </button>
-        <button type="submit" disabled={isLoading}>
+        <button
+          className="ml-[10vw] bg-biyaLightBlue hover:cursor-pointer text-white text-center text-sm not-italic font-[400] leading-normal w-[127px] h-[35px] flex-shrink-0 rounded-[94px] border-0"
+          type="submit"
+          disabled={isLoading}
+        >
           Next
         </button>
       </div>

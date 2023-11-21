@@ -90,8 +90,8 @@ export const Table = () => {
   }
 
   return (
-    <div className="table-container">
-      <table>
+    <div className="mt-[25px]">
+      <table className="w-[100%] border-collapse">
         <thead className="head">
           {/* <tr>
             <th>Doctor name</th>
@@ -107,8 +107,9 @@ export const Table = () => {
                 .slice(indexOfFirstItem, indexOfLastItem)
                 .map((trx: any, index: number) => (
                   <tr key={index}>
-                    <td className="table-cell">
+                    <td className="text-tabCol1 text-sm not-italic font-[600] leading-[22px] w-[8%] py-[5px] px-[15px]">
                       <div
+                        className="rounded-[55px] w-[55px] h-[55px] flex-shrink-0 flex items-center justify-center"
                         style={{
                           background: `url(${trxUserBg}), lightgray 50% / cover no-repeat`,
                         }}
@@ -129,12 +130,14 @@ export const Table = () => {
                         />
                       </div>
                     </td>
-                    <td className="table-cell">{trx?.FromUser}</td>
-                    <td className="table-cell">{`${formatDate(
+                    <td className="text-black text-sm not-italic font-[400] leading-normal w-[22%]">
+                      {trx?.FromUser}
+                    </td>
+                    <td className="text-black text-sm not-italic font-[400] leading-normal w-[15%]">{`${formatDate(
                       trx?.UpdatedAt
                     )} ${formatTime(trx?.UpdatedAt)}`}</td>
                     <td
-                      className={`table-cell `}
+                      className="text-black text-sm not-italic font-[400] leading-normal w-[15%]"
                       style={{
                         color:
                           trx?.Status.toLowerCase() === "success"
@@ -151,7 +154,7 @@ export const Table = () => {
                         : "Failed"}
                     </td>
                     <td
-                      className={`table-cell`}
+                      className="text-black text-sm not-italic font-[500] leading-normal w-[15%]"
                       style={{
                         color: trx?.Type === "BiyaTransfer" ? "green" : "red",
                       }}
@@ -165,8 +168,9 @@ export const Table = () => {
         </tbody>
       </table>
 
-      <div className="pagination">
+      <div className=" text-biyaLightBlue py-[10px px-[20px] text-right relative">
         <img
+          className=" absolute right-[95px] bottom-[5px] cursor-pointer"
           src={lArrow}
           alt="tabLArrow"
           onClick={() => handlePageChange(currentPage - 1)}
@@ -175,6 +179,7 @@ export const Table = () => {
           indexOfFirstItem + 1
         } - ${indexOfLastItem} of ${trLength}`}</span>
         <img
+          className="absolute right-0 bottom-[5px] cursor-pointer"
           src={rArrow}
           alt="tabRArrow"
           onClick={() => handlePageChange(currentPage + 1)}

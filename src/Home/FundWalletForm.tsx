@@ -51,43 +51,26 @@ export const FundWalletForm = ({ fnShowCardForm }: IFundWalletFormProps) => {
   });
 
   return (
-    <form onSubmit={formik.handleSubmit}>
+    <form
+      onSubmit={formik.handleSubmit}
+      className="mt-[70px] pl-[15px] md:pl-[35px] h-fit mb-[50px] md:mb-0"
+    >
       <>
         {errText === "Unverified account number" && (
           <div style={{ color: "orangered" }}>**{errText}**</div>
         )}
       </>
-      <div className="text-1">Credit your wallet</div>
+      <div className="text-lightBlack text-base not-italic font-[600] leading-normal w-fit my-5 mx-0">
+        Credit your wallet
+      </div>
 
-      {/* <div className="field-holder">
-        <div className="title">Enter card surname</div>
-        <div className="field">
-          <input
-            type="text"
-            id="AccountNumber"
-            name="AccountNumber"
-            onChange={(e) => {
-              formik.handleChange(e);
-              if (verifiedAcct || errText === "Unverified account number") {
-                dispatch(setVerifiedAcct(null));
-                formik.setFieldValue("Beneficiary", "");
-                formik.setFieldValue("BankName", "");
-              }
-            }}
-            onBlur={formik.handleBlur}
-            value={formik.values.AccountNumber}
-            placeholder="Account number"
-          />
+      <div className="w-fit mb-[15px] mt-[15px] md:mt-0 mx-auto md:mx-0">
+        <div className="w-fit h-[24px] md:h-[22px] flex-shrink-0 text-black text-base not-italic font-extrabold leading-normal">
+          Enter amount
         </div>
-        {formik.touched.AccountNumber && formik.errors.AccountNumber && (
-          <div className="error">{formik.errors.AccountNumber}</div>
-        )}
-      </div> */}
-
-      <div className="field-holder">
-        <div className="title">Enter amount</div>
-        <div className="field">
+        <div className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none">
           <input
+            className="w-[90vw] md:w-[28vw] h-[36px] flex-shrink-0 border border-t-0 border-l-0 border-r-0 bg-white pl-[5px] focus:outline-none"
             type="text"
             id="amount"
             name="amount"
@@ -102,16 +85,20 @@ export const FundWalletForm = ({ fnShowCardForm }: IFundWalletFormProps) => {
         )}
       </div>
 
-      <div className="card-forms-bottom">
+      <div className="mt-[50px] mb-[50px] md:mb-0 ml-0 md:ml-[-35px] xs:max-md:text-center">
         <button
+          className=" ml-[15px] font-extrabold hover:cursor-pointer text-black text-center text-sm not-italic leading-normal w-[127px] h-[35px] flex-shrink-0 bg-white rounded-[94px] border-0"
           onClick={() => {
             fnShowCardForm(false);
           }}
         >
           Back
         </button>
-
-        <button type="submit" disabled={isLoading}>
+        <button
+          className="ml-[10vw] bg-biyaLightBlue hover:cursor-pointer text-white text-center text-sm not-italic font-[400] leading-normal w-[127px] h-[35px] flex-shrink-0 rounded-[94px] border-0"
+          type="submit"
+          disabled={isLoading}
+        >
           Next
         </button>
       </div>

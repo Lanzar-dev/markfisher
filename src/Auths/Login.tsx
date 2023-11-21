@@ -203,12 +203,12 @@ export const Login = () => {
                     )}
                   </div>
 
-                  <div className="xs:my-[10px] md:my-1 mx-auto xs:w-[90%] md:w-[358px] text-biyaGray text-sm not-italic font-[400] leading-normal">
+                  <div className=" xs:my-[10px] md:my-1 mx-auto xs:w-[90%] md:w-[358px] text-biyaGray text-sm not-italic font-[400] leading-normal">
                     Forgot password?
                     <a
                       href="#a"
                       onClick={() => navigate(routes.f_password)}
-                      className="text-biyaBlue text-sm not-italic font-[400] leading-normal ml-1 cursor-pointer no-underline"
+                      className=" text-biyaBlue text-sm not-italic font-[400] leading-normal ml-1 cursor-pointer no-underline"
                     >
                       Reset here
                     </a>

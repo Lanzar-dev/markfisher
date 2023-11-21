@@ -18,7 +18,7 @@ import { BankTransferForm } from "./BankTransferForm";
 import { BiyaTransferForm } from "./BiyaTransferForm";
 import { PSBTransferForm } from "./PSBTransferForm";
 import { MySVGs } from "../SVGs/MySVGs";
-import { TollForm } from "./TollForm";
+// import { TollForm } from "./TollForm";
 import { AirtimeForm } from "./AirtimeForm";
 import { BundleForm } from "./BundleForm";
 import save from "../Images/SaveToGallery.svg";
@@ -131,8 +131,8 @@ export const Home = () => {
   // console.log(errors);
   useEffect(() => {
     if (navIndex === 5 || navIndex === 4) {
-      if (navIndex === 5) setCardFormIndex(6);
-      if (navIndex === 4) setCardFormIndex(4);
+      if (navIndex === 5) setCardFormIndex(10);
+      if (navIndex === 4) setCardFormIndex(8);
       // setShowCardForm((preValue) => !preValue);
       setShowCardForm(true);
     } else if (navIndex === 8) {
@@ -203,105 +203,106 @@ export const Home = () => {
     };
   }, [dispatch, pendingBill]);
 
-  // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
+  console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
 
   var name: string = currentUser?.Email?.slice(0, 5);
   name = name?.at(0)?.toUpperCase() + name?.slice(1, 5);
   var acctNum: string = currentUser?.AccountNumber;
   return (
-    <div className="Home">
+    <div className="bg-white h-screen flex">
       {showCardForm && (
-        <div
-          className="card-forms"
-          style={{
-            width: isMobile ? "100vw" : "35vw",
-            height: isMobile ? "93vh" : "100vh",
-          }}
-        >
-          <div
-            className="entire-form"
-            style={{
-              width: isMobile ? "100vw" : "35vw",
-              height: isMobile ? "93vh" : "100vh",
-            }}
-          >
-            <div className="card-forms-title">
-              <div className="biyaCircle">
-                {(cardFormIndex === 1 || cardFormIndex === 5) && "B"}
-                {(cardFormIndex === 2 || cardFormIndex === 8) && (
-                  <img src={bankTrx} alt="bankTrx" />
+        <div className=" absolute w-[100vw] md:w-[35vw] h-[93vh] md:h-screen right-0 z-[4] rounded-md border-2 border-sideFormBorder bg-sideFormBg overflow-y-auto">
+          <div className="w-[100vw] md:w-[35vw] h-screen md:h-[93vh]">
+            <div className="flex items-center pt-[60px] md:pt-0">
+              <div className="w-[60.579px] h-[60.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center justify-center text-biyaLightBlue text-2xl not-italic font-[600] leading-normal ml-[15px] mr-[20px] mt-[15px] cursor-pointer">
+                {(cardFormIndex === 1 || cardFormIndex === 9) && "B"}
+                {(cardFormIndex === 2 || cardFormIndex === 4) &&
+                  navIndex !== 4 && (
+                    <img
+                      src={bankTrx}
+                      alt="bankTrx"
+                      className="w-[35px] left-[17px] top-[15px]"
+                    />
+                  )}
+                {(cardFormIndex === 8 || navIndex === 4) && (
+                  <MySVGs index={4} fill={"rgba(4, 157, 254, 1)"} />
                 )}
-                {cardFormIndex === 4 && (
-                  <MySVGs index={cardFormIndex} fill={"rgba(4, 157, 254, 1)"} />
-                )}
-                {cardFormIndex === 3 && <img src={TrxIcon} alt="TrxIcon" />}
-                {cardFormIndex === 6 && (
-                  <MySVGs
-                    index={cardFormIndex - 1}
-                    fill={"rgba(4, 157, 254, 1)"}
+                {(cardFormIndex === 3 ||
+                  cardFormIndex === 5 ||
+                  cardFormIndex === 11) && (
+                  <img
+                    src={TrxIcon}
+                    alt="TrxIcon"
+                    className="w-[35px] left-[17px] top-[15px]"
                   />
                 )}
-                {cardFormIndex === 7 && <img src={TrxIcon} alt="TrxIcon" />}
+                {(cardFormIndex === 10 || navIndex === 5) && (
+                  <MySVGs index={5} fill={"rgba(4, 157, 254, 1)"} />
+                )}
+                {(cardFormIndex === 7 || cardFormIndex === 6) &&
+                  navIndex !== 5 && (
+                    <img
+                      src={TrxIcon}
+                      alt="TrxIcon"
+                      className="w-[35px] left-[17px] top-[15px]"
+                    />
+                  )}
               </div>
-              <div className="title">
-                {cardFormIndex === 1 && "Biya to Biya"}
-                {((cardFormIndex === 2 && navIndex === 3) ||
-                  (cardFormIndex === 2 && navIndex === 1)) &&
-                  "Bank transfer"}
-                {((cardFormIndex === 3 && navIndex === 3) ||
-                  (cardFormIndex === 3 && navIndex === 1)) &&
-                  "PSB transfer"}
-                {cardFormIndex === 2 &&
+              <div className=" text-black text-xl not-italic font-[600] leading-normal">
+                {cardFormIndex === 1 && navIndex === 3 && "Biya to Biya"}
+                {cardFormIndex === 2 && navIndex === 3 && "Bank transfer"}
+                {cardFormIndex === 3 && navIndex === 3 && "PSB transfer"}
+                {cardFormIndex === 6 &&
                   navIndex === 7 &&
                   "Electricity postpaid"}
-                {cardFormIndex === 3 && navIndex === 7 && "Electricity prepaid"}
-                {cardFormIndex === 4 && "Airtime"}
-                {cardFormIndex === 5 && "Cable Tv"}
-                {cardFormIndex === 6 && "Buy a bundle"}
-                {cardFormIndex === 7 && "Tolls"}
-                {cardFormIndex === 8 && "Fund wallet"}
-                {cardFormIndex === 2 && navIndex === 6 && "Bank Withdrawal"}
-                {cardFormIndex === 3 && navIndex === 6 && "PSB Withdrawal"}
+                {cardFormIndex === 7 && navIndex === 7 && "Electricity prepaid"}
+                {((cardFormIndex === 8 && navIndex === 7) || navIndex === 4) &&
+                  "Airtime"}
+                {cardFormIndex === 9 && navIndex === 7 && "Cable Tv"}
+                {((cardFormIndex === 10 && navIndex === 7) || navIndex === 5) &&
+                  "Buy a bundle"}
+                {/* {cardFormIndex === 7 && "Tolls"} */}
+                {cardFormIndex === 11 && "Fund wallet"}
+                {cardFormIndex === 4 && navIndex === 6 && "Bank withdrawal"}
+                {cardFormIndex === 5 && navIndex === 6 && "PSB withdrawal"}
               </div>
             </div>
-            {cardFormIndex === 1 && (
+            {cardFormIndex === 1 && navIndex === 3 && (
               <BiyaTransferForm fnShowCardForm={funcSetShowCard} />
             )}
             {((cardFormIndex === 2 && navIndex === 3) ||
-              (cardFormIndex === 2 && navIndex === 6) ||
-              (cardFormIndex === 2 && navIndex === 1)) && (
+              (cardFormIndex === 4 && navIndex === 6)) && (
               <BankTransferForm fnShowCardForm={funcSetShowCard} />
             )}
             {((cardFormIndex === 3 && navIndex === 3) ||
-              (cardFormIndex === 3 && navIndex === 6) ||
-              (cardFormIndex === 3 && navIndex === 1)) && (
+              (cardFormIndex === 5 && navIndex === 6)) && (
               <PSBTransferForm fnShowCardForm={funcSetShowCard} />
             )}
-            {cardFormIndex === 2 && navIndex === 7 && (
+            {cardFormIndex === 6 && navIndex === 7 && (
               <ElectricityForm
                 fnShowCardForm={funcSetShowCard}
                 isPostpaid={true}
               />
             )}
-            {cardFormIndex === 3 && navIndex === 7 && (
+            {cardFormIndex === 7 && navIndex === 7 && (
               <ElectricityForm
                 fnShowCardForm={funcSetShowCard}
                 isPostpaid={false}
               />
             )}
-            {cardFormIndex === 4 && (
+            {((cardFormIndex === 8 && navIndex === 7) || navIndex === 4) && (
               <AirtimeForm fnShowCardForm={funcSetShowCard} />
             )}
-            {cardFormIndex === 5 && (
+            {cardFormIndex === 9 && navIndex === 7 && (
               <CableTvForm fnShowCardForm={funcSetShowCard} />
             )}
-            {cardFormIndex === 6 && (
+            {((cardFormIndex === 10 && navIndex === 7) || navIndex === 5) && (
               <BundleForm fnShowCardForm={funcSetShowCard} />
             )}
-            {cardFormIndex === 7 && (
+            {/* {cardFormIndex === 7 && (
               <TollForm fnShowCardForm={funcSetShowCard} />
-            )}
-            {cardFormIndex === 8 && (
+            )} */}
+            {cardFormIndex === 11 && (
               <FundWalletForm fnShowCardForm={funcSetShowCard} />
             )}
           </div>
@@ -309,15 +310,16 @@ export const Home = () => {
       )}
       {!isMobile && (
         <>
-          <div className="left-div">
+          <div className="w-[16vw]">
             <img
+              className="w-[7vw] mt-[2vh] ml-[1vw] hover:cursor-pointer"
               src={biyaLogo}
               alt="biyaLogo1"
               onClick={() => {
                 setNavIndex(1);
               }}
             />
-            <div className="side-bar">
+            <div className="mt-[50px]">
               {navComponent("Home", 1)}
               {navComponent("Scan & pay", 2)}
               {navComponent("Transfer", 3)}
@@ -332,10 +334,10 @@ export const Home = () => {
           </div>
 
           <div className="right-div">
-            <div className="user">
-              <div className="holder">
+            <div className="relative">
+              <div className="w-fit mt-[3vh] mr-[1vw] mb-[3vh] ml-auto flex items-center">
                 <div
-                  className="userImg"
+                  className="mr-[7px]"
                   style={{
                     width: "40px",
                     height: "40px",
@@ -344,65 +346,99 @@ export const Home = () => {
                     background: `url(${userPic}), lightgray 50% / cover no-repeat`,
                   }}
                 ></div>
-                Welcome, {name}
-                <img
-                  src={dnArrow}
-                  alt={"dnArrow"}
+                <div
+                  className=" cursor-pointer flex"
                   onClick={() => setShowUserInfo(!showUserInfo)}
-                />
+                >
+                  Welcome, {name}
+                  <img
+                    className=" hover:cursor-pointer ml-[7px]"
+                    src={dnArrow}
+                    alt={"dnArrow"}
+                  />
+                </div>
               </div>
               {showUserInfo && (
-                <div className="user-info">
-                  <ul>
-                    <li>Profile</li>
-                    <li onClick={LogOut}>Log out</li>
+                <div className="absolute top-[40px] right-[10px] w-fit z-[3] border-[0.5px] rounded-[7px] bg-white dropdown-box-shadow">
+                  <ul className="py-[3px] px-[15px]">
+                    <li className="ml-0 mt-[0px] list-none hover:cursor-pointer">
+                      Profile
+                    </li>
+                    <li
+                      className="ml-0 mt-[5px] list-none hover:cursor-pointer"
+                      onClick={LogOut}
+                    >
+                      Log out
+                    </li>
                   </ul>
                 </div>
               )}
             </div>
-            <div className="right-content">
+            <div className="overflow-y-auto overflow-x-auto w-[84vw] h-[92vh] rounded-t-[20px] bg-white2">
               {(navIndex === 1 || navIndex === 5 || navIndex === 4) && (
-                <div className="home">
-                  <div className="card-holder">
-                    <div className="card">
-                      <div className="name">
-                        <div className="left">
+                <div>
+                  <div className="flex">
+                    <div className="my-[35px] rounded-[20px] bg-white w-[390.6px] h-[129.138px] flex-shrink-0 user-filter ml-[38px]">
+                      <div className="flex h-[60px] py-[5px] pl-[18px] pr-[5px]">
+                        <div className="text-black text-[25px] not-italic font-[600] leading-normal flex">
                           Hey {name}!
                           {showBalance ? (
                             <BsEyeFill
+                              className="pt-[6px] hover:cursor-pointer"
                               onClick={() => setShowBalance(!showBalance)}
                             />
                           ) : (
                             <BsEyeSlashFill
+                              className="pt-[6px] hover:cursor-pointer"
                               onClick={() => setShowBalance(!showBalance)}
                             />
                           )}
                         </div>
-                        <div className="right">
+                        <div className="flex-1">
                           <div
-                            className="add"
+                            className="flex items-center justify-center ml-auto mt-[9px] text-biyaLightBlue text-center text-sm not-italic font-[400] leading-normal"
                             onClick={() => {
-                              setCardFormIndex(8);
+                              setCardFormIndex(11);
                               funcSetShowCard(!showCardForm);
                             }}
                           >
-                            <img src={walletIcon} alt="WalletLogo1" /> Add money
-                            <img src={rightArrow} alt="rightArrow" />
+                            <img
+                              src={walletIcon}
+                              alt="WalletLogo1"
+                              className="mt-0 mr-[5px] hover:cursor-pointer"
+                            />{" "}
+                            Add money
+                            <img
+                              src={rightArrow}
+                              alt="rightArrow"
+                              className="mt-0 hover:cursor-pointer"
+                            />
                           </div>
                           <div
-                            className="add"
+                            className="flex items-center justify-center ml-auto mt-[9px] text-biyaLightBlue text-center text-sm not-italic font-[400] leading-normal"
                             onClick={() => {
                               setNavIndex(6);
                             }}
                           >
-                            <img src={walletIcon} alt="WalletLogo1" /> Withdraw
-                            money
-                            <img src={rightArrow} alt="rightArrow" />
+                            <img
+                              src={walletIcon}
+                              alt="WalletLogo1"
+                              className="mt-0 mr-[5px] hover:cursor-pointer"
+                            />{" "}
+                            Withdraw money
+                            <img
+                              src={rightArrow}
+                              alt="rightArrow"
+                              className="mt-0 hover:cursor-pointer"
+                            />
                           </div>
                         </div>
                       </div>
-                      <div className="amount">
-                        <span>Current balance</span> <br />{" "}
+                      <div className="py-[2px] pl-[18px] pr-[5px] text-black text-[20px] not-italic leading-normal font-[700]">
+                        <span className="text-black text-[10px] not-italic font-[500] leading-normal">
+                          Current balance
+                        </span>{" "}
+                        <br />{" "}
                         {showBalance
                           ? `₦${parseFloat(currentUser?.WalletBalance).toFixed(
                               2
@@ -410,227 +446,344 @@ export const Home = () => {
                           : "************"}
                       </div>
                     </div>
-                    <div className="card">
-                      <div>
+                    <div className="my-[35px] rounded-[20px] bg-biyaRed w-[390.6px] h-[129.138px] flex-shrink-0 user-filter mx-[20px] flex items-center justify-center">
+                      <div className="text-white text-[25px] not-italic font-[600] leading-normal mr-[25px]">
                         Manage Your <br /> Favourites
                       </div>
-                      <img src={favourite} alt="favouriteIcon" />
+                      <img
+                        src={favourite}
+                        alt="favouriteIcon"
+                        className=" inline-flex w-[100.248px] h-[100.248px] transform rotate[360deg] items-center justify-center flex-shrink-0 pt-[1.203px] pr-[2.558px] pb-[1.536px] pl-[0.181px]"
+                      />
                     </div>
-                    <div className="card">
-                      <div>Find An Agent</div>
-                      <img src={agent} alt="agentIcon" />
+                    <div className="my-[35px] rounded-[20px] bg-biyaLightBlue w-[390.6px] h-[129.138px] flex-shrink-0 user-filter flex items-center justify-center text-[20px]">
+                      <div className="text-white text-[25px] not-italic font-[600] leading-normal mr-[25px]">
+                        Find An Agent
+                      </div>
+                      <img
+                        src={agent}
+                        alt="agentIcon"
+                        className=" inline-flex w-[55.345px] h-[55.345px] transform rotate-[360deg] items-center justify-center flex-shrink-0 pt-[1.203px] pr-[2.558px] pb-[1.536px] pl-[0.181px]"
+                      />
                     </div>
                   </div>
-                  <div className="recent-transaction">
+                  <div className="ml-[38px] mb-[40px] w-[784px] h-[450px] flex-shrink-0 rounded-[20px] bg-white user-filter">
                     <br />
-                    <div className="title">Recent transactions</div>
+                    <div className="w-fit mt-[5px] ml-[20px] text-black text-lg not-italic font-[600] leading-normal">
+                      Recent transactions
+                    </div>
                     <Table />
                   </div>
                 </div>
               )}
               {navIndex === 2 && <div className="scanpay"></div>}
               {navIndex === 3 && (
-                <div className="transfer">
-                  <div className="card" onClick={() => decideFormStage(1)}>
-                    <div className="biyaCircle">B</div>
-                    <div className="biyaTrx">Biya to Biya wallet</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr1"
-                      onClick={() => decideFormStage(1)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(2)}>
-                    <div className="biyaCircle">
-                      <img src={bankTrx} alt="bankTrx" />
+                <div className="flex">
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(1)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      B
                     </div>
-                    <div className="biyaTrx">Other accounts and banks</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(3)}>
-                    <div className="biyaCircle">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Biya to Biya wallet
                     </div>
-                    <div className="biyaTrx">Other payment service bank</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(3)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div>
+                  <div
+                    className="mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative cursor-pointer"
+                    onClick={() => decideFormStage(2)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={bankTrx}
+                        alt="bankTrx"
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
+                    </div>
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Other accounts and banks
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div>
+                  <div
+                    className="cursor-pointer relative mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue"
+                    onClick={() => decideFormStage(3)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="w-[35px] absolute left-[17px] top-[15px]"
+                      />
+                    </div>
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Other payment service bank
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
                   </div>
                 </div>
               )}
               {navIndex === 4 && <></>}
               {navIndex === 5 && <></>}
               {navIndex === 6 && (
-                <div className="withdraw">
-                  <div className="card" onClick={() => decideFormStage(2)}>
-                    <div className="biyaCircle">
-                      <img src={bankTrx} alt="bankTrx" />
+                <div className="flex">
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(4)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={bankTrx}
+                        alt="bankTrx"
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
                     </div>
-                    <div className="biyaTrx">Withdraw via bank</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Withdraw via bank
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
                   </div>
-                  <div className="card" onClick={() => decideFormStage(3)}>
-                    <div className="biyaCircle">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(5)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
                     </div>
-                    <div className="biyaTrx">
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
                       Withdraw via payment service bank
                     </div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(3)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
                   </div>
                 </div>
               )}
               {navIndex === 7 && (
-                <div className="paybill">
-                  <div className="card" onClick={() => decideFormStage(1)}>
-                    <div className="biyaCircle">B</div>
-                    <div className="biyaTrx">Solar</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr1"
-                      onClick={() => decideFormStage(1)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(2)}>
-                    <div className="biyaCircle">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
+                <div className="grid grid-cols-4 gap-[10px] my-0 mx-auto w-[1100px] lg:w-[100%]">
+                  {/* <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(1)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      B
                     </div>
-                    <div className="biyaTrx">Electricity postpaid</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(3)}>
-                    <div className="biyaCircle">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Solar
                     </div>
-                    <div className="biyaTrx">Electricity prepaid</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(3)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(4)}>
-                    <div className="biyaCircle">
-                      <MySVGs index={4} fill={"rgba(4, 157, 254, 1)"} />
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div> */}
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(6)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
                     </div>
-                    <div className="biyaTrx">Airtime recharge</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(4)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(5)}>
-                    <div className="biyaCircle">B</div>
-                    <div className="biyaTrx">Cable TV</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(5)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
-                  </div>
-                  <div className="card" onClick={() => decideFormStage(6)}>
-                    <div className="biyaCircle">
-                      <MySVGs index={5} fill={"rgba(4, 157, 254, 1)"} />
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Electricity postpaid
                     </div>
-                    <div className="biyaTrx">Internet subscription</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(6)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
                   </div>
-                  <div className="card" onClick={() => decideFormStage(7)}>
-                    <div className="biyaCircle">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(7)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
                     </div>
-                    <div className="biyaTrx">Tolls</div>
-                    {/* <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr3"
-                      onClick={() => decideFormStage(7)}
-                    /> */}
-                    <MySVGs index={12} fill="white" />
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Electricity prepaid
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
                   </div>
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(8)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <MySVGs
+                        index={4}
+                        fill={"rgba(4, 157, 254, 1)"}
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
+                    </div>
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Airtime recharge
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div>
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(9)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      B
+                    </div>
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Cable TV
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div>
+                  <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(10)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <MySVGs
+                        index={5}
+                        fill={"rgba(4, 157, 254, 1)"}
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
+                    </div>
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Internet subscription
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div>
+                  {/* <div
+                    className="cursor-pointer mt-[30px] ml-[40px] w-[250.255px] h-[246.941px] flex-shrink-0 rounded-[10px] bg-biyaLightBlue relative"
+                    onClick={() => decideFormStage(7)}
+                  >
+                    <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-white3 rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal absolute ml-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="absolute left-[17px] top-[15px] w-[35px]"
+                      />
+                    </div>
+                    <div className="w-[162.417px] h-[56.349px] flex-shrink-0 absolute bottom-[15px] left-[20px] text-white text-[15px] not-italic font-[600] leading-normal">
+                      Tolls
+                    </div>
+                    <MySVGs
+                      index={12}
+                      fill="white"
+                      className={"absolute right-[10px] bottom-[25px]"}
+                    />
+                  </div> */}
                 </div>
               )}
               {navIndex === 8 && (
-                <div className="myQr">
-                  <div className="card-holder">
-                    <div className="card">
-                      <div className="name">
-                        <div className="left">
+                <div>
+                  <div className="flex">
+                    <div className="ml-[38px] my-[35px] rounded-[20px] bg-white w-[415px] h-[260px] flex-shrink-0 user-filter">
+                      <div className="flex h-[60px] py-[5px] pl-[18px] pr-[5px]">
+                        <div className="text-black text-[25px] not-italic font-[600] leading-normal">
                           Hey {name}! <br />
-                          <span>Scan this code to receive payemnts</span>
+                          <span className="text-lightBlack text-center text-[12px] not-italic font-[400] leading-normal">
+                            Scan this code to receive payemnts
+                          </span>
                         </div>
                       </div>
-                      <div className="qr-holder">
-                        <div className="qr" ref={qrCodeRef}>
+                      <div className="pt-[25px] flex">
+                        <div
+                          className="py-[2px] pl-[18px] pr-[5px] text-black text-[25px] not-italic font-[700] leading-normal"
+                          ref={qrCodeRef}
+                        >
                           <QRCodeCanvas value="Olaiyapo Raphael Adetunji" />
                         </div>
-                        <div className="num-holder">
-                          <div className="number">
+                        <div className="flex-1">
+                          <div className="flex items-center justify-center text-biyaLightBlue text-center text-lg not-italic font-[600] leading-normal">
                             {acctNum}
                             <img
+                              className="ml-[6px] cursor-pointer"
                               src={copyIcon}
                               alt="copy"
                               onClick={() => handleCopyClick(acctNum)}
                             />
                           </div>
-                          <div className="save-share">
-                            <div className="save">
-                              <div className="biyaCircle">
+                          <div className="flex text-center pl-[30px] mt-[30px]">
+                            <div className=" items-center">
+                              <div className="w-[49.579px] h-[49.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal ml-[15px] mr-[20px] mt-[15px] cursor-pointer">
                                 <img
+                                  className=" w-[24px] left-[17px] top-[15px]"
                                   src={save}
                                   alt="save"
                                   onClick={handleSaveClick}
                                 />
                               </div>
-                              <div className="title">Save to gallery</div>
-                            </div>
-                            <div className="save">
-                              <div className="biyaCircle">
-                                <img src={share} alt="share" />
+                              <div className="text-lightBlack text-center text-[13px] not-italic font-[400] leading-normal">
+                                Save to gallery
                               </div>
-                              <div className="title">Share QR code</div>
+                            </div>
+                            <div className="items-center ml-[15px]">
+                              <div className="w-[49.579px] h-[49.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal ml-[15px] mr-[20px] mt-[15px] cursor-pointer">
+                                <img
+                                  src={share}
+                                  alt="share"
+                                  className="w-[24px] left-[17px] top-[15px]"
+                                />
+                              </div>
+                              <div className="text-lightBlack text-center text-[13px] not-italic font-[400] leading-normal">
+                                Share QR code
+                              </div>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                  <div className="recent-transaction">
+                  <div className="ml-[38px] mb-[40px] w-[784px] h-[450px] flex-shrink-0 rounded-[20px] bg-white user-filter">
                     <br />
-                    <div className="title">Recent transactions</div>
+                    <div className="w-fit mt-[5px] ml-[20px] text-black text-lg not-italic font-[600] leading-normal">
+                      Recent transactions
+                    </div>
                     <Table />
                   </div>
                 </div>
@@ -640,232 +793,112 @@ export const Home = () => {
         </>
       )}
       {isMobile && (
-        <div className="xs-screen">
+        <div className="overflow-y-auto relative h-screen">
           {navIndex === 6 && (
-            <div className="withdraw" style={{ zIndex: zindex }}>
-              <div className="mobile-title">
+            <div
+              className="bg-white2 z-[4] w-screen h-[93vh] overflow-y-auto pb-[150px]"
+              style={{ zIndex: zindex }}
+            >
+              <div className="text-black text-left text-xl not-italic font-[600] leading-normal h-fit flex items-center mt-[40px] mb-[30px]">
                 <img
+                  className="ml-[25px] mr-[50px]"
                   src={backArrow}
                   alt="bankTrx"
                   onClick={() => setNavIndex(1)}
                 />
                 Withdraw Money
               </div>
-              <ul>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={bankTrx} alt="bankTrx" />
-                    </div>
-                    <div className="text">Withdraw via bank</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(2);
-                        // setNavIndex(6);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
-                    </div>
-                    <div className="text">
-                      Withdraw via payment service bank
-                    </div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(3)}
-                    />
-                  </div>
-                </li>
+              <ul className="w-screen pl-0">
+                {WithdrawList("Withdraw via bank", 4, bankTrx, biyaTrxRArr)}
+                {WithdrawList(
+                  "Withdraw via payment service bank",
+                  5,
+                  TrxIcon,
+                  biyaTrxRArr
+                )}
               </ul>
             </div>
           )}
           {navIndex === 3 && (
-            <div className="withdraw" style={{ zIndex: zindex }}>
-              <div className="mobile-title">
+            <div
+              className="bg-white2 z-[4] w-screen h-[93vh] overflow-y-auto pb-[150px]"
+              style={{ zIndex: zindex }}
+            >
+              <div className="text-black text-left text-xl not-italic font-[600] leading-normal h-fit flex items-center mt-[40px] mb-[30px]">
                 <img
+                  className="ml-[25px] mr-[50px]"
                   src={backArrow}
                   alt="bankTrx"
                   onClick={() => setNavIndex(1)}
                 />
                 Transfer Money
               </div>
-              <ul>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={biyaToBiya} alt="bankTrx" />
-                    </div>
-                    <div className="text">Biya to Biya wallet</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(1);
-                        // setNavIndex(7);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={bankTrx} alt="bankTrx" />
-                    </div>
-                    <div className="text">Other accounts and banks</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(2);
-                        // setNavIndex(3);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
-                    </div>
-                    <div className="text">Other payment service bank</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(3);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
+              <ul className="w-screen pl-0">
+                {TransferList(1, bankTrx, biyaTrxRArr, "Biya to Biya wallet")}
+                {TransferList(
+                  2,
+                  biyaToBiya,
+                  biyaTrxRArr,
+                  "Other accounts and banks"
+                )}
+                {TransferList(
+                  3,
+                  TrxIcon,
+                  biyaTrxRArr,
+                  "Other payment service bank"
+                )}
               </ul>
             </div>
           )}
           {navIndex === 7 && (
-            <div className="withdraw" style={{ zIndex: zindex }}>
-              <div className="mobile-title">
+            <div
+              className=" bg-white2 z-[4] w-screen h-[93vh] overflow-y-auto pb-[150px]"
+              style={{ zIndex: zindex }}
+            >
+              <div className="text-black text-left text-xl not-italic font-[600] leading-normal h-fit flex items-center mt-[40px] mb-[30px]">
                 <img
+                  className="ml-[25px] mr-[50px]"
                   src={backArrow}
                   alt="bankTrx"
                   onClick={() => setNavIndex(1)}
                 />
                 Pay Bills
               </div>
-              <ul>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={biyaToBiya} alt="bankTrx" />
+              <ul className="w-screen pl-0">
+                <li className="list-none ml-0">
+                  <div className="flex items-center">
+                    <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={bankTrx}
+                        alt="bankTrx"
+                        className="mx-auto w-[30px]"
+                      />
                     </div>
-                    <div className="text">Solar</div>
+                    <div className="max-w-[60vw]">Electricity postpaid</div>
                     <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => decideFormStage(2)}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={bankTrx} alt="bankTrx" />
-                    </div>
-                    <div className="text">Electricity postpaid</div>
-                    <img
+                      className="ml-auto mr-[25px]"
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
                       onClick={() => {
-                        decideFormStage(2);
+                        decideFormStage(6);
                         setNavIndex(7);
                         setZindex(3);
                       }}
                     />
                   </div>
                 </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
+                <li className="list-none ml-0">
+                  <div className="flex items-center">
+                    <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="mx-auto w-[30px]"
+                      />
                     </div>
-                    <div className="text">Electricity prepaid</div>
+                    <div className="max-w-[60vw]">Electricity prepaid</div>
                     <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(3);
-                        // setNavIndex(7);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
-                    </div>
-                    <div className="text">Airtime recharge</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(4);
-                        // setNavIndex(7);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
-                    </div>
-                    <div className="text">Internet subscription</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(6);
-                        // setNavIndex(7);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
-                    </div>
-                    <div className="text">Cable TV</div>
-                    <img
-                      src={biyaTrxRArr}
-                      alt="biyaTrxRArr2"
-                      onClick={() => {
-                        decideFormStage(5);
-                        // setNavIndex(7);
-                        setZindex(3);
-                      }}
-                    />
-                  </div>
-                </li>
-                <li>
-                  <div className="mobile-list">
-                    <div className="list-icon">
-                      <img src={TrxIcon} alt="bankTrxIcon" />
-                    </div>
-                    <div className="text">Tolls</div>
-                    <img
+                      className="ml-auto mr-[25px]"
                       src={biyaTrxRArr}
                       alt="biyaTrxRArr2"
                       onClick={() => {
@@ -876,32 +909,119 @@ export const Home = () => {
                     />
                   </div>
                 </li>
+                <li className="list-none ml-0">
+                  <div className="flex items-center">
+                    <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="mx-auto w-[30px]"
+                      />
+                    </div>
+                    <div className="max-w-[60vw]">Airtime recharge</div>
+                    <img
+                      className="ml-auto mr-[25px]"
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(8);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
+                  </div>
+                </li>
+                <li className="list-none ml-0">
+                  <div className="flex items-center">
+                    <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="mx-auto w-[30px]"
+                      />
+                    </div>
+                    <div className="max-w-[60vw]">Internet subscription</div>
+                    <img
+                      className="ml-auto mr-[25px]"
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(10);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
+                  </div>
+                </li>
+                <li className="list-none ml-0">
+                  <div className="flex items-center">
+                    <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+                      <img
+                        src={TrxIcon}
+                        alt="bankTrxIcon"
+                        className="mx-auto w-[30px]"
+                      />
+                    </div>
+                    <div className="max-w-[60vw]">Cable TV</div>
+                    <img
+                      className="ml-auto mr-[25px]"
+                      src={biyaTrxRArr}
+                      alt="biyaTrxRArr2"
+                      onClick={() => {
+                        decideFormStage(9);
+                        // setNavIndex(7);
+                        setZindex(3);
+                      }}
+                    />
+                  </div>
+                </li>
               </ul>
             </div>
           )}
           {navIndex === 8 && (
-            <div className="withdraw" style={{ zIndex: zindex }}>
-              <div className="qr-title">My QR</div>
-              <div className="Qr-holder">
-                <div>My QR number</div>
-                <div>{currentUser?.AccountNumber}</div>
-                <div className="Qr" ref={qrCodeRef}>
+            <div className="w-screen" style={{ zIndex: zindex }}>
+              <div className="text-center text-black text-xl not-italic font-[600] leading-normal h-fit mb-[30px] py-[20px] px-[5px] border-b border-gray-300">
+                My QR
+              </div>
+              <div className="flex flex-col items-center">
+                <div className=" text-lightBlack text-center text-xs not-italic font-[600] leading-normal">
+                  My QR number
+                </div>
+                <div className=" text-biyaLightBlue text-center text-lg not-italic font-[600] leading-normal mb-[10px]">
+                  {currentUser?.AccountNumber}
+                </div>
+                <div
+                  className=" text-lightBlack text-center text-xs not-italic font-[400] leading-normal"
+                  ref={qrCodeRef}
+                >
                   <QRCodeCanvas value="Olaiyapo Raphael Adetunji" size={200} />
                 </div>
-                <div>Scan this code to receive payments</div>
-                <div className="Num-holder">
-                  {/* <div className="save-share"> */}
-                  <div className="save">
-                    <div className="biyaCircle">
-                      <img src={save} alt="save" onClick={handleSaveClick} />
+                <div className="mt-2">Scan this code to receive payments</div>
+                <div className="flex mt-[60px]">
+                  <div className="my-0 mx-[10px]">
+                    <div className="w-[60.579px] h-[60.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center justify-center text-biyaLightBlue text-2xl not-italic font-[600] leading-normal ml-[15px] mr-[20px] mt-[15px] cursor-pointer">
+                      <img
+                        src={save}
+                        alt="save"
+                        onClick={handleSaveClick}
+                        className="w-[35px] left-[17px] top-[15px]"
+                      />
                     </div>
-                    <div className="title">Save to gallery</div>
+                    <div className=" text-lightBlack text-center text-[10px] not-italic font-[400] leading-normal">
+                      Save to gallery
+                    </div>
                   </div>
-                  <div className="save">
-                    <div className="biyaCircle">
-                      <img src={share} alt="share" />
+                  <div className="my-0 mx-[10px] text-center">
+                    <div className="w-[60.579px] h-[60.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center justify-center text-biyaLightBlue text-2xl not-italic font-[600] leading-normal ml-[15px] mr-[20px] mt-[15px] cursor-pointer">
+                      <img
+                        src={share}
+                        alt="share"
+                        className="w-[35px] left-[17px] top-[15px]"
+                      />
                     </div>
-                    <div className="title">Share QR code</div>
+                    <div className="text-lightBlack text-center text-[10px] not-italic font-[400] leading-normal">
+                      Share QR code
+                    </div>
                   </div>
                   {/* </div> */}
                 </div>
@@ -910,37 +1030,59 @@ export const Home = () => {
           )}
           {navIndex === 1 && (
             <>
-              <div className="top"></div>
-              <div className="user">
-                <div className="card">
-                  <div className="name">
-                    <div className="left">Hey {name}!</div>
-                    <div className="right">
+              <div className=" w-screen h-[20vh] flex-shrink-0 rounded-none bg-biyaLightBlue"></div>
+              <div className=" absolute top-[65px] left-[3vw] z-[3] rounded-[20px] bg-white w-[94vw] h-[159px] user-filter">
+                <div>
+                  <div className=" flex h-[60px] py-[5px] pl-[18px] pr-[5px]">
+                    <div className="text-black text-2xl not-italic font-[600] leading-normal">
+                      Hey {name}!
+                    </div>
+                    <div className=" flex-1">
                       <div
-                        className="add"
+                        className="flex items-center w-fit ml-auto m-[9px] text-biyaLightBlue text-center text-sm not-italic font-[400] leading-normal"
                         onClick={() => {
-                          setCardFormIndex(8);
+                          setCardFormIndex(11);
                           funcSetShowCard(!showCardForm);
                         }}
                       >
-                        <img src={walletIcon} alt="WalletLogo1" /> Add money
-                        <img src={rightArrow} alt="rightArrow" />
+                        <img
+                          src={walletIcon}
+                          alt="WalletLogo1"
+                          className="mt-0 mr-[5px] hover:cursor-pointer"
+                        />{" "}
+                        Add money
+                        <img
+                          src={rightArrow}
+                          alt="rightArrow"
+                          className="mt-0 hover:cursor-pointer"
+                        />
                       </div>
                       <div
-                        className="add"
+                        className="flex items-center w-fit ml-auto m-[9px] text-biyaLightBlue text-center text-sm not-italic font-[400] leading-normal"
                         onClick={() => {
                           setNavIndex(6);
                         }}
                       >
-                        <img src={walletIcon} alt="WalletLogo1" /> Withdraw
-                        money
-                        <img src={rightArrow} alt="rightArrow" />
+                        <img
+                          src={walletIcon}
+                          alt="WalletLogo1"
+                          className="mt-0 mr-[5px] hover:cursor-pointer"
+                        />{" "}
+                        Withdraw money
+                        <img
+                          src={rightArrow}
+                          alt="rightArrow"
+                          className="mt-0 hover:cursor-pointer"
+                        />
                       </div>
                     </div>
                   </div>
-                  <div className="amount">
-                    <div>
-                      <span>Current balance</span> <br />{" "}
+                  <div className="py-[2px] pr-[5px] pl-[18px] flex">
+                    <div className="mt-[20px] text-black text-xl not-italic font-[700] leading-normal">
+                      <span className="text-black text-[10px] not-italic font-[500] leading-normal">
+                        Current balance
+                      </span>{" "}
+                      <br />{" "}
                       {showBalance
                         ? `₦${parseFloat(currentUser?.WalletBalance).toFixed(
                             2
@@ -948,165 +1090,112 @@ export const Home = () => {
                         : "************"}
                     </div>
                     {showBalance ? (
-                      <BsEyeFill onClick={() => setShowBalance(!showBalance)} />
+                      <BsEyeFill
+                        onClick={() => setShowBalance(!showBalance)}
+                        className="ml-auto mr-[25px] mt-[45px]"
+                      />
                     ) : (
                       <BsEyeSlashFill
+                        className="ml-auto mr-[25px] mt-[45px]"
                         onClick={() => setShowBalance(!showBalance)}
                       />
                     )}
                   </div>
                 </div>
               </div>
-              <div className="down">
+              <div className="rounded-none bg-white2 down-height">
                 <br />
-                <h3>Quick Actions</h3>
-                <div className="icons">
-                  <div className="xs-grid">
-                    <div
-                      className="card"
-                      onClick={() => {
-                        setCardFormIndex(8);
-                        funcSetShowCard(!showCardForm);
-                      }}
-                    >
-                      <div className="biyaCircle">
-                        <img src={walletIcon} alt="bankTrxIcon" />
-                      </div>
-                      <div className="biyaTrx">Add Money</div>
-                    </div>
-                    <div className="card" onClick={() => setNavIndex(3)}>
-                      <div className="biyaCircle">
-                        <img src={TrxIcon} alt="bankTrxIcon" />
-                      </div>
-                      <div className="biyaTrx">Transfer Money</div>
-                    </div>
-                    <div
-                      className="card"
-                      onClick={() => {
-                        setNavIndex(4);
-                      }}
-                    >
-                      <div className="biyaCircle">
-                        {/* <img src={airtimeIcon} alt="bankTrxIcon" /> */}
-                        <MySVGs index={4} fill="rgba(4, 157, 254, 1)" />
-                      </div>
-                      <div className="biyaTrx">Recharge Airtime</div>
-                    </div>
-                    <div
-                      className="card"
-                      onClick={() => {
-                        setNavIndex(5);
-                      }}
-                    >
-                      <div className="biyaCircle">
-                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                        <MySVGs index={5} fill="rgba(4, 157, 254, 1)" />
-                      </div>
-                      <div className="biyaTrx">Buy Bundle</div>
-                    </div>
-                    <div
-                      className="card"
-                      onClick={() => {
-                        setNavIndex(6);
-                      }}
-                    >
-                      <div className="biyaCircle">
-                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                        <MySVGs index={6} fill="rgba(4, 157, 254, 1)" />
-                      </div>
-                      <div className="biyaTrx">Withdraw Cash</div>
-                    </div>
-                    <div
-                      className="card"
-                      onClick={() => {
-                        setNavIndex(7);
-                      }}
-                    >
-                      <div className="biyaCircle">
-                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                        <MySVGs index={7} fill="rgba(4, 157, 254, 1)" />
-                      </div>
-                      <div className="biyaTrx">Pay Bill</div>
-                    </div>
-                    <div className="card">
-                      <div className="biyaCircle">
-                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                        <MySVGs index={9} fill="rgba(4, 157, 254, 1)" />
-                      </div>
-                      <div className="biyaTrx">Pay Merchant</div>
-                    </div>
-                    <div
-                      className="card"
-                      onClick={() => {
-                        setNavIndex(8);
-                      }}
-                    >
-                      <div className="biyaCircle">
-                        {/* <img src={walletIcon} alt="bankTrxIcon" /> */}
-                        <MySVGs index={8} fill="rgba(4, 157, 254, 1)" />
-                      </div>
-                      <div className="biyaTrx">My QR</div>
-                    </div>
+                <h3 className="text-black text-lg not-italic font-[600] leading-normal mt-[100px] mr-[15px] ml-[10px]">
+                  Quick Actions
+                </h3>
+                <div className="w-screen overflow-x-auto mt-[-15px]">
+                  <div className=" grid grid-cols-4 gap-0">
+                    {IconHolder("Add Money", walletIcon, 11, 0)}
+                    {IconHolder("Transfer Money", TrxIcon, 3, 0)}
+                    {IconHolder("Recharge Airtime", "", 4, 4)}
+                    {IconHolder("Buy Bundle", "", 5, 5)}
+                    {IconHolder("Withdraw Cash", "", 6, 6)}
+                    {IconHolder("Pay Bill", "", 7, 7)}
+                    {IconHolder("Pay Merchant", "", -1, 9)}
+                    {IconHolder("My QR", "", 8, 8)}
                   </div>
                 </div>
-                <div className="card-2">
-                  <div>
-                    <div className="card">
-                      <div>
+                <div className="overflow-x-auto w-screen">
+                  <div className=" w-fit flex">
+                    <div className="my-[35px] rounded-[7px] bg-biyaRed w-[50vw] min-w-[170px] h-[80px] flex-shrink-0 user-filter mx-[10px] flex items-center justify-center">
+                      <div className="text-white text-[13px] not-italic font-[600] leading-normal mr-[15px] pl-[10px]">
                         Manage Your <br /> Favourites
                       </div>
-                      <img src={favourite} alt="favouriteIcon" />
+                      <img
+                        src={favourite}
+                        alt="favouriteIcon"
+                        className=" inline-flex w-[40px] pt-[1.203px] pr-[2.558px] pb-[1.536px] pl-[0.181px] justify-center items-center flex-shrink-0 transform rotate-[360deg]"
+                      />
                     </div>
-                    <div className="card">
-                      <div>Find An Agent</div>
-                      <img src={agent} alt="agentIcon" />
+                    <div className="my-[35px] rounded-[7px] bg-biyaLightBlue w-[50vw] min-w-[170px] h-[80px] flex items-center justify-center mr-[10px] flex-shrink-0 user-filter">
+                      <div className="text-white text-[13px] not-italic font-[600] leading-normal mr-[15px] pl-[10px]">
+                        Find An Agent
+                      </div>
+                      <img
+                        src={agent}
+                        alt="agentIcon"
+                        className=" inline-flex w-[40px] transform rotate-[360deg] items-center justify-center flex-shrink-0 pt-[1.203px] pr-[2.558px] pb-[1.536px] pl-[0.181px]"
+                      />
                     </div>
                   </div>
                 </div>
               </div>
-              <div className="small-table">
+              <div className="bg-white2 mb-[50px] mt-[0px] w-screen h-fit flex-shrink-0">
                 <br />
-                <div className="title">Recent transactions</div>
+                <div className="w-fit mt-[0px] ml-[20px] text-black text-lg not-italic font-[600] leading-normal">
+                  Recent transactions
+                </div>
                 <SmallTable />
-                {/* <br /> */}
               </div>
             </>
           )}
-          <div className="bottom-nav">
-            <div className="bNav" onClick={() => setNavIndex(1)}>
+          <div className="bottom-box-shadow border fixed bottom-0 w-screen h-[9vh] flex-shrink-0 rounded-t-[20px] rounded-r-[20px] bg-white flex items-center z-[20]">
+            <div
+              className="my-0 mx-auto w-fit h-fit max-h-[8vh] flex flex-col text-center text-xs not-italic font-[500] leading-normal"
+              onClick={() => setNavIndex(1)}
+            >
               <MySVGs
                 fill={navIndex === 1 ? "rgba(4, 157, 254, 1)" : "#263238"}
                 index={1}
+                className={"my-0 mx-auto w-[10vw]"}
               />
               Home
             </div>
-            <div className="bNav" onClick={() => setNavIndex(2)}>
+            <div
+              className="my-0 mx-auto w-fit h-fit max-h-[8vh] flex flex-col text-center text-xs not-italic font-[500] leading-normal"
+              onClick={() => setNavIndex(2)}
+            >
               <MySVGs
                 fill={navIndex === 2 ? "rgba(4, 157, 254, 1)" : "#263238"}
                 index={2}
+                className={"my-0 mx-auto w-[10vw]"}
               />
               Scan & pay
             </div>
-            <div className="bNav" onClick={() => setNavIndex(3)}>
+            <div
+              className="my-0 mx-auto w-fit h-fit max-h-[8vh] flex flex-col text-center text-xs not-italic font-[500] leading-normal"
+              onClick={() => setNavIndex(3)}
+            >
               <MySVGs
                 fill={navIndex === 3 ? "rgba(4, 157, 254, 1)" : "#263238"}
                 index={3}
+                className={"my-0 mx-auto w-[10vw]"}
               />
               Transfer
             </div>
-            {/* <div className="bNav" onClick={() => setNavIndex(11)}>
-              <MySVGs
-                fill={navIndex === 11 ? "rgba(4, 157, 254, 1)" : "#263238"}
-                index={11}
+            <div
+              className="my-0 mx-auto w-fit h-fit max-h-[8vh] flex flex-col text-center text-xs not-italic font-[500] leading-normal"
+              onClick={LogOut}
+            >
+              <FiLogOut
+                style={{ fontSize: "20px" }}
+                className={"my-0 mx-auto w-[10vw]"}
               />
-              More
-            </div> */}
-            <div className="bNav" onClick={LogOut}>
-              {/* <MySVGs
-                fill={navIndex === 11 ? "rgba(4, 157, 254, 1)" : "#263238"}
-                index={11}
-              /> */}
-              <FiLogOut style={{ fontSize: "20px" }} />
               LogOut
             </div>
           </div>
@@ -1115,17 +1204,99 @@ export const Home = () => {
     </div>
   );
 
+  function WithdrawList(text: string, index: number, img1: any, img2: any) {
+    return (
+      <li className="list-none ml-0">
+        <div className="flex items-center">
+          <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+            <img src={img1} alt="bankTrx" className="mx-auto w-[30px]" />
+          </div>
+          <div className="max-w-[60vw]">{text}</div>
+          <img
+            className="ml-auto mr-[25px]"
+            src={img2}
+            alt="biyaTrxRArr2"
+            onClick={() => {
+              decideFormStage(index);
+              // setNavIndex(6);
+            }}
+          />
+        </div>
+      </li>
+    );
+  }
+
+  function TransferList(index: number, img1: any, img2: any, text: string) {
+    return (
+      <li className=" list-none ml-0">
+        <div className="flex items-center">
+          <div className="w-[55.579px] h-[55.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center mx-[15px] mt-[15px] cursor-pointer">
+            <img src={img1} alt="bankTrx" className="mx-auto w-[30px]" />
+          </div>
+          <div className="max-w-[60vw]">{text}</div>
+          <img
+            className="ml-auto mr-[25px]"
+            src={img2}
+            alt="biyaTrxRArr2"
+            onClick={() => {
+              decideFormStage(index);
+              // setNavIndex(7);
+              setZindex(3);
+            }}
+          />
+        </div>
+      </li>
+    );
+  }
+
+  function IconHolder(
+    text: string,
+    icon: string,
+    index: number,
+    svgIndex: number
+  ) {
+    return (
+      <div
+        className="mt-[15px] mx-auto w-[85px] h-fit flex-shrink-0 rounded-[10px] bg-none"
+        onClick={() => {
+          setCardFormIndex(index);
+          if (index === 11) {
+            setNavIndex(1);
+            funcSetShowCard(!showCardForm);
+          } else if (index !== 11) {
+            setNavIndex(index);
+          }
+        }}
+      >
+        <div className="w-[70.579px] h-[70.579px] flex-shrink-0 bg-biyaCircle rounded-[50%] flex items-center justify-center text-biyaLightBlue text-[28px] not-italic font-[600] leading-normal ml-[10px] mt-[15px] cursor-pointer">
+          {icon !== "" ? (
+            <img src={icon} alt="bankTrxIcon" className="w-[35px]" />
+          ) : (
+            <MySVGs index={svgIndex} fill="rgba(4, 157, 254, 1)" />
+          )}
+        </div>
+        <div className="text-center text-lightBlack text-[13px] not-italic font-[400] leading-normal">
+          {text}
+        </div>
+      </div>
+    );
+  }
+
   function navComponent(content: string, index: number) {
     return (
       <div
-        className="side-component"
+        className="w-fit my-[10px] flex items-center hover:cursor-pointer"
         onClick={() => {
+          if (index !== 4 || navIndex !== 5) {
+            setShowCardForm(false);
+          }
           setNavIndex(index);
         }}
       >
         <MySVGs
           index={index}
           fill={navIndex === index ? "rgba(4, 157, 254, 1)" : "#263238"}
+          className={"w-[30px] my-[5px] ml-[20px] mr-[10px]"}
         />
         <div
           style={{
