@@ -76,8 +76,8 @@ export const ForgotPassword = () => {
       </div>
       <div className="flex items-center xs:w-screen md:w-[50vw] mb-14">
         <div>
-          <div className="xs:mt-[45vh] md:mt-20 xs:ml-0 md:ml-9 w-[323px] h-[134px] flex-shrink-0 login2-img"></div>
-          <div className="xs:mt-7 md:mt-5 xs:ml-[2vw] md:ml-9 flex items-center justify-center xs:w-[96vw] md:w-[504px] h-[285px] flex-shrink-0 xs:rounded-none md:rounded-2xl bg-white xs:shadow-none md:shadow-form-bx-sh">
+          <div className="mt-[20vh] md:mt-20 xs:ml-0 md:ml-9 w-[323px] h-[134px] flex-shrink-0 login2-img"></div>
+          <div className="mt-7 md:mt-5 ml-[2vw] md:ml-9 flex items-center justify-center xs:w-[96vw] md:w-[504px] h-[285px] flex-shrink-0 xs:rounded-none md:rounded-2xl bg-white xs:shadow-none md:shadow-form-bx-sh">
             <form onSubmit={formik.handleSubmit}>
               <div className="xs:w-[90%] md:w-fit mx-auto my-6">
                 <div className="w-[160px] h-[18px] flex-shrink-0 text-biyaBlue text-lg not-italic font-[500] leading-normal">

@@ -68,6 +68,21 @@ export const Home = () => {
   const errtext = errors[0]?.message;
 
   //Always get user wallet balance on first rendering or reload
+
+  if (!isAuth) {
+    navigate(routes.login);
+  }
+
+  useEffect(() => {
+    // console.log("useEffect is running");
+    // console.log("isAuth:", isAuth);
+    // console.log("navigate:", navigate);
+
+    if (!isAuth) {
+      navigate(routes.login);
+    }
+  }, [isAuth, navigate]);
+
   useEffect(() => {
     dispatch(fetchUserWallet(currentUser?.Email));
     dispatch(fetchTransactions(currentUser?.Email));
@@ -118,12 +133,6 @@ export const Home = () => {
 
     setSearchParams("");
   }, [dispatch, transactions, setSearchParams, pendingBill]);
-
-  useEffect(() => {
-    if (isAuth === false) {
-      navigate(routes.login);
-    }
-  }, [navigate, isAuth]);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);

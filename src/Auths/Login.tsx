@@ -28,12 +28,6 @@ export const Login = () => {
   const errTexts = errors[0]?.message;
   const errText: string = errors[0]?.message?.message;
 
-  useEffect(() => {
-    //dispatch(clearErrors());
-    if (isAuth) {
-      navigate(routes.homepage);
-    }
-  }, [navigate, isAuth]);
   // console.log(isAuth);
   // Define the validation schema using Yup
   const validationSchema = Yup.object({
@@ -63,6 +57,17 @@ export const Login = () => {
     EmailOTP: otp,
   };
 
+  if (isAuth === true) {
+    navigate(routes.homepage);
+  }
+
+  useEffect(() => {
+    //dispatch(clearErrors());
+    if (isAuth === true) {
+      navigate(routes.homepage);
+    }
+  }, [navigate, isAuth]);
+
   // Submit handler
   const handleSubmit = (values: ISignin) => {
     if (!showVerifyEmail) {
@@ -74,8 +79,8 @@ export const Login = () => {
         dispatch(resendVerifyEmail(formik.values.Email));
       }
     }
-    if (isAuth === true) navigate(routes.homepage);
-    navigate(routes.homepage);
+    // if (isAuth === true) navigate(routes.homepage);
+    // navigate(routes.homepage);
   };
 
   // Formik form handling
@@ -145,7 +150,7 @@ export const Login = () => {
       </div>
       <div className="flex items-center xs:w-screen md:w-[50vw] mb-14">
         <div>
-          <div className=" xs:mt-[45vh] md:mt-20 xs:ml-0 md:ml-9 w-[323px] h-[134px] flex-shrink-0 login2-img"></div>
+          <div className="mt-[20vh] md:mt-20 xs:ml-0 md:ml-9 w-[323px] h-[134px] flex-shrink-0 login2-img"></div>
           <div className="xs:mt-7 md:mt-5 xs:ml-[2vw] md:ml-9 flex items-center justify-center xs:w-[96vw] md:w-[504px] h-[375px] flex-shrink-0 xs:rounded-none md:rounded-2xl bg-white xs:shadow-none md:shadow-form-bx-sh">
             <form onSubmit={formik.handleSubmit}>
               {!showVerifyEmail ? (
