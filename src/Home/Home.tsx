@@ -39,8 +39,8 @@ import {
   fetchFlwPayment,
   fetchTransactions,
   fetchUserWallet,
-  getBillStatus,
-  getTransferStatus,
+  // getBillStatus,
+  // getTransferStatus,
   setClearPendingBill,
   setLogout,
   setPendingBill,
@@ -66,12 +66,6 @@ export const Home = () => {
   // const isDesktop = useMediaQuery({ minWidth: 768 } as MediaQueryMatchers);
   const [searchParams, setSearchParams] = useSearchParams();
   const errtext = errors[0]?.message;
-
-  useEffect(() => {
-    if (!isAuth) {
-      navigate(routes.login);
-    }
-  }, [navigate, isAuth]);
 
   //Always get user wallet balance on first rendering or reload
   useEffect(() => {
@@ -109,6 +103,7 @@ export const Home = () => {
   }, [dispatch, isNotify, searchParams, errtext, currentUser, isMobile]);
 
   // Separate useEffect for resetting searchParams
+  //checking transactions for any pending bill
   useEffect(() => {
     transactions?.forEach((trx: any, index: number) => {
       const isFind = pendingBill?.findIndex(
@@ -123,6 +118,12 @@ export const Home = () => {
 
     setSearchParams("");
   }, [dispatch, transactions, setSearchParams, pendingBill]);
+
+  useEffect(() => {
+    if (isAuth === false) {
+      navigate(routes.login);
+    }
+  }, [navigate, isAuth]);
 
   const decideFormStage = (index: number) => {
     setCardFormIndex(index);
@@ -180,34 +181,35 @@ export const Home = () => {
     const intervalId = setInterval(() => {
       if (pendingBill?.length > 0) {
         // console.log("pend: ", pendingBill[0]);
-        if (
-          pendingBill[0]?.Type !== "Transfer" &&
-          pendingBill[0] !== null &&
-          pendingBill[0] !== undefined
-        ) {
-          dispatch(
-            getBillStatus(pendingBill[0]?.Reference, pendingBill[0]?.Type)
-          );
-        } else if (pendingBill[0]?.Type === "Transfer") {
-          dispatch(
-            getTransferStatus(pendingBill[0]?.Reference, pendingBill[0]?.Type)
-          );
-        } else if (pendingBill[0] === null || pendingBill[0] === undefined) {
+        dispatch(fetchUserWallet(currentUser?.Email));
+        dispatch(fetchTransactions(currentUser?.Email));
+
+        var isFind;
+        transactions?.forEach((trx: any, index: number) => {
+          if (trx.Status === "pending") {
+            isFind = 1;
+          } else {
+            isFind = -1;
+          }
+        });
+        if (isFind === -1) {
+          // console.log("isFind: ", isFind);
           dispatch(setClearPendingBill());
         }
       }
-    }, 5000);
+    }, 60000);
 
     return () => {
       clearInterval(intervalId);
     };
-  }, [dispatch, pendingBill]);
+  }, [dispatch, pendingBill, currentUser?.Email, transactions]);
 
   // console.log("navIndex: ", navIndex, " cardFormIndex: ", cardFormIndex);
 
   var name: string = currentUser?.Email?.slice(0, 5);
   name = name?.at(0)?.toUpperCase() + name?.slice(1, 5);
   var acctNum: string = currentUser?.AccountNumber;
+
   return (
     <div className="bg-white h-screen flex">
       {showCardForm && (

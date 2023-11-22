@@ -113,7 +113,7 @@ function OTPInput({ getOTP, showResend }: ILoginProps) {
       <div>
         {otp.map((digit, index) => (
           <input
-            className="w-[35px] h-[35px] my-[1px] mx-[7px] text-center"
+            className="w-[35px] h-[35px] my-[1px] mx-[7px] text-center border-2 border-biyaBlue"
             key={index}
             type="text"
             id={`otp-input-${index}`}

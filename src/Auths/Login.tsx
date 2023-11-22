@@ -74,8 +74,8 @@ export const Login = () => {
         dispatch(resendVerifyEmail(formik.values.Email));
       }
     }
-    // if (isAuth === true) navigate(routes.homepage);
-    // navigate(routes.homepage);
+    if (isAuth === true) navigate(routes.homepage);
+    navigate(routes.homepage);
   };
 
   // Formik form handling
