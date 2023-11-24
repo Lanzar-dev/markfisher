@@ -131,7 +131,7 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="mt-[70px] pl-[15px] md:pl-[35px] h-fit mb-[50px] md:mb-0"
+      className="mt-[35px] md:mt-[70px] pl-[15px] md:pl-[35px] h-fit mb-[50px] md:mb-0"
     >
       <>
         {errText === "Unverified account number" && (
@@ -266,7 +266,7 @@ export const PSBTransferForm = ({ fnShowCardForm }: IPSBTransferFormProps) => {
         )}
       </div>
 
-      <div className="mt-[50px] mb-[50px] md:mb-0 ml-0 md:ml-[-35px] xs:max-md:text-center">
+      <div className="mt-[30px] md:mt-[50px] mb-[50px] md:mb-0 ml-0 md:ml-[-35px] xs:max-md:text-center">
         <button
           className=" ml-[15px] font-extrabold hover:cursor-pointer text-black text-center text-sm not-italic leading-normal w-[127px] h-[35px] flex-shrink-0 bg-white rounded-[94px] border-0"
           onClick={() => {

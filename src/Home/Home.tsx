@@ -147,6 +147,8 @@ export const Home = () => {
       setShowCardForm(true);
     } else if (navIndex === 8) {
       setShowCardForm(false);
+    } else if (navIndex === 1) {
+      setShowCardForm(false);
     }
   }, [navIndex]);
 

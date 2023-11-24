@@ -95,7 +95,7 @@ export const BundleForm = ({ fnShowCardForm }: IBundleFormProps) => {
   return (
     <form
       onSubmit={formik.handleSubmit}
-      className="mt-[70px] pl-[15px] md:pl-[35px] h-fit mb-[50px] md:mb-0"
+      className="mt-[35px] md:mt-[70px] pl-[15px] md:pl-[35px] h-fit mb-[50px] md:mb-0"
     >
       <div className="text-lightBlack text-base not-italic font-[600] leading-normal w-fit my-5 mx-0">
         Pay to

@@ -92,78 +92,84 @@ export const SmallTable = () => {
   }
 
   return (
-    <div className=" overflow-x-auto overflow-y-auto w-screen h-fit min-h-[370px] relative mt-[25px] pb-[11vh]">
-      <table className="min-w-[100vw] w-fit border-collapse">
-        <thead className="head">
-          {/* <tr>
+    <div className=" overflow-x-auto overflow-y-auto w-screen h-fit min-h-[360px] relative mt-[25px] pb-[11vh]">
+      {transactions?.length > 0 ? (
+        <table className="min-w-[100vw] w-fit border-collapse">
+          <thead className="head">
+            {/* <tr>
             <th>Doctor name</th>
             <th>Type</th>
             <th>Date</th>
             <th>Status</th>
           </tr> */}
-        </thead>
-        <tbody>
-          {transactions && (
-            <>
-              {transactions
-                .slice(indexOfFirstItem, indexOfLastItem)
-                .map((trx: any, index: number) => (
-                  <tr key={index}>
-                    <td className=" text-tabCol1 text-sm not-italic font-[600] leading-[22px] w-[10%] py-[5px] px-[15px]">
-                      <div
-                        className="rounded-[55px] w-[55px] h-[55px] flex-shrink-0 flex items-center justify-center"
+          </thead>
+          <tbody>
+            {transactions && (
+              <>
+                {transactions
+                  .slice(indexOfFirstItem, indexOfLastItem)
+                  .map((trx: any, index: number) => (
+                    <tr key={index}>
+                      <td className=" text-tabCol1 text-sm not-italic font-[600] leading-[22px] w-[10%] py-[5px] px-[15px]">
+                        <div
+                          className="rounded-[55px] w-[55px] h-[55px] flex-shrink-0 flex items-center justify-center"
+                          style={{
+                            background: `url(${trxUserBg}), lightgray 50% / cover no-repeat`,
+                          }}
+                        >
+                          <img
+                            src={
+                              trx?.Type === "Airtime"
+                                ? airtime
+                                : trx?.Type === "Bundle"
+                                ? bundle
+                                : trx?.Type === "Cable"
+                                ? cable
+                                : trx?.Type === "BiyaTransfer"
+                                ? trxUser
+                                : spotifyIcon
+                            }
+                            alt="trxUser"
+                          />
+                        </div>
+                      </td>
+
+                      <td className=" text-tabCol1 text-[15px] not-italic font-[400] leading-normal w-[40%]">
+                        <div>From: {trx?.FromUser.slice(0, 10)}</div>
+                        <div className=" text-lightBlack text-xs not-italic font-[600] leading-normal">{`${formatDate(
+                          trx?.UpdatedAt
+                        )} . ${formatTime(trx?.UpdatedAt)}`}</div>
+                      </td>
+                      <td
+                        className="text-right pr-[20px] text-sm not-italic font-[500] leading-normal w-[40%]"
                         style={{
-                          background: `url(${trxUserBg}), lightgray 50% / cover no-repeat`,
+                          color: trx?.Type === "BiyaTransfer" ? "green" : "red",
                         }}
-                      >
-                        <img
-                          src={
-                            trx?.Type === "Airtime"
-                              ? airtime
-                              : trx?.Type === "Bundle"
-                              ? bundle
-                              : trx?.Type === "Cable"
-                              ? cable
-                              : trx?.Type === "BiyaTransfer"
-                              ? trxUser
-                              : spotifyIcon
-                          }
-                          alt="trxUser"
-                        />
-                      </div>
-                    </td>
+                      >{`₦${trx?.Amount}`}</td>
+                    </tr>
+                  ))}
+              </>
+            )}
+          </tbody>
+        </table>
+      ) : (
+        <div className="h-[200px] flex items-center justify-center">
+          No transactions to show
+        </div>
+      )}
 
-                    <td className=" text-tabCol1 text-[15px] not-italic font-[400] leading-normal w-[40%]">
-                      <div>From: {trx?.FromUser.slice(0, 10)}</div>
-                      <div className=" text-lightBlack text-xs not-italic font-[600] leading-normal">{`${formatDate(
-                        trx?.UpdatedAt
-                      )} . ${formatTime(trx?.UpdatedAt)}`}</div>
-                    </td>
-                    <td
-                      className="text-right pr-[20px] text-sm not-italic font-[500] leading-normal w-[40%]"
-                      style={{
-                        color: trx?.Type === "BiyaTransfer" ? "green" : "red",
-                      }}
-                    >{`₦${trx?.Amount}`}</td>
-                  </tr>
-                ))}
-            </>
-          )}
-        </tbody>
-      </table>
-
-      <div className="absolute bottom-[60px] right-0 w-screen text-biyaLightBlue py-[10px] px-[20px] text-right">
+      <div className="absolute bottom-4 right-0 flex text-biyaLightBlue py-[10px] px-[20px] text-right w-fit">
         <img
-          className=" absolute right-[95px] top-[15px]"
+          className=""
           src={lArrow}
           alt="tabLArrow"
           onClick={() => handlePageChange(currentPage - 1)}
         />
-        <span>{`${indexOfFirstItem + 1} - ${indexOfLastItem} of ${
-          transactions?.length
-        }`}</span>
+        <span className="mx-3">{`${
+          indexOfFirstItem + 1
+        } - ${indexOfLastItem} of ${transactions?.length}`}</span>
         <img
-          className="absolute right-0 top-[15px]"
+          className=""
           src={rArrow}
           alt="tabRArrow"
           onClick={() => handlePageChange(currentPage + 1)}
